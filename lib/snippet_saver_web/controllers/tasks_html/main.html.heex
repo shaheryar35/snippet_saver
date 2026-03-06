@@ -1,0 +1,36 @@
+<h1>Tasks</h1>
+
+<!-- Task Form -->
+<.form for={@changeset} action={~p"/tasks"} method="post">
+  <div>
+    <label>Name</label>
+    <input type="text" name="task[name]" />
+  </div>
+
+  <div>
+    <label>Description</label>
+    <textarea name="task[description]"></textarea>
+  </div>
+
+  <div>
+    <label>User ID</label>
+    <input type="text" name="task[user_id]" />
+  </div>
+
+  <div>
+    <button type="submit">Create Task</button>
+  </div>
+</.form>
+
+<hr />
+
+<!-- List Tasks -->
+<ul>
+  <%= for task <- @tasks do %>
+    <li>
+      <strong><%= task.name %></strong> —
+      <%= task.description %>
+      (User: <%= task.user_id %>)
+    </li>
+  <% end %>
+</ul>

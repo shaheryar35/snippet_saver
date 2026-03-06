@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :snippet_saver, SnippetSaver.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "shaheryar",
+  password: "",
   hostname: "localhost",
   database: "snippet_saver_dev",
   stacktrace: true,
