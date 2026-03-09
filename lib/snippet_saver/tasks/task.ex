@@ -13,6 +13,6 @@ defmodule SnippetSaver.Tasks.Task do
   def changeset(task, attrs) do
     task
     |> cast(attrs, [:name, :description, :user_id])
-    |> validate_required([:name])
+    |> validate_required([:name], message: "Please enter a task name")
   end
 end

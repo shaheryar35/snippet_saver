@@ -193,7 +193,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
 
   attr :rest, :global,
-    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart phx-change phx-submit),
     doc: "the arbitrary HTML attributes to apply to the form tag"
 
   slot :inner_block, required: true
@@ -222,24 +222,59 @@ defmodule SnippetSaverWeb.CoreComponents do
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
-  attr :rest, :global, include: ~w(disabled form name value)
+  attr :variant, :string, default: "primary", doc: "button style: primary, secondary, danger, warning, outline, ghost"
+  attr :size, :string, default: "md", doc: "button size: xs, sm, md, lg, xl"
+  attr :rest, :global, include: ~w(disabled form name value phx-click phx-value-id)
 
   slot :inner_block, required: true
 
   def button(assigns) do
+    # Assign values to assigns so they can be used with @ in template
+    assigns =
+      assigns
+      |> assign(:variant, assigns[:variant] || "primary")
+      |> assign(:size, assigns[:size] || "md")
+      |> assign(:type, assigns[:type] || "button")
+
     ~H"""
     <button
       type={@type}
-      class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80",
-        @class
-      ]}
       {@rest}
+      class={[
+        "font-medium transition-colors duration-200 rounded-lg",
+        "focus:outline-none focus:ring-2 focus:ring-offset-2",
+        button_variant(@variant),
+        button_size(@size)
+      ]}
     >
       <%= render_slot(@inner_block) %>
     </button>
     """
+  end
+
+  defp button_variant(variant) do
+    case variant do
+      "primary" -> "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
+      "secondary" -> "bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500"
+      "danger" -> "bg-danger-500 text-white hover:bg-danger-600 focus:ring-danger-500"
+      "warning" -> "bg-warning-500 text-white hover:bg-warning-600 focus:ring-warning-500"
+      "outline" -> "border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-primary-500"
+      "ghost" -> "text-gray-700 hover:bg-gray-100 focus:ring-gray-500"
+      # default
+      _ -> "bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500"
+    end
+  end
+
+  defp button_size(size) do
+    case size do
+      "xs" -> "px-2 py-1 text-xs"
+      "sm" -> "px-3 py-1.5 text-sm"
+      "md" -> "px-4 py-2 text-sm"
+      "lg" -> "px-6 py-3 text-base"
+      "xl" -> "px-8 py-4 text-lg"
+      # default
+      _ -> "px-4 py-2 text-sm"
+    end
   end
 
   @doc """
@@ -284,11 +319,13 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
   attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
-  attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
+  attr :multiple, :boolean, default: false, doc: "multi-select (native HTML is always an open list; for dropdown-style multi-select, use checkbox_group)"
+  attr :size, :string, default: "md", doc: "visual size: sm, md, lg"
+  attr :variant, :string, default: "default", doc: "visual variant for border/focus styling"
 
   attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
-                multiple pattern placeholder readonly required rows size step)
+                multiple pattern placeholder readonly required rows step)
 
   slot :inner_block
 
@@ -327,67 +364,539 @@ defmodule SnippetSaverWeb.CoreComponents do
     """
   end
 
-  def input(%{type: "select"} = assigns) do
-    ~H"""
-    <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
-      <select
-        id={@id}
-        name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
-        multiple={@multiple}
-        {@rest}
-      >
-        <option :if={@prompt} value=""><%= @prompt %></option>
-        <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
-      </select>
-      <.error :for={msg <- @errors}><%= msg %></.error>
-    </div>
-    """
-  end
-
-  def input(%{type: "textarea"} = assigns) do
-    ~H"""
-    <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
-      <textarea
-        id={@id}
-        name={@name}
-        class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "min-h-[6rem] phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
-        ]}
-        {@rest}
-      ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
-      <.error :for={msg <- @errors}><%= msg %></.error>
-    </div>
-    """
-  end
-
-  # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
+    rest = assigns[:rest] || []
+    rest = if is_list(rest), do: rest, else: Map.to_list(rest)
+    rest_for_element = Keyword.drop(rest, [:size, :variant])
+
+    assigns =
+      assigns
+      |> assign(:size, assigns[:size] || "md")
+      |> assign(:variant, assigns[:variant] || "default")
+      |> assign(:errors, assigns[:errors] || [])
+      |> assign(:required, Keyword.get(rest, :required, assigns[:required] || false))
+      |> assign(:type, assigns[:type] || "text")
+      |> assign(:multiple, assigns[:multiple] || false)
+      |> assign(:options, assigns[:options] || [])
+      |> assign(:prompt, assigns[:prompt])
+      |> assign(:rest, rest_for_element)
+
     ~H"""
-    <div phx-feedback-for={@name}>
-      <.label for={@id}><%= @label %></.label>
-      <input
-        type={@type}
-        name={@name}
-        id={@id}
-        value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-        class={[
-          "mt-2 block w-full rounded-lg text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6",
-          "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
-          @errors != [] && "border-rose-400 focus:border-rose-400"
-        ]}
-        {@rest}
-      />
+    <div class="mb-4" phx-feedback-for={@name}>
+      <label :if={@label} for={@id} class="block text-sm font-medium text-gray-700 mb-1">
+        <%= @label %>
+        <span :if={@required} class="text-danger-500 ml-1">*</span>
+      </label>
+      <%= case @type do %>
+        <% "textarea" -> %>
+          <textarea
+            id={@id}
+            name={@name}
+            class={[
+              "w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-offset-2",
+              "min-h-[6rem] phx-no-feedback:border-gray-300",
+              input_size(@size),
+              input_variant(@variant, @errors)
+            ]}
+            {@rest}
+          ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
+
+        <% "select" -> %>
+          <select
+            id={@id}
+            name={if @multiple, do: @name |> to_string() |> ensure_bracket_suffix(), else: @name}
+            multiple={@multiple}
+            {if @multiple, do: [size: 4], else: []}
+            class={[
+              "w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-offset-2",
+              input_size(@size),
+              input_variant(@variant, @errors)
+            ]}
+            {@rest}
+          >
+            <%= if @options != [] do %>
+              <option :if={@prompt} value=""><%= @prompt %></option>
+              <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
+            <% else %>
+              <%= render_slot(@inner_block) %>
+            <% end %>
+          </select>
+
+        <% _ -> %>
+          <input
+            type={@type}
+            id={@id}
+            name={@name}
+            value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+            class={[
+              "w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-offset-2",
+              input_size(@size),
+              input_variant(@variant, @errors)
+            ]}
+            {@rest}
+          />
+      <% end %>
+
+      <!-- Error messages -->
+      <div :if={length(@errors) > 0} class="mt-1">
+        <p :for={msg <- @errors} class="text-sm text-danger-600">
+          <%= msg %>
+        </p>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a container wrapper for forms with optional title.
+
+  ## Examples
+
+      <.form_container title="Create New Task">
+        <.form for={@changeset} phx-submit="create">
+          ...
+        </.form>
+      </.form_container>
+  """
+  attr :title, :string, default: nil, doc: "optional title displayed above the form"
+  slot :inner_block, required: true
+
+  def form_container(assigns) do
+    ~H"""
+    <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+      <%= if @title do %>
+        <h2 class="text-xl font-semibold text-gray-800 mb-6"><%= @title %></h2>
+      <% end %>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a row of form action buttons (submit, cancel, etc.).
+
+  ## Examples
+
+      <.form_actions>
+        <.button type="submit">Save</.button>
+        <.button type="button" phx-click="cancel">Cancel</.button>
+      </.form_actions>
+  """
+  slot :inner_block, required: true
+
+  def form_actions(assigns) do
+    ~H"""
+    <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a card container for grouping content.
+
+  ## Examples
+
+      <.card>
+        <h3>Card Title</h3>
+        <p>Card content goes here.</p>
+      </.card>
+
+      <.card title="My Card" class="max-w-md">
+        Content
+      </.card>
+  """
+  attr :title, :string, default: nil
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+
+  def card(assigns) do
+    ~H"""
+    <div class={["rounded-lg border border-gray-200 bg-white shadow-sm", @class]}>
+      <div :if={@title} class="border-b border-gray-200 px-4 py-3">
+        <h3 class="text-base font-semibold text-gray-900"><%= @title %></h3>
+      </div>
+      <div class="p-4">
+        <%= render_slot(@inner_block) %>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a badge/tag for status, labels, or counts.
+
+  ## Examples
+
+      <.badge>New</.badge>
+      <.badge variant="success">Active</.badge>
+      <.badge variant="danger">Deleted</.badge>
+  """
+  attr :variant, :string, default: "default", doc: "default, success, warning, danger, info"
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+
+  def badge(assigns) do
+    ~H"""
+    <span class={[
+      "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+      badge_variant(@variant),
+      @class
+    ]}>
+      <%= render_slot(@inner_block) %>
+    </span>
+    """
+  end
+
+  defp badge_variant("success"), do: "bg-secondary-100 text-secondary-800"
+  defp badge_variant("warning"), do: "bg-warning-100 text-warning-800"
+  defp badge_variant("danger"), do: "bg-danger-100 text-danger-800"
+  defp badge_variant("info"), do: "bg-primary-100 text-primary-800"
+  defp badge_variant(_), do: "bg-gray-100 text-gray-800"
+
+  @doc """
+  Renders an inline alert (for form or page-level messages, not toast-style).
+
+  ## Examples
+
+      <.alert kind="info">Your changes have been saved.</.alert>
+      <.alert kind="error" title="Error">Something went wrong.</.alert>
+  """
+  attr :kind, :atom, values: [:info, :error, :warning, :success], default: :info
+  attr :title, :string, default: nil
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+
+  def alert(assigns) do
+    ~H"""
+    <div
+      role="alert"
+      class={[
+        "rounded-lg p-4",
+        alert_kind(@kind),
+        @class
+      ]}
+    >
+      <p :if={@title} class="font-semibold mb-1"><%= @title %></p>
+      <div class="text-sm"><%= render_slot(@inner_block) %></div>
+    </div>
+    """
+  end
+
+  defp alert_kind(:info), do: "bg-primary-50 text-primary-800 border border-primary-200"
+  defp alert_kind(:error), do: "bg-danger-50 text-danger-800 border border-danger-200"
+  defp alert_kind(:warning), do: "bg-warning-50 text-warning-800 border border-warning-200"
+  defp alert_kind(:success), do: "bg-secondary-50 text-secondary-800 border border-secondary-200"
+
+  @doc """
+  Renders a loading spinner.
+
+  ## Examples
+
+      <.spinner />
+      <.spinner class="h-8 w-8" />
+  """
+  attr :class, :string, default: nil
+
+  def spinner(assigns) do
+    ~H"""
+    <svg
+      class={["animate-spin h-5 w-5 text-primary-600", @class]}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+      </circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      >
+      </path>
+    </svg>
+    """
+  end
+
+  @doc """
+  Renders an empty state when a list or table has no items.
+
+  ## Examples
+
+      <.empty_state :if={@tasks == []}>
+        No tasks yet. Create your first one!
+      </.empty_state>
+  """
+  attr :class, :string, default: nil
+  slot :inner_block, required: true
+
+  def empty_state(assigns) do
+    ~H"""
+    <div class={["rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center", @class]}>
+      <p class="text-sm text-gray-700"><%= render_slot(@inner_block) %></p>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a switch/toggle (checkbox styled as a switch).
+
+  ## Examples
+
+      <.switch name="task[active]" label="Enable notifications" checked={true} />
+  """
+  attr :name, :any, required: true
+  attr :label, :string, default: nil
+  attr :checked, :boolean, default: false
+  attr :value, :string, default: "true"
+  attr :errors, :list, default: []
+  attr :rest, :global, include: ~w(disabled)
+
+  def switch(assigns) do
+    ~H"""
+    <div class="mb-4" phx-feedback-for={@name}>
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input type="hidden" name={@name} value="false" />
+        <div class="relative w-11 h-6">
+          <input
+            type="checkbox"
+            name={@name}
+            value={@value}
+            checked={@checked}
+            class="sr-only peer"
+            {@rest}
+          />
+          <div class="block w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-primary-600 transition-colors">
+          </div>
+          <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5 pointer-events-none">
+          </div>
+        </div>
+        <span :if={@label} class="text-sm font-medium text-gray-700"><%= @label %></span>
+      </label>
       <.error :for={msg <- @errors}><%= msg %></.error>
     </div>
     """
   end
+
+  @doc """
+  Renders Yes/No radio buttons.
+
+  ## Examples
+
+      <.yes_no name="task[confirmed]" value={true} label="Confirmed?" />
+  """
+  attr :name, :any, required: true
+  attr :label, :string, default: nil
+  attr :value, :any, doc: "true for Yes, false for No, nil for neither"
+  attr :errors, :list, default: []
+  attr :rest, :global, include: ~w(disabled required)
+
+  def yes_no(assigns) do
+    assigns = assign(assigns, :yes_checked, assigns[:value] == true)
+    assigns = assign(assigns, :no_checked, assigns[:value] == false)
+
+    ~H"""
+    <div class="mb-4" phx-feedback-for={@name}>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <div class="flex gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name={@name} value="true" checked={@yes_checked} class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500" {@rest} />
+          <span class="text-sm text-gray-700">Yes</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="radio" name={@name} value="false" checked={@no_checked} class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500" {@rest} />
+          <span class="text-sm text-gray-700">No</span>
+        </label>
+      </div>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a group of radio buttons (single selection).
+
+  ## Examples
+
+      <.radio_group name="task[priority]" label="Priority" options={[{"Low", "low"}, {"Medium", "medium"}, {"High", "high"}]} value="medium" />
+  """
+  attr :name, :any, required: true
+  attr :label, :string, default: nil
+  attr :value, :any, doc: "the selected value"
+  attr :options, :list, required: true, doc: "list of {label, value} tuples"
+  attr :errors, :list, default: []
+  attr :rest, :global, include: ~w(disabled required)
+
+  def radio_group(assigns) do
+    ~H"""
+    <div class="mb-4" phx-feedback-for={@name}>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <div class="space-y-2">
+        <div :for={{label, val} <- @options} class="flex items-center gap-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name={@name}
+              value={val}
+              checked={@value == val}
+              class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500"
+              {@rest}
+            />
+            <span class="text-sm text-gray-700"><%= label %></span>
+          </label>
+        </div>
+      </div>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a group of checkboxes (multi-select).
+
+  ## Examples
+
+      <.checkbox_group name="task[tags]" label="Tags" options={[{"Work", "work"}, {"Personal", "personal"}]} value={["work"]} />
+  """
+  attr :name, :any, required: true
+  attr :label, :string, default: nil
+  attr :value, :any, doc: "list of selected values"
+  attr :options, :list, required: true, doc: "list of {label, value} tuples"
+  attr :errors, :list, default: []
+  attr :rest, :global, include: ~w(disabled)
+
+  def checkbox_group(assigns) do
+    assigns = assign(assigns, :selected, List.wrap(assigns[:value] || []))
+
+    ~H"""
+    <div class="mb-4" phx-feedback-for={@name}>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <div class="space-y-2">
+        <div :for={{label, val} <- @options} class="flex items-center gap-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name={"#{@name}[]"}
+              value={val}
+              checked={val in @selected}
+              class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              {@rest}
+            />
+            <span class="text-sm text-gray-700"><%= label %></span>
+          </label>
+        </div>
+      </div>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a dropdown-style multi-select (collapsed by default, expands on click).
+
+  ## Examples
+
+      <.multi_select_dropdown
+        name="task[tags]"
+        label="Select tags"
+        options={[{"Work", "work"}, {"Personal", "personal"}, {"Urgent", "urgent"}]}
+        value={["work", "urgent"]}
+        placeholder="Choose tags..."
+      />
+  """
+  attr :id, :string, default: nil
+  attr :name, :any, required: true
+  attr :label, :string, default: nil
+  attr :options, :list, required: true, doc: "list of {label, value} tuples"
+  attr :value, :any, default: [], doc: "list of selected values"
+  attr :placeholder, :string, default: "Select..."
+  attr :errors, :list, default: []
+
+  def multi_select_dropdown(assigns) do
+    id = assigns[:id] || "multi-select-#{unique_id(assigns[:name])}"
+    dropdown_id = "#{id}-dropdown"
+    selected = List.wrap(assigns[:value] || [])
+
+    assigns =
+      assigns
+      |> assign(:id, id)
+      |> assign(:dropdown_id, dropdown_id)
+      |> assign(:selected, selected)
+      |> assign(:selected_labels, selected_labels(assigns[:options], selected))
+
+    ~H"""
+    <div
+      id={@id}
+      class="relative mb-4"
+      phx-click-away={JS.add_class("hidden", to: "##{@dropdown_id}")}
+      phx-feedback-for={@name}
+    >
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-1"><%= @label %></label>
+      <button
+        type="button"
+        phx-click={JS.toggle_class("hidden", to: "##{@dropdown_id}")}
+        class="w-full flex items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2 text-left text-sm shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+      >
+        <span class={if @selected == [], do: "text-gray-500", else: "text-gray-900"}>
+          <%= if @selected == [] do %>
+            <%= @placeholder %>
+          <% else %>
+            <%= Enum.join(@selected_labels, ", ") %>
+          <% end %>
+        </span>
+        <.icon name="hero-chevron-down" class="h-5 w-5 text-gray-400" />
+      </button>
+      <div
+        id={@dropdown_id}
+        class="hidden absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-lg max-h-60 overflow-auto"
+      >
+        <div class="py-1">
+          <div :for={{label, val} <- @options} class="px-3 py-2 hover:bg-gray-50">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                name={"#{@name}[]"}
+                value={val}
+                checked={val in @selected}
+                class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+              />
+              <span class="text-sm text-gray-700"><%= label %></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  defp unique_id(name) when is_binary(name), do: String.replace(name, ~r/[\[\]]/, "-")
+  defp unique_id(name), do: unique_id(to_string(name))
+
+  defp selected_labels(options, selected) do
+    for {label, val} <- options, val in selected, do: label
+  end
+
+  defp ensure_bracket_suffix(name) when is_binary(name) do
+    if String.ends_with?(name, "[]"), do: name, else: name <> "[]"
+  end
+
+  defp input_size("sm"), do: "px-2 py-1 text-sm"
+  defp input_size("lg"), do: "px-4 py-3 text-lg"
+  defp input_size(_), do: "px-3 py-2 text-base"
+
+  defp input_variant("error", errors) when length(errors) > 0,
+    do: "border-danger-300 focus:border-danger-500 focus:ring-danger-500"
+
+  defp input_variant(_, errors) when length(errors) > 0,
+    do: "border-danger-300 focus:border-danger-500 focus:ring-danger-500"
+
+  defp input_variant("default", _),
+    do: "border-gray-300 focus:border-primary-500 focus:ring-primary-500"
+
+  defp input_variant(_, _),
+    do: "border-gray-300 focus:border-primary-500 focus:ring-primary-500"
 
   @doc """
   Renders a label.
