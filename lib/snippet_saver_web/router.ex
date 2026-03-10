@@ -24,6 +24,10 @@ defmodule SnippetSaverWeb.Router do
     # get "/tasks", TasksController, :main
     # post "/tasks", TasksController, :create
     live "/tasks", TaskLive.Index, :index
+    live "/employees", EmployeeLive.Index, :index
+    live "/employees/new", EmployeeLive.New, :new
+    live "/employees/:id", EmployeeLive.Show, :show
+    live "/employees/:id/edit", EmployeeLive.Edit, :edit
   end
 
   # Other scopes may use custom stacks.

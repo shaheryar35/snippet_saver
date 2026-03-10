@@ -9,7 +9,9 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/snippet_saver_web.ex",
-    "../lib/snippet_saver_web/**/*.*ex"
+    "../lib/snippet_saver_web/**/*.*ex",
+    "../deps/live_table/lib/**/*.*ex",
+    "../deps/live_table/priv/static/**/*.js"
   ],
   theme: {
     extend: {

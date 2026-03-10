@@ -5,11 +5,12 @@ defmodule SnippetSaver.MixProject do
     [
       app: :snippet_saver,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      listeners: [Phoenix.CodeReloader]
     ]
   end
 
@@ -33,18 +34,14 @@ defmodule SnippetSaver.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 3.0"},
-      # Slightly newer
-      {:phoenix, "~> 1.7.14"},
+      {:phoenix, "~> 1.8.0"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
-      # Updated
       {:phoenix_html, "~> 4.1"},
-      # Updated
       {:phoenix_live_reload, "~> 1.4", only: :dev},
-      {:phoenix_live_view, "~> 1.0.0"},
+      {:phoenix_live_view, "~> 1.1.1"},
       {:floki, ">= 0.30.0", only: :test},
-      # Uncomment this, it works with LV 1.0
       {:phoenix_live_dashboard, "~> 0.8.4"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
@@ -55,19 +52,21 @@ defmodule SnippetSaver.MixProject do
        app: false,
        compile: false,
        depth: 1},
-      # Updated
       {:swoosh, "~> 1.16"},
-      # Updated
       {:finch, "~> 0.18"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      # Updated
       {:gettext, "~> 0.24"},
-      # Updated
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
-      # Updated
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:number, "~> 1.0"},
+
+      # LiveTable 0.3.1 - Simple and stable
+      {:live_table, "~> 0.3.1"},
+
+      # Required for exports
+      {:oban, "~> 2.19"}
     ]
   end
 
