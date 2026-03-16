@@ -22,6 +22,11 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 import hooks_default from "../../deps/live_table/priv/static/live-table.js";
+import EmployeeTabs from "./hooks/employee_tabs.js";
+
+const hooks = Object.assign({}, hooks_default, {
+  EmployeeTabs,
+});
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
@@ -29,7 +34,7 @@ let csrfToken = document
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: { _csrf_token: csrfToken },
-  hooks: hooks_default,
+  hooks,
 });
 
 // Show progress bar on live navigation and form submits

@@ -1,0 +1,59 @@
+<div id="employee-index-root" class="container mx-auto px-4 py-8" phx-hook="EmployeeTabs">
+  <.header>
+    Employees
+    <:subtitle>Manage your team members</:subtitle>
+    <:actions>
+      <.link navigate={~p"/employees/new"}>
+        <.button variant="primary">Add Employee</.button>
+      </.link>
+    </:actions>
+  </.header>
+
+  <%# <.employee_tabs tabs={@tabs} active_tab={@active_tab} /> %>
+
+  <div class="content border border-t-0 border-gray-200 bg-white rounded-b-lg shadow-sm min-h-[320px]">
+    <%= case @employee_page do %>
+      <% :index -> %>
+        <div class="p-4">
+          <%= @table_content.(assigns) %>
+        </div>
+
+      <% :show -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.EmployeeLive.Components.ShowComponent}
+            id={"employee-show-#{@employee.id}"}
+            employee={@employee}
+            patch_back={~p"/employees"}
+          />
+        </div>
+
+      <% :edit -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.EmployeeLive.Components.EditComponent}
+            id={"employee-edit-#{@employee.id}"}
+            employee={@employee}
+            patch_back={~p"/employees"}
+            parent_pid={@parent_pid}
+          />
+        </div>
+
+      <% :new -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.EmployeeLive.Components.NewComponent}
+            id="employee-new"
+            employee={@employee}
+            patch_back={~p"/employees"}
+            parent_pid={@parent_pid}
+          />
+        </div>
+
+      <% _ -> %>
+        <div class="p-4">
+          <%= @table_content.(assigns) %>
+        </div>
+    <% end %>
+  </div>
+</div>

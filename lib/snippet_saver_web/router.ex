@@ -20,14 +20,16 @@ defmodule SnippetSaverWeb.Router do
   scope "/", SnippetSaverWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    # get "/tasks", TasksController, :main
-    # post "/tasks", TasksController, :create
-    live "/tasks", TaskLive.Index, :index
-    live "/employees", EmployeeLive.Index, :index
-    live "/employees/new", EmployeeLive.New, :new
-    live "/employees/:id", EmployeeLive.Show, :show
-    live "/employees/:id/edit", EmployeeLive.Edit, :edit
+    live_session :app,
+      on_mount: [{SnippetSaverWeb.UserAuth, :mount_current_user}] do
+      live "/", DashboardLive.Index, :index
+      live "/dashboard", DashboardLive.Index, :index
+      live "/tasks", TaskLive.Index, :index
+      live "/employees", EmployeeLive.Index, :index
+      live "/employees/new", EmployeeLive.Index, :new
+      live "/employees/:id", EmployeeLive.Index, :show
+      live "/employees/:id/edit", EmployeeLive.Index, :edit
+    end
   end
 
   # Other scopes may use custom stacks.

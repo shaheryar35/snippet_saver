@@ -1,4 +1,4 @@
-defmodule SnippetSaverWeb.EmployeeLive.FormComponent do
+defmodule SnippetSaverWeb.EmployeeLive.Components.FormComponent do
   use SnippetSaverWeb, :live_component
 
   alias SnippetSaver.Employees
@@ -30,6 +30,7 @@ defmodule SnippetSaverWeb.EmployeeLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:parent_pid, assigns[:parent_pid])
      |> assign_form()}
   end
 
@@ -49,10 +50,15 @@ defmodule SnippetSaverWeb.EmployeeLive.FormComponent do
   defp save_employee(socket, :new, employee_params) do
     case Employees.create_employee(employee_params) do
       {:ok, employee} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Employee created successfully")
-         |> push_navigate(to: ~p"/employees/#{employee}")}
+        if pid = socket.assigns[:parent_pid] do
+          send(pid, {:employee_saved, employee, "Employee created successfully"})
+          {:noreply, socket}
+        else
+          {:noreply,
+           socket
+           |> put_flash(:info, "Employee created successfully")
+           |> push_navigate(to: ~p"/employees/#{employee}")}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
@@ -62,10 +68,15 @@ defmodule SnippetSaverWeb.EmployeeLive.FormComponent do
   defp save_employee(socket, :edit, employee_params) do
     case Employees.update_employee(socket.assigns.employee, employee_params) do
       {:ok, employee} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Employee updated successfully")
-         |> push_navigate(to: ~p"/employees/#{employee}")}
+        if pid = socket.assigns[:parent_pid] do
+          send(pid, {:employee_saved, employee, "Employee updated successfully"})
+          {:noreply, socket}
+        else
+          {:noreply,
+           socket
+           |> put_flash(:info, "Employee updated successfully")
+           |> push_navigate(to: ~p"/employees/#{employee}")}
+        end
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
@@ -146,11 +157,10 @@ defmodule SnippetSaverWeb.EmployeeLive.FormComponent do
 
           <:actions>
             <.button type="submit" variant="primary" size="lg">
-              <%!-- <%= @action == :new ? "Create Employee" : "Update Employee" %> --%>
               <%= if @action == :new, do: "Create Employee", else: "Update Employee" %>
             </.button>
 
-            <.link navigate={~p"/employees"}>
+            <.link patch={~p"/employees"}>
               <.button type="button" variant="outline" size="lg">
                 Cancel
               </.button>

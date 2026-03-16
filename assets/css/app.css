@@ -5,3 +5,118 @@
 @import "../../deps/live_table/priv/static/live-table.css";
 
 /* This file is for your main application CSS */
+
+/* LiveTable theme overrides – scoped to #live-table (header, form, table, footer) */
+
+/* ---- Header: controls wrapper (Export + form) ---- */
+#live-table .px-4.sm\:px-6.lg\:px-8 {
+  @apply bg-white rounded-xl border border-gray-200 shadow-sm;
+  padding: 1rem;
+}
+
+/* Export button */
+#live-table #export-menu-button {
+  @apply rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-800
+         shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+#live-table #export-dropdown {
+  @apply rounded-lg border border-gray-200 bg-white shadow-lg;
+}
+
+#live-table #export-dropdown a {
+  @apply text-gray-700 hover:bg-gray-100;
+}
+
+/* Form: search + per-page row */
+#live-table form[phx-change="sort"] .space-y-4 {
+  @apply mt-4;
+}
+
+#live-table form[phx-change="sort"] .flex.flex-col.sm\:flex-row.sm\:items-center.gap-2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* Search input */
+#live-table #table-search {
+  @apply w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm text-gray-900
+         placeholder:text-gray-400
+         focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+}
+
+/* Per-page select */
+#live-table form[phx-change="sort"] select[name="per_page"] {
+  @apply w-20 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700
+         focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+}
+
+/* Filters section */
+#live-table #filters-container > div.rounded-lg {
+  @apply mt-4 bg-gray-50 border border-gray-200 p-4;
+  border-radius: 0.5rem;
+}
+
+#live-table #filters-container label {
+  @apply text-sm font-medium text-gray-800;
+}
+
+#live-table #filters-container input[type="checkbox"] {
+  @apply h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500;
+}
+
+/* ---- Table section (.mt-8.flow-root) ---- */
+#live-table .mt-8.flow-root .overflow-hidden.shadow.sm\:rounded-lg {
+  @apply bg-white rounded-xl border border-gray-200 shadow-sm;
+}
+
+#live-table .mt-8.flow-root table {
+  @apply bg-white;
+  min-width: 100%;
+}
+
+#live-table .mt-8.flow-root thead {
+  @apply bg-gray-50;
+}
+
+#live-table .mt-8.flow-root thead th {
+  @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-600;
+}
+
+#live-table .mt-8.flow-root tbody {
+  @apply bg-white divide-y divide-gray-200;
+}
+
+#live-table .mt-8.flow-root tbody tr {
+  @apply hover:bg-gray-50;
+}
+
+#live-table .mt-8.flow-root tbody td {
+  @apply px-4 py-3 text-sm text-gray-900 whitespace-nowrap;
+}
+
+/* Fixed height + scroll for table body area */
+#live-table .mt-8.flow-root .inline-block.min-w-full.py-2.align-middle.sm\:px-6.lg\:px-8 {
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* ---- Pagination footer ---- */
+#live-table nav[aria-label="Pagination"] {
+  @apply border-t border-gray-200 bg-white px-4 py-3 sm:px-6 rounded-b-xl;
+}
+
+#live-table nav[aria-label="Pagination"] p {
+  @apply text-sm text-gray-700;
+}
+
+#live-table nav[aria-label="Pagination"] button:not([disabled]) {
+  @apply bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-primary-500 rounded-lg px-3 py-2 text-sm font-medium;
+}
+
+#live-table nav[aria-label="Pagination"] button[disabled] {
+  @apply bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200;
+}

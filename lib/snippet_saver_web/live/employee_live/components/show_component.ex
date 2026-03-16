@@ -1,21 +1,18 @@
-defmodule SnippetSaverWeb.EmployeeLive.Show do
-  use SnippetSaverWeb, :live_view
+defmodule SnippetSaverWeb.EmployeeLive.Components.ShowComponent do
+  use SnippetSaverWeb, :live_component
 
-  alias SnippetSaver.Employees
-
-  def mount(%{"id" => id}, _session, socket) do
-    employee = Employees.get_employee!(id)
-
-    {:ok,
-     socket
-     |> assign(employee: employee)
-     |> assign(page_title: employee.name)}
-  end
+  attr :employee, :any, required: true
+  attr :patch_back, :any, required: true
 
   def render(assigns) do
     ~H"""
     <div class="container mx-auto px-4 py-8">
-      <.back navigate={~p"/employees"}>Back to Employees</.back>
+      <.link patch={@patch_back}>
+        <.button variant="ghost" class="mb-4">
+          <.icon name="hero-arrow-left" class="h-4 w-4 mr-1" />
+          Back to Employees
+        </.button>
+      </.link>
 
       <div class="flex justify-between items-start mb-6">
         <.header>
@@ -24,12 +21,16 @@ defmodule SnippetSaverWeb.EmployeeLive.Show do
         </.header>
 
         <div class="flex gap-2">
-          <.link patch={~p"/employees/#{@employee.id}/edit"}>
-            <.button variant="outline" size="sm">
-              <.icon name="hero-pencil" class="h-4 w-4 mr-1" />
-              Edit
-            </.button>
-          </.link>
+          <.button
+            variant="outline"
+            size="sm"
+            phx-click="go-to-edit"
+            phx-value-id={@employee.id}
+            phx-target={@myself}
+          >
+            <.icon name="hero-pencil" class="h-4 w-4 mr-1" />
+            Edit
+          </.button>
         </div>
       </div>
 
@@ -67,5 +68,10 @@ defmodule SnippetSaverWeb.EmployeeLive.Show do
       </.card>
     </div>
     """
+  end
+
+  def handle_event("go-to-edit", %{"id" => id}, socket) do
+    send(self(), {:go_to_edit, id})
+    {:noreply, socket}
   end
 end

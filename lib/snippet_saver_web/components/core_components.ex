@@ -193,7 +193,8 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
 
   attr :rest, :global,
-    include: ~w(autocomplete name rel action enctype method novalidate target multipart phx-change phx-submit),
+    include:
+      ~w(autocomplete name rel action enctype method novalidate target multipart phx-change phx-submit),
     doc: "the arbitrary HTML attributes to apply to the form tag"
 
   slot :inner_block, required: true
@@ -222,7 +223,11 @@ defmodule SnippetSaverWeb.CoreComponents do
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
-  attr :variant, :string, default: "primary", doc: "button style: primary, secondary, danger, warning, outline, ghost"
+
+  attr :variant, :string,
+    default: "primary",
+    doc: "button style: primary, secondary, danger, warning, outline, ghost"
+
   attr :size, :string, default: "md", doc: "button size: xs, sm, md, lg, xl"
   attr :rest, :global, include: ~w(disabled form name value phx-click phx-value-id)
 
@@ -319,7 +324,12 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
   attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
-  attr :multiple, :boolean, default: false, doc: "multi-select (native HTML is always an open list; for dropdown-style multi-select, use checkbox_group)"
+
+  attr :multiple, :boolean,
+    default: false,
+    doc:
+      "multi-select (native HTML is always an open list; for dropdown-style multi-select, use checkbox_group)"
+
   attr :size, :string, default: "md", doc: "visual size: sm, md, lg"
   attr :variant, :string, default: "default", doc: "visual variant for border/focus styling"
 
@@ -1053,6 +1063,267 @@ defmodule SnippetSaverWeb.CoreComponents do
         </div>
       </dl>
     </div>
+    """
+  end
+
+  @doc """
+  Renders the main application sidebar with navigation links.
+
+  ## Examples
+
+      <.sidebar current_user={@current_user} active_page={@active_page}>
+        <:nav_item
+          name="Dashboard"
+          path={~p"/dashboard"}
+          icon="hero-home"
+          active={@active_page == "dashboard"}
+        />
+        <:nav_section title="Management">
+          <:nav_item
+            name="Employees"
+            path={~p"/employees"}
+            icon="hero-users"
+            active={@active_page == "employees"}
+          />
+          <:nav_item
+            name="Tasks"
+            path={~p"/tasks"}
+            icon="hero-check-circle"
+            active={@active_page == "tasks"}
+          />
+        </:nav_section>
+      </.sidebar>
+  """
+  attr :current_user, :any, default: nil
+  attr :active_page, :string, default: nil
+
+  slot :inner_block
+
+  slot :nav_item, doc: "individual navigation items" do
+    attr :name, :string, required: true
+    attr :path, :any, required: true
+    attr :icon, :string, required: true
+    attr :active, :boolean
+  end
+
+  slot :nav_section, doc: "group of navigation items with a title" do
+    attr :title, :string, required: true
+  end
+
+  def sidebar(assigns) do
+    ~H"""
+    <!-- Mobile Header -->
+    <div class="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30 p-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+        <button
+          type="button"
+          phx-click={JS.toggle(to: "#mobile-sidebar")}
+          class="p-2 rounded-lg hover:bg-gray-100"
+        >
+          <.icon name="hero-bars-3" class="h-6 w-6" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div
+      id="mobile-sidebar"
+      class="lg:hidden fixed inset-0 z-40 hidden"
+      phx-click-away={JS.hide(to: "#mobile-sidebar")}
+    >
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50"
+        phx-click={JS.hide(to: "#mobile-sidebar")}
+      >
+      </div>
+
+      <aside class="fixed left-0 top-0 bottom-0 w-64 bg-white shadow-xl flex flex-col">
+        <div class="p-4 border-b border-gray-200">
+          <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto p-4">
+          <ul class="space-y-1">
+            <%= for item <- @nav_item do %>
+              <li>
+                <.sidebar_link
+                  name={item.name}
+                  path={item.path}
+                  icon={item.icon}
+                  active={Map.get(item, :active, false)}
+                />
+              </li>
+            <% end %>
+
+            <%= for section <- @nav_section do %>
+              <li class="mt-4 mb-2">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
+                  <%= section.title %>
+                </p>
+              </li>
+
+              <%= render_slot(section) %>
+            <% end %>
+
+            <%= render_slot(@inner_block) %>
+          </ul>
+        </nav>
+
+        <div class="p-4 border-t border-gray-200 space-y-2">
+          <%= if @current_user do %>
+            <p class="text-xs text-gray-500 px-1 truncate">
+              Signed in as<br />
+              <span class="font-medium text-gray-900"><%= @current_user.email %></span>
+            </p>
+
+            <.sidebar_link
+              name="Settings"
+              path="/users/settings"
+              icon="hero-cog"
+              active={false}
+            />
+
+            <.sidebar_link
+              name="Log out"
+              path="/users/log_out"
+              icon="hero-arrow-right-on-rectangle"
+              method="delete"
+              active={false}
+            />
+          <% else %>
+            <.sidebar_link
+              name="Log in"
+              path="/users/log_in"
+              icon="hero-arrow-right-on-rectangle"
+              active={false}
+            />
+
+            <.sidebar_link
+              name="Register"
+              path="/users/register"
+              icon="hero-user-plus"
+              active={false}
+            />
+          <% end %>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Desktop Sidebar -->
+    <aside class="hidden lg:flex lg:w-64 bg-white border-r border-gray-200 flex-col h-screen">
+      <div class="p-4 border-b border-gray-200">
+        <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+      </div>
+
+      <nav class="flex-1 overflow-y-auto p-4">
+        <ul class="space-y-1">
+          <%= for item <- @nav_item do %>
+            <li>
+              <.sidebar_link
+                name={item.name}
+                path={item.path}
+                icon={item.icon}
+                active={Map.get(item, :active, false)}
+              />
+            </li>
+          <% end %>
+
+          <%= for section <- @nav_section do %>
+            <li class="mt-4 mb-2">
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
+                <%= section.title %>
+              </p>
+            </li>
+
+            <%= render_slot(section) %>
+          <% end %>
+
+          <%= render_slot(@inner_block) %>
+        </ul>
+      </nav>
+
+      <div class="p-4 border-t border-gray-200 space-y-2">
+        <%= if @current_user do %>
+          <p class="text-xs text-gray-500 px-1 truncate">
+            Signed in as<br />
+            <span class="font-medium text-gray-900"><%= @current_user.email %></span>
+          </p>
+
+          <.sidebar_link
+            name="Settings"
+            path="/users/settings"
+            icon="hero-cog"
+            active={false}
+          />
+
+          <.sidebar_link
+            name="Log out"
+            path="/users/log_out"
+            icon="hero-arrow-right-on-rectangle"
+            method="delete"
+            active={false}
+          />
+        <% else %>
+          <.sidebar_link
+            name="Log in"
+            path="/users/log_in"
+            icon="hero-arrow-right-on-rectangle"
+            active={false}
+          />
+
+          <.sidebar_link
+            name="Register"
+            path="/users/register"
+            icon="hero-user-plus"
+            active={false}
+          />
+        <% end %>
+      </div>
+    </aside>
+    """
+  end
+
+  @doc """
+  Renders a single sidebar navigation link.
+  """
+  attr :name, :string, required: true
+  attr :path, :any, required: true
+  attr :icon, :string, required: true
+  attr :active, :boolean, default: false
+  attr :method, :string, default: nil
+  attr :rest, :global
+
+  def sidebar_link(assigns) do
+    ~H"""
+    <%= if @active and is_nil(@method) do %>
+      <button
+        type="button"
+        class={[
+          "w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-200 text-sm font-medium",
+          "bg-primary-50 text-primary-700 cursor-default"
+        ]}
+        {@rest}
+      >
+        <.icon name={@icon} class="h-5 w-5" />
+        <span><%= @name %></span>
+      </button>
+    <% else %>
+      <.link
+        patch={@path}
+        class={[
+          "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-200 text-sm font-medium",
+          if(@active,
+            do: "bg-primary-50 text-primary-700",
+            else: "text-gray-700 hover:bg-gray-100"
+          )
+        ]}
+        {@rest}
+      >
+        <.icon name={@icon} class="h-5 w-5" />
+        <span><%= @name %></span>
+      </.link>
+    <% end %>
     """
   end
 

@@ -17,7 +17,8 @@ defmodule SnippetSaverWeb.TaskLive.Index do
        changeset: changeset,
        editing_task_id: editing_task_id,
        edit_changeset: edit_changeset,
-       tags: tags
+       tags: tags,
+       active_page: "tasks"
      )}
   end
 
