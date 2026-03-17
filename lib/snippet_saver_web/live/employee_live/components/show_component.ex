@@ -7,12 +7,6 @@ defmodule SnippetSaverWeb.EmployeeLive.Components.ShowComponent do
   def render(assigns) do
     ~H"""
     <div class="container mx-auto px-4 py-8">
-      <.link patch={@patch_back}>
-        <.button variant="ghost" class="mb-4">
-          <.icon name="hero-arrow-left" class="h-4 w-4 mr-1" />
-          Back to Employees
-        </.button>
-      </.link>
 
       <div class="flex justify-between items-start mb-6">
         <.header>

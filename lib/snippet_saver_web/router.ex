@@ -28,6 +28,7 @@ defmodule SnippetSaverWeb.Router do
       live "/employees", EmployeeLive.Index, :index
       live "/employees/new", EmployeeLive.Index, :new
       live "/employees/:id", EmployeeLive.Index, :show
+      live "/employees/:id/:subtab", EmployeeLive.Index, :show
       live "/employees/:id/edit", EmployeeLive.Index, :edit
     end
   end

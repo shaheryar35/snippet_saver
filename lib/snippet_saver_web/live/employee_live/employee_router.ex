@@ -47,6 +47,27 @@ defmodule SnippetSaverWeb.EmployeeLive.EmployeeRouter do
           |> assign(:page_title, "Edit Employee")
           |> assign(:active_page, "employees")
         {:noreply, socket}
+
+      {:show_subtab, id, subtab} ->
+        employee = Employees.get_employee!(id)
+
+        active_subtab =
+          case subtab do
+            "details" -> :details
+            "activity" -> :activity
+            "permissions" -> :permissions
+            _ -> :details
+          end
+
+        socket =
+          socket
+          |> assign(:employee_page, :show)
+          |> assign(:employee, employee)
+          |> assign(:active_subtab, active_subtab)
+          |> assign(:page_title, employee.name)
+          |> assign(:active_page, "employees")
+
+        {:noreply, socket}
     end
   end
 
@@ -58,6 +79,7 @@ defmodule SnippetSaverWeb.EmployeeLive.EmployeeRouter do
       ["new"] -> :new
       [id, "edit"] -> {:edit, String.to_integer(id)}
       [id] -> {:show, String.to_integer(id)}
+      [id, subtab] -> {:show_subtab, String.to_integer(id), subtab}
       _ -> :index
     end
   end

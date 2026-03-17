@@ -9,12 +9,19 @@ defmodule SnippetSaverWeb.EmployeeLive.IndexView do
     show_employee? = assigns[:employee_page] in [:show, :edit] and is_map_key(assigns, :employee)
     is_new_page? = assigns[:employee_page] == :new
 
+    active_subtab =
+      case Map.get(assigns, :active_subtab) do
+        nil -> :details
+        val -> val
+      end
+
     assigns =
       assigns
       |> assign(:show_employee?, show_employee?)
       |> assign(:data_employee_id, if(show_employee?, do: assigns.employee.id, else: nil))
       |> assign(:data_employee_name, if(show_employee?, do: assigns.employee.name, else: nil))
       |> assign(:data_page_new, is_new_page?)
+      |> assign(:active_subtab, active_subtab)
 
     ~H"""
     <div
@@ -24,6 +31,7 @@ defmodule SnippetSaverWeb.EmployeeLive.IndexView do
       data-employee-id={@data_employee_id}
       data-employee-name={@data_employee_name}
       data-page-new={@data_page_new}
+      data-employee-subtab={if @employee_page == :show, do: @active_subtab, else: nil}
     >
       <.header>
         Employees
@@ -46,12 +54,31 @@ defmodule SnippetSaverWeb.EmployeeLive.IndexView do
 
           <% :show -> %>
             <div class="p-4">
-              <.live_component
-                module={SnippetSaverWeb.EmployeeLive.Components.ShowComponent}
-                id={"employee-show-#{@employee.id}"}
-                employee={@employee}
-                patch_back={~p"/employees"}
-              />
+              <%= case @active_subtab do %>
+                <% :activity -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.EmployeeLive.Components.ActivityComponent}
+                    id={"employee-activity-#{@employee.id}"}
+                    employee={@employee}
+                    patch_back={~p"/employees"}
+                  />
+
+                <% :permissions -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.EmployeeLive.Components.PermissionsComponent}
+                    id={"employee-permissions-#{@employee.id}"}
+                    employee={@employee}
+                    patch_back={~p"/employees"}
+                  />
+
+                <% _ -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.EmployeeLive.Components.ShowComponent}
+                    id={"employee-show-#{@employee.id}"}
+                    employee={@employee}
+                    patch_back={~p"/employees"}
+                  />
+              <% end %>
             </div>
 
           <% :edit -> %>

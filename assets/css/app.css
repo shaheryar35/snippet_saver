@@ -120,3 +120,33 @@
 #live-table nav[aria-label="Pagination"] button[disabled] {
   @apply bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200;
 }
+
+/* Employee nested tab system */
+.employee-tabs-root {
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.employee-tabs-parent-row {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.employee-tabs-parent-row .employee-parent-tab {
+  @apply bg-white rounded-t-lg;
+}
+
+.employee-tabs-child-row {
+  border-top-width: 1px;
+}
+
+.employee-tabs-child-row .employee-child-tab {
+  @apply bg-gray-50 rounded-t-md;
+}
+
+.employee-tabs-parent-row .employee-parent-tab:hover {
+  @apply bg-gray-50;
+}
+
+.employee-tabs-child-row .employee-child-tab:hover {
+  @apply bg-gray-100;
+}

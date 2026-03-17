@@ -166,13 +166,46 @@ defmodule SnippetSaverWeb.EmployeeLive.Index do
     {:noreply, socket}
   end
 
+  # Nested tab navigation: employee + subtab (details/activity/permissions)
+  def handle_event("navigate_to", %{"employee_id" => employee_id, "subtab" => subtab}, socket) do
+    employee = Employees.get_employee!(employee_id)
+
+    active_subtab =
+      case subtab do
+        "details" -> :details
+        "activity" -> :activity
+        "permissions" -> :permissions
+        _ -> :details
+      end
+
+    socket =
+      socket
+      |> assign(:employee_page, :show)
+      |> assign(:employee, employee)
+      |> assign(:active_subtab, active_subtab)
+      |> assign(:page_title, employee.name)
+      |> assign(:active_page, "employees")
+      |> push_patch(to: ~p"/employees/#{employee_id}/#{subtab}")
+
+    {:noreply, socket}
+  end
+
+  # Backwards-compatible navigation using only an id (list/new/show)
   def handle_event("navigate_to", %{"id" => id}, socket) do
     case id do
       "list" ->
-        list_params = %{"page" => "1", "per_page" => "10", "sort_params" => %{"id" => "asc"}, "filters" => %{}, "search" => ""}
+        list_params = %{
+          "page" => "1",
+          "per_page" => "10",
+          "sort_params" => %{"id" => "asc"},
+          "filters" => %{},
+          "search" => ""
+        }
+
         {:noreply, socket} = apply_table_params(socket, list_params, ["employees"])
         socket = push_patch(socket, to: ~p"/employees?page=1&per_page=10&sort_params[id]=asc")
         {:noreply, socket}
+
       "new" ->
         socket =
           socket
@@ -181,16 +214,21 @@ defmodule SnippetSaverWeb.EmployeeLive.Index do
           |> assign(:page_title, "New Employee")
           |> assign(:active_page, "employees")
           |> push_patch(to: ~p"/employees/new")
+
         {:noreply, socket}
+
       _ ->
         employee = Employees.get_employee!(id)
+
         socket =
           socket
           |> assign(:employee_page, :show)
           |> assign(:employee, employee)
+          |> assign(:active_subtab, :details)
           |> assign(:page_title, employee.name)
           |> assign(:active_page, "employees")
           |> push_patch(to: ~p"/employees/#{id}")
+
         {:noreply, socket}
     end
   end
