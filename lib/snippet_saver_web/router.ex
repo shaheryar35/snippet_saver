@@ -76,6 +76,11 @@ defmodule SnippetSaverWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{SnippetSaverWeb.UserAuth, :ensure_authenticated}] do
+      live "/permissions", PermissionLive.Index, :index
+      live "/permissions/new", PermissionLive.Index, :new
+      live "/permissions/:id/edit", PermissionLive.Index, :edit
+      live "/permissions/:id/delete", PermissionLive.Index, :delete
+
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

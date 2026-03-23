@@ -10,6 +10,12 @@ defmodule SnippetSaver.Employees.Employee do
     field :company, :string
     field :department, :string
     field :salary, :decimal
+    # Add relationships
+    has_many :activities, SnippetSaver.Employees.Activity
+
+    many_to_many :permissions, SnippetSaver.Employees.Permission,
+      join_through: "employee_permissions",
+      on_replace: :delete
 
     timestamps(type: :utc_datetime)
   end

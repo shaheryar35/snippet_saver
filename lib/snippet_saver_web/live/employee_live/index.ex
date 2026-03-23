@@ -285,6 +285,18 @@ defmodule SnippetSaverWeb.EmployeeLive.Index do
     end
   end
 
+  def handle_event("unassign-permission", %{"id" => permission_id}, socket) do
+    employee_id = socket.assigns.employee.id
+    permission_id_int = String.to_integer(permission_id)
+
+    _count = Employees.unassign_permission_from_employee(employee_id, permission_id_int)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, "Permission unassigned")
+     |> push_patch(to: ~p"/employees/#{employee_id}/permissions")}
+  end
+
   @impl true
   def handle_info({:employee_saved, employee, message}, socket) do
     {:noreply,
