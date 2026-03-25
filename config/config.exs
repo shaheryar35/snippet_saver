@@ -7,12 +7,12 @@
 # General application configuration
 import Config
 
-config :snippet_saver,
+config :petx,
   ecto_repos: [SnippetSaver.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :snippet_saver, SnippetSaverWeb.Endpoint,
+config :petx, SnippetSaverWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -29,12 +29,12 @@ config :snippet_saver, SnippetSaverWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :snippet_saver, SnippetSaver.Mailer, adapter: Swoosh.Adapters.Local
+config :petx, SnippetSaver.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",
-  snippet_saver: [
+  petx: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
@@ -44,7 +44,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "3.4.0",
-  snippet_saver: [
+  petx: [
     args: ~w(
       --config=tailwind.config.js
       --input=css/app.css
@@ -67,7 +67,7 @@ config :live_table,
   pubsub: SnippetSaver.PubSub
 
 # Configure Oban for exports
-config :snippet_saver, Oban,
+config :petx, Oban,
   repo: SnippetSaver.Repo,
   queues: [exports: 10]
 

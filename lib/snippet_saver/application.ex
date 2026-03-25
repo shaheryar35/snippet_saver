@@ -10,7 +10,7 @@ defmodule SnippetSaver.Application do
     children = [
       SnippetSaverWeb.Telemetry,
       SnippetSaver.Repo,
-      {DNSCluster, query: Application.get_env(:snippet_saver, :dns_cluster_query) || :ignore},
+      {DNSCluster, query: Application.get_env(:petx, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: SnippetSaver.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: SnippetSaver.Finch},

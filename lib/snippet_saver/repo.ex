@@ -1,5 +1,5 @@
 defmodule SnippetSaver.Repo do
   use Ecto.Repo,
-    otp_app: :snippet_saver,
+    otp_app: :petx,
     adapter: Ecto.Adapters.Postgres
 end

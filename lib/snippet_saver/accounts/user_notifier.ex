@@ -8,7 +8,7 @@ defmodule SnippetSaver.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"SnippetSaver", "contact@example.com"})
+      |> from({"PetX", "contact@example.com"})
       |> subject(subject)
       |> text_body(body)
 

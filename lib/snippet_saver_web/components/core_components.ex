@@ -1115,7 +1115,7 @@ defmodule SnippetSaverWeb.CoreComponents do
     <!-- Mobile Header -->
     <div class="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30 p-4">
       <div class="flex items-center justify-between">
-        <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+        <h1 class="text-xl font-bold text-primary-600">PetX</h1>
         <button
           type="button"
           phx-click={JS.toggle(to: "#mobile-sidebar")}
@@ -1140,7 +1140,7 @@ defmodule SnippetSaverWeb.CoreComponents do
 
       <aside class="fixed left-0 top-0 bottom-0 w-64 bg-white shadow-xl flex flex-col">
         <div class="p-4 border-b border-gray-200">
-          <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+          <h1 class="text-xl font-bold text-primary-600">PetX</h1>
         </div>
 
         <nav class="flex-1 overflow-y-auto p-4">
@@ -1213,7 +1213,7 @@ defmodule SnippetSaverWeb.CoreComponents do
     <!-- Desktop Sidebar -->
     <aside class="hidden lg:flex lg:w-64 bg-white border-r border-gray-200 flex-col h-screen">
       <div class="p-4 border-b border-gray-200">
-        <h1 class="text-xl font-bold text-primary-600">SnippetSaver</h1>
+        <h1 class="text-xl font-bold text-primary-600">PetX</h1>
       </div>
 
       <nav class="flex-1 overflow-y-auto p-4">

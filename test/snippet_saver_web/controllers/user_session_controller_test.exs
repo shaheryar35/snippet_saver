@@ -35,7 +35,7 @@ defmodule SnippetSaverWeb.UserSessionControllerTest do
           }
         })
 
-      assert conn.resp_cookies["_snippet_saver_web_user_remember_me"]
+      assert conn.resp_cookies["_petx_web_user_remember_me"]
       assert redirected_to(conn) == ~p"/"
     end
 

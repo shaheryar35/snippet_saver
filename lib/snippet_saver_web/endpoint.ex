@@ -1,12 +1,12 @@
 defmodule SnippetSaverWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :snippet_saver
+  use Phoenix.Endpoint, otp_app: :petx
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_snippet_saver_key",
+    key: "_petx_key",
     signing_salt: "n/BOTjtR",
     same_site: "Lax"
   ]
@@ -21,7 +21,7 @@ defmodule SnippetSaverWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :snippet_saver,
+    from: :petx,
     gzip: false,
     only: SnippetSaverWeb.static_paths()
 
@@ -31,7 +31,7 @@ defmodule SnippetSaverWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :snippet_saver
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :petx
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,

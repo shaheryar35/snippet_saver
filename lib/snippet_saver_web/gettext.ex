@@ -20,5 +20,5 @@ defmodule SnippetSaverWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :snippet_saver
+  use Gettext, otp_app: :petx
 end

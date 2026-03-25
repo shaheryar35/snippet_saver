@@ -1,4 +1,4 @@
-# SnippetSaver
+# PetX
 
 To start your Phoenix server:
 

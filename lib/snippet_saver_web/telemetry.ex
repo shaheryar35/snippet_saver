@@ -52,23 +52,23 @@ defmodule SnippetSaverWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("snippet_saver.repo.query.total_time",
+      summary("petx.repo.query.total_time",
         unit: {:native, :millisecond},
         description: "The sum of the other measurements"
       ),
-      summary("snippet_saver.repo.query.decode_time",
+      summary("petx.repo.query.decode_time",
         unit: {:native, :millisecond},
         description: "The time spent decoding the data received from the database"
       ),
-      summary("snippet_saver.repo.query.query_time",
+      summary("petx.repo.query.query_time",
         unit: {:native, :millisecond},
         description: "The time spent executing the query"
       ),
-      summary("snippet_saver.repo.query.queue_time",
+      summary("petx.repo.query.queue_time",
         unit: {:native, :millisecond},
         description: "The time spent waiting for a database connection"
       ),
-      summary("snippet_saver.repo.query.idle_time",
+      summary("petx.repo.query.idle_time",
         unit: {:native, :millisecond},
         description:
           "The time the connection spent waiting before being checked out for the query"

@@ -6,7 +6,7 @@ defmodule SnippetSaverWeb.UserAuthTest do
   alias SnippetSaverWeb.UserAuth
   import SnippetSaver.AccountsFixtures
 
-  @remember_me_cookie "_snippet_saver_web_user_remember_me"
+  @remember_me_cookie "_petx_web_user_remember_me"
 
   setup %{conn: conn} do
     conn =

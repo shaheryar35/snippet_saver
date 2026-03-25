@@ -3,7 +3,7 @@ defmodule SnippetSaver.MixProject do
 
   def project do
     [
-      app: :snippet_saver,
+      app: :petx,
       version: "0.1.0",
       elixir: "~> 1.17",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -83,10 +83,10 @@ defmodule SnippetSaver.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["tailwind snippet_saver", "esbuild snippet_saver"],
+      "assets.build": ["tailwind petx", "esbuild petx"],
       "assets.deploy": [
-        "tailwind snippet_saver --minify",
-        "esbuild snippet_saver --minify",
+        "tailwind petx --minify",
+        "esbuild petx --minify",
         "phx.digest"
       ]
     ]
