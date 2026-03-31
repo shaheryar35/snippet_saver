@@ -17,7 +17,7 @@ defmodule SnippetSaver.Contacts.ContactMethod do
   @doc false
   def changeset(contact_method, attrs) do
     contact_method
-    |> cast(attrs, [:type, :value, :is_primary, :allow_sms, :allow_email])
-    |> validate_required([:type, :value, :is_primary, :allow_sms, :allow_email])
+    |> cast(attrs, [:contact_id, :type, :value, :is_primary, :allow_sms, :allow_email])
+    |> validate_required([:contact_id, :type, :value, :is_primary, :allow_sms, :allow_email])
   end
 end

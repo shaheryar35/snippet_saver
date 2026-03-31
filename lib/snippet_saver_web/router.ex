@@ -24,6 +24,11 @@ defmodule SnippetSaverWeb.Router do
       on_mount: [{SnippetSaverWeb.UserAuth, :mount_current_user}] do
       live "/", DashboardLive.Index, :index
       live "/dashboard", DashboardLive.Index, :index
+      live "/contacts", ContactLive.Index, :index
+      live "/contacts/new", ContactLive.Index, :new
+      live "/contacts/:id", ContactLive.Index, :show
+      live "/contacts/:id/:subtab", ContactLive.Index, :show
+      live "/contacts/:id/edit", ContactLive.Index, :edit
       live "/tasks", TaskLive.Index, :index
       live "/employees", EmployeeLive.Index, :index
       live "/employees/new", EmployeeLive.Index, :new

@@ -473,7 +473,7 @@ defmodule SnippetSaverWeb.CoreComponents do
 
   def form_container(assigns) do
     ~H"""
-    <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md p-6 mx-auto">
       <%= if @title do %>
         <h2 class="text-xl font-semibold text-gray-800 mb-6"><%= @title %></h2>
       <% end %>
@@ -1110,6 +1110,8 @@ defmodule SnippetSaverWeb.CoreComponents do
     attr :title, :string, required: true
   end
 
+  slot :bottom_nav, doc: "optional nav content pinned above auth footer"
+
   def sidebar(assigns) do
     ~H"""
     <!-- Mobile Header -->
@@ -1169,6 +1171,10 @@ defmodule SnippetSaverWeb.CoreComponents do
             <%= render_slot(@inner_block) %>
           </ul>
         </nav>
+
+        <div :if={@bottom_nav != []} class="px-4 pb-3">
+          <%= render_slot(@bottom_nav) %>
+        </div>
 
         <div class="p-4 border-t border-gray-200 space-y-2">
           <%= if @current_user do %>
@@ -1242,6 +1248,10 @@ defmodule SnippetSaverWeb.CoreComponents do
           <%= render_slot(@inner_block) %>
         </ul>
       </nav>
+
+      <div :if={@bottom_nav != []} class="px-4 pb-3">
+        <%= render_slot(@bottom_nav) %>
+      </div>
 
       <div class="p-4 border-t border-gray-200 space-y-2">
         <%= if @current_user do %>

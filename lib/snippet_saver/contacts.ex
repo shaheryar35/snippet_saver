@@ -37,6 +37,18 @@ defmodule SnippetSaver.Contacts do
   """
   def get_contact!(id), do: Repo.get!(Contact, id)
 
+  def get_contact_with_assocs!(id) do
+    Contact
+    |> Repo.get!(id)
+    |> Repo.preload([
+      :contact_roles,
+      :contact_methods,
+      :addresses,
+      :general_info,
+      contact_roles: :contact_role_type
+    ])
+  end
+
   @doc """
   Creates a contact.
 
@@ -115,6 +127,13 @@ defmodule SnippetSaver.Contacts do
   """
   def list_contact_roles do
     Repo.all(ContactRole)
+  end
+
+  def list_contact_roles_for_contact(contact_id) do
+    ContactRole
+    |> where([cr], cr.contact_id == ^contact_id)
+    |> preload(:contact_role_type)
+    |> Repo.all()
   end
 
   @doc """
@@ -213,6 +232,12 @@ defmodule SnippetSaver.Contacts do
     Repo.all(ContactMethod)
   end
 
+  def list_contact_methods_for_contact(contact_id) do
+    ContactMethod
+    |> where([cm], cm.contact_id == ^contact_id)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single contact_method.
 
@@ -309,6 +334,12 @@ defmodule SnippetSaver.Contacts do
     Repo.all(Address)
   end
 
+  def list_addresses_for_contact(contact_id) do
+    Address
+    |> where([a], a.contact_id == ^contact_id)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single address.
 
@@ -403,6 +434,12 @@ defmodule SnippetSaver.Contacts do
   """
   def list_contact_general_info do
     Repo.all(GeneralInfo)
+  end
+
+  def get_general_info_for_contact(contact_id) do
+    GeneralInfo
+    |> where([gi], gi.contact_id == ^contact_id)
+    |> Repo.one()
   end
 
   @doc """

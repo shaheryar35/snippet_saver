@@ -1,0 +1,57 @@
+<div id="contact-index-root" class="container mx-auto px-4 py-8" phx-hook="ContactTabs">
+  <.header>
+    Contacts
+    <:subtitle>Manage your contacts</:subtitle>
+    <:actions>
+      <.link navigate={~p"/contacts/new"}>
+        <.button variant="primary">Add Contact</.button>
+      </.link>
+    </:actions>
+  </.header>
+
+  <div class="content border border-t-0 border-gray-200 bg-white rounded-b-lg shadow-sm min-h-[320px]">
+    <%= case @contact_page do %>
+      <% :index -> %>
+        <div class="p-4">
+          <%= @table_content.(assigns) %>
+        </div>
+
+      <% :show -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.ContactLive.Components.ShowComponent}
+            id={"contact-show-#{@contact.id}"}
+            contact={@contact}
+            patch_back={~p"/contacts"}
+          />
+        </div>
+
+      <% :edit -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.ContactLive.Components.EditComponent}
+            id={"contact-edit-#{@contact.id}"}
+            contact={@contact}
+            patch_back={~p"/contacts"}
+            parent_pid={@parent_pid}
+          />
+        </div>
+
+      <% :new -> %>
+        <div class="p-4">
+          <.live_component
+            module={SnippetSaverWeb.ContactLive.Components.NewComponent}
+            id="contact-new"
+            contact={@contact}
+            patch_back={~p"/contacts"}
+            parent_pid={@parent_pid}
+          />
+        </div>
+
+      <% _ -> %>
+        <div class="p-4">
+          <%= @table_content.(assigns) %>
+        </div>
+    <% end %>
+  </div>
+</div>

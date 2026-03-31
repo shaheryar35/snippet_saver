@@ -21,6 +21,7 @@ defmodule SnippetSaver.Contacts.Address do
   def changeset(address, attrs) do
     address
     |> cast(attrs, [
+      :contact_id,
       :type,
       :street_address,
       :suburb,
@@ -32,6 +33,7 @@ defmodule SnippetSaver.Contacts.Address do
       :address_name
     ])
     |> validate_required([
+      :contact_id,
       :type,
       :street_address,
       :suburb,

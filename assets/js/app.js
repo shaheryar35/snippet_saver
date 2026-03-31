@@ -23,9 +23,13 @@ import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 import hooks_default from "../../deps/live_table/priv/static/live-table.js";
 import EmployeeTabs from "./hooks/employee_tabs.js";
+import ContactTabs from "./hooks/contact_tabs.js";
+import SectionScrollSpy from "./hooks/section_scroll_spy.js";
 
 const hooks = Object.assign({}, hooks_default, {
   EmployeeTabs,
+  ContactTabs,
+  SectionScrollSpy,
 });
 
 let csrfToken = document
