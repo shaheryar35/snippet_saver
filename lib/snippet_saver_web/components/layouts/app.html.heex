@@ -1,54 +1,93 @@
 <div class="flex min-h-screen bg-gray-50">
-  <!-- Sidebar -->
-  <% raw_active_page = Map.get(assigns, :active_page, nil) %>
-  <% current_path = Map.get(assigns, :current_path, "") %>
-  <% inferred_active_page =
-    if is_nil(raw_active_page) do
-      cond do
-        String.starts_with?(current_path, "employees") -> "employees"
-        String.starts_with?(current_path, "tasks") -> "tasks"
-        String.starts_with?(current_path, "dashboard") or current_path == "" -> "dashboard"
-        true -> nil
-      end
-    else
-      raw_active_page
-    end %>
-  <% active_page = inferred_active_page %>
-  <.sidebar current_user={@current_user} active_page={active_page}>
-    <% main_nav = SnippetSaverWeb.Layouts.main_nav() %>
-    <% dashboard_items = Enum.filter(main_nav, &(&1.key == "dashboard")) %>
-    <% management_items = Enum.reject(main_nav, &(&1.key == "dashboard")) %>
+  <%= if @current_user do %>
+    <!-- Sidebar -->
+    <% raw_active_page = Map.get(assigns, :active_page, nil) %>
+    <% current_path = Map.get(assigns, :current_path, "") %>
+    <% inferred_active_page =
+      if is_nil(raw_active_page) do
+        cond do
+          String.starts_with?(current_path, "setting/contact") -> "settings_contacts"
+          String.starts_with?(current_path, "setting/clinic") -> "clinic"
+          String.starts_with?(current_path, "contacts") -> "contacts"
+          String.starts_with?(current_path, "employees") -> "employees"
+          String.starts_with?(current_path, "tasks") -> "tasks"
+          String.starts_with?(current_path, "dashboard") or current_path == "" -> "dashboard"
+          true -> nil
+        end
+      else
+        raw_active_page
+      end %>
+    <% active_page = inferred_active_page %>
+    <.sidebar current_user={@current_user} active_page={active_page}>
+      <% main_nav = SnippetSaverWeb.Layouts.main_nav() %>
+      <% dashboard_items = Enum.filter(main_nav, &(&1.key == "dashboard")) %>
+      <% management_items =
+        main_nav
+        |> Enum.reject(&(&1.key == "dashboard")) %>
 
-    <%= for item <- dashboard_items do %>
-      <.sidebar_link
-        name={item.name}
-        path={item.path}
-        icon={item.icon}
-        active={active_page == item.key}
-      />
-    <% end %>
+      <%= for item <- dashboard_items do %>
+        <.sidebar_link
+          name={item.name}
+          path={item.path}
+          icon={item.icon}
+          active={active_page == item.key}
+        />
+      <% end %>
 
-    <li class="mt-4 mb-2">
-      <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
-        Management
-      </p>
-    </li>
+      <li class="mt-4 mb-2">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
+          Management
+        </p>
+      </li>
 
-    <%= for item <- management_items do %>
-      <.sidebar_link
-        name={item.name}
-        path={item.path}
-        icon={item.icon}
-        active={active_page == item.key}
-      />
-    <% end %>
-  </.sidebar>
+      <%= for item <- management_items do %>
+        <.sidebar_link
+          name={item.name}
+          path={item.path}
+          icon={item.icon}
+          active={active_page == item.key}
+        />
+      <% end %>
 
-  <!-- Main Content -->
+      <:bottom_nav>
+        <details
+          class="group rounded-lg border border-gray-200 bg-white"
+          open={active_page in ["settings_contacts", "clinic"]}
+        >
+          <summary class="cursor-pointer list-none px-3 py-2 text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center justify-between hover:bg-gray-50 rounded-lg">
+            <span>Settings</span>
+            <.icon
+              name="hero-chevron-down"
+              class="h-4 w-4 text-gray-500 transition-transform duration-200 group-open:rotate-180"
+            />
+          </summary>
+
+          <div class="px-2 pb-2">
+            <div class="pl-2 border-l border-gray-200 space-y-1 max-h-56 overflow-y-auto">
+              <.sidebar_link
+                name="Settings Contacts"
+                path={~p"/setting/contact"}
+                icon="hero-users"
+                active={active_page == "settings_contacts"}
+              />
+              <.sidebar_link
+                name="Clinic"
+                path={~p"/setting/clinic"}
+                icon="hero-building-office-2"
+                active={active_page == "clinic"}
+              />
+            </div>
+          </div>
+        </details>
+      </:bottom_nav>
+    </.sidebar>
+  <% end %>
+  
+<!-- Main Content -->
   <main class="flex-1 overflow-auto">
     <div class="px-4 py-6 sm:px-6 lg:px-8">
       <.flash_group flash={@flash} />
-      <%= @inner_content %>
+      {@inner_content}
     </div>
   </main>
 </div>

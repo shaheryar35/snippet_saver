@@ -18,12 +18,20 @@ defmodule SnippetSaverWeb.Router do
   end
 
   scope "/", SnippetSaverWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_user]
 
     live_session :app,
-      on_mount: [{SnippetSaverWeb.UserAuth, :mount_current_user}] do
+      on_mount: [{SnippetSaverWeb.UserAuth, :ensure_authenticated}] do
       live "/", DashboardLive.Index, :index
       live "/dashboard", DashboardLive.Index, :index
+      live "/contacts", ContactLive.Index, :index
+      live "/contacts/new", ContactLive.Index, :new
+      live "/contacts/:id", ContactLive.Index, :show
+      live "/contacts/:id/:subtab", ContactLive.Index, :show
+      live "/contacts/:id/edit", ContactLive.Index, :edit
+      live "/setting/contact/role_types", SettingLive.ContactRoleTypesLive, :index
+      live "/setting/contact", SettingLive.ContactHub, :index
+      live "/setting/clinic", SettingLive.ClinicHub, :index
       live "/tasks", TaskLive.Index, :index
       live "/employees", EmployeeLive.Index, :index
       live "/employees/new", EmployeeLive.Index, :new
@@ -62,7 +70,6 @@ defmodule SnippetSaverWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{SnippetSaverWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit

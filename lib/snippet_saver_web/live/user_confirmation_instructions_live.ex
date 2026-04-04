@@ -1,8 +1,6 @@
 defmodule SnippetSaverWeb.UserConfirmationInstructionsLive do
   use SnippetSaverWeb, :live_view
 
-  alias SnippetSaver.Accounts
-
   def render(assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
@@ -21,8 +19,7 @@ defmodule SnippetSaverWeb.UserConfirmationInstructionsLive do
       </.simple_form>
 
       <p class="text-center mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/users/log_in"}>Log in</.link>
       </p>
     </div>
     """
@@ -32,16 +29,9 @@ defmodule SnippetSaverWeb.UserConfirmationInstructionsLive do
     {:ok, assign(socket, form: to_form(%{}, as: "user"))}
   end
 
-  def handle_event("send_instructions", %{"user" => %{"email" => email}}, socket) do
-    if user = Accounts.get_user_by_email(email) do
-      Accounts.deliver_user_confirmation_instructions(
-        user,
-        &url(~p"/users/confirm/#{&1}")
-      )
-    end
-
+  def handle_event("send_instructions", %{"user" => %{"email" => _email}}, socket) do
     info =
-      "If your email is in our system and it has not been confirmed yet, you will receive an email with instructions shortly."
+      "Email confirmation is currently disabled. You can log in directly if your account exists."
 
     {:noreply,
      socket

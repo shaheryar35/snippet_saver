@@ -4,6 +4,7 @@ defmodule SnippetSaver.Accounts.User do
 
   schema "users" do
     field :email, :string
+    field :role, :string, default: "admin"
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
@@ -11,6 +12,10 @@ defmodule SnippetSaver.Accounts.User do
 
     timestamps(type: :utc_datetime)
   end
+
+  @roles ~w(super_admin admin)
+
+  def roles, do: @roles
 
   @doc """
   A user changeset for registration.
@@ -40,6 +45,15 @@ defmodule SnippetSaver.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> validate_role()
+  end
+
+  def admin_creation_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:email, :password, :role])
+    |> validate_email(opts)
+    |> validate_password(opts)
+    |> validate_role()
   end
 
   defp validate_email(changeset, opts) do
@@ -59,6 +73,11 @@ defmodule SnippetSaver.Accounts.User do
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
+  end
+
+  defp validate_role(changeset) do
+    changeset
+    |> validate_inclusion(:role, @roles)
   end
 
   defp maybe_hash_password(changeset, opts) do
