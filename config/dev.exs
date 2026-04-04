@@ -1,11 +1,18 @@
 import Config
 
+pg_port =
+  case System.get_env("PGPORT") do
+    nil -> 5432
+    p -> String.to_integer(p)
+  end
+
 # Configure your database
 config :snippet_saver, SnippetSaver.Repo,
-  username: "shaheryar",
-  password: "",
-  hostname: "localhost",
-  database: "snippet_saver_dev",
+  username: System.get_env("PGUSER") || System.get_env("USER") || "postgres",
+  password: System.get_env("PGPASSWORD") || "",
+  hostname: System.get_env("PGHOST") || "localhost",
+  port: pg_port,
+  database: System.get_env("PGDATABASE") || "snippet_saver_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
