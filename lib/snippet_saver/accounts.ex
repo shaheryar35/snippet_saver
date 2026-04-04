@@ -81,6 +81,32 @@ defmodule SnippetSaver.Accounts do
   end
 
   @doc """
+  Creates an admin user when initiated by a super admin.
+  """
+  def create_admin_user(%User{role: "super_admin"}, attrs) do
+    attrs = Map.new(attrs) |> Map.put("role", "admin")
+
+    %User{}
+    |> User.admin_creation_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_admin_user(_, _), do: {:error, :unauthorized}
+
+  @doc """
+  Updates a user's role.
+  """
+  def update_user_role(%User{} = user, role) do
+    if role in User.roles() do
+      user
+      |> Ecto.Changeset.change(role: role)
+      |> Repo.update()
+    else
+      {:error, :invalid_role}
+    end
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples

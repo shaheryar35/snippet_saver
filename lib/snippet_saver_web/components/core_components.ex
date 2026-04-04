@@ -79,7 +79,7 @@ defmodule SnippetSaverWeb.CoreComponents do
                 </button>
               </div>
               <div id={"#{@id}-content"}>
-                <%= render_slot(@inner_block) %>
+                {render_slot(@inner_block)}
               </div>
             </.focus_wrap>
           </div>
@@ -124,9 +124,9 @@ defmodule SnippetSaverWeb.CoreComponents do
       <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
         <.icon :if={@kind == :info} name="hero-information-circle-mini" class="h-4 w-4" />
         <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="h-4 w-4" />
-        <%= @title %>
+        {@title}
       </p>
-      <p class="mt-2 text-sm leading-5"><%= msg %></p>
+      <p class="mt-2 text-sm leading-5">{msg}</p>
       <button type="button" class="group absolute top-1 right-1 p-2" aria-label={gettext("close")}>
         <.icon name="hero-x-mark-solid" class="h-5 w-5 opacity-40 group-hover:opacity-70" />
       </button>
@@ -157,7 +157,7 @@ defmodule SnippetSaverWeb.CoreComponents do
         phx-connected={hide("#client-error")}
         hidden
       >
-        <%= gettext("Attempting to reconnect") %>
+        {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
       </.flash>
 
@@ -169,7 +169,7 @@ defmodule SnippetSaverWeb.CoreComponents do
         phx-connected={hide("#server-error")}
         hidden
       >
-        <%= gettext("Hang in there while we get back on track") %>
+        {gettext("Hang in there while we get back on track")}
         <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
       </.flash>
     </div>
@@ -204,9 +204,9 @@ defmodule SnippetSaverWeb.CoreComponents do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
       <div class="mt-10 space-y-8 bg-white">
-        <%= render_slot(@inner_block, f) %>
+        {render_slot(@inner_block, f)}
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
-          <%= render_slot(action, f) %>
+          {render_slot(action, f)}
         </div>
       </div>
     </.form>
@@ -252,7 +252,7 @@ defmodule SnippetSaverWeb.CoreComponents do
         button_size(@size)
       ]}
     >
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </button>
     """
   end
@@ -367,9 +367,9 @@ defmodule SnippetSaverWeb.CoreComponents do
           class="rounded border-zinc-300 text-zinc-900 focus:ring-0"
           {@rest}
         />
-        <%= @label %>
+        {@label}
       </label>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -394,7 +394,7 @@ defmodule SnippetSaverWeb.CoreComponents do
     ~H"""
     <div class="mb-4" phx-feedback-for={@name}>
       <label :if={@label} for={@id} class="block text-sm font-medium text-gray-700 mb-1">
-        <%= @label %>
+        {@label}
         <span :if={@required} class="text-danger-500 ml-1">*</span>
       </label>
       <%= case @type do %>
@@ -410,7 +410,6 @@ defmodule SnippetSaverWeb.CoreComponents do
             ]}
             {@rest}
           ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
-
         <% "select" -> %>
           <select
             id={@id}
@@ -425,13 +424,12 @@ defmodule SnippetSaverWeb.CoreComponents do
             {@rest}
           >
             <%= if @options != [] do %>
-              <option :if={@prompt} value=""><%= @prompt %></option>
-              <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
+              <option :if={@prompt} value="">{@prompt}</option>
+              {Phoenix.HTML.Form.options_for_select(@options, @value)}
             <% else %>
-              <%= render_slot(@inner_block) %>
+              {render_slot(@inner_block)}
             <% end %>
           </select>
-
         <% _ -> %>
           <input
             type={@type}
@@ -446,11 +444,11 @@ defmodule SnippetSaverWeb.CoreComponents do
             {@rest}
           />
       <% end %>
-
-      <!-- Error messages -->
+      
+    <!-- Error messages -->
       <div :if={length(@errors) > 0} class="mt-1">
         <p :for={msg <- @errors} class="text-sm text-danger-600">
-          <%= msg %>
+          {msg}
         </p>
       </div>
     </div>
@@ -475,9 +473,9 @@ defmodule SnippetSaverWeb.CoreComponents do
     ~H"""
     <div class="bg-white rounded-lg shadow-md p-6 mx-auto">
       <%= if @title do %>
-        <h2 class="text-xl font-semibold text-gray-800 mb-6"><%= @title %></h2>
+        <h2 class="text-xl font-semibold text-gray-800 mb-6">{@title}</h2>
       <% end %>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -497,7 +495,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   def form_actions(assigns) do
     ~H"""
     <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </div>
     """
   end
@@ -524,10 +522,10 @@ defmodule SnippetSaverWeb.CoreComponents do
     ~H"""
     <div class={["rounded-lg border border-gray-200 bg-white shadow-sm", @class]}>
       <div :if={@title} class="border-b border-gray-200 px-4 py-3">
-        <h3 class="text-base font-semibold text-gray-900"><%= @title %></h3>
+        <h3 class="text-base font-semibold text-gray-900">{@title}</h3>
       </div>
       <div class="p-4">
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
       </div>
     </div>
     """
@@ -553,7 +551,7 @@ defmodule SnippetSaverWeb.CoreComponents do
       badge_variant(@variant),
       @class
     ]}>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </span>
     """
   end
@@ -587,8 +585,8 @@ defmodule SnippetSaverWeb.CoreComponents do
         @class
       ]}
     >
-      <p :if={@title} class="font-semibold mb-1"><%= @title %></p>
-      <div class="text-sm"><%= render_slot(@inner_block) %></div>
+      <p :if={@title} class="font-semibold mb-1">{@title}</p>
+      <div class="text-sm">{render_slot(@inner_block)}</div>
     </div>
     """
   end
@@ -643,8 +641,11 @@ defmodule SnippetSaverWeb.CoreComponents do
 
   def empty_state(assigns) do
     ~H"""
-    <div class={["rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center", @class]}>
-      <p class="text-sm text-gray-700"><%= render_slot(@inner_block) %></p>
+    <div class={[
+      "rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 p-12 text-center",
+      @class
+    ]}>
+      <p class="text-sm text-gray-700">{render_slot(@inner_block)}</p>
     </div>
     """
   end
@@ -682,9 +683,9 @@ defmodule SnippetSaverWeb.CoreComponents do
           <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-5 pointer-events-none">
           </div>
         </div>
-        <span :if={@label} class="text-sm font-medium text-gray-700"><%= @label %></span>
+        <span :if={@label} class="text-sm font-medium text-gray-700">{@label}</span>
       </label>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -708,18 +709,32 @@ defmodule SnippetSaverWeb.CoreComponents do
 
     ~H"""
     <div class="mb-4" phx-feedback-for={@name}>
-      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2">{@label}</label>
       <div class="flex gap-6">
         <label class="flex items-center gap-2 cursor-pointer">
-          <input type="radio" name={@name} value="true" checked={@yes_checked} class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500" {@rest} />
+          <input
+            type="radio"
+            name={@name}
+            value="true"
+            checked={@yes_checked}
+            class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500"
+            {@rest}
+          />
           <span class="text-sm text-gray-700">Yes</span>
         </label>
         <label class="flex items-center gap-2 cursor-pointer">
-          <input type="radio" name={@name} value="false" checked={@no_checked} class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500" {@rest} />
+          <input
+            type="radio"
+            name={@name}
+            value="false"
+            checked={@no_checked}
+            class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500"
+            {@rest}
+          />
           <span class="text-sm text-gray-700">No</span>
         </label>
       </div>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -741,7 +756,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   def radio_group(assigns) do
     ~H"""
     <div class="mb-4" phx-feedback-for={@name}>
-      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2">{@label}</label>
       <div class="space-y-2">
         <div :for={{label, val} <- @options} class="flex items-center gap-2">
           <label class="flex items-center gap-2 cursor-pointer">
@@ -753,11 +768,11 @@ defmodule SnippetSaverWeb.CoreComponents do
               class="rounded-full border-gray-300 text-primary-600 focus:ring-primary-500"
               {@rest}
             />
-            <span class="text-sm text-gray-700"><%= label %></span>
+            <span class="text-sm text-gray-700">{label}</span>
           </label>
         </div>
       </div>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -781,7 +796,7 @@ defmodule SnippetSaverWeb.CoreComponents do
 
     ~H"""
     <div class="mb-4" phx-feedback-for={@name}>
-      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2"><%= @label %></label>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2">{@label}</label>
       <div class="space-y-2">
         <div :for={{label, val} <- @options} class="flex items-center gap-2">
           <label class="flex items-center gap-2 cursor-pointer">
@@ -793,11 +808,11 @@ defmodule SnippetSaverWeb.CoreComponents do
               class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
               {@rest}
             />
-            <span class="text-sm text-gray-700"><%= label %></span>
+            <span class="text-sm text-gray-700">{label}</span>
           </label>
         </div>
       </div>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -842,7 +857,7 @@ defmodule SnippetSaverWeb.CoreComponents do
       phx-click-away={JS.add_class("hidden", to: "##{@dropdown_id}")}
       phx-feedback-for={@name}
     >
-      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-1"><%= @label %></label>
+      <label :if={@label} class="block text-sm font-medium text-gray-700 mb-1">{@label}</label>
       <button
         type="button"
         phx-click={JS.toggle_class("hidden", to: "##{@dropdown_id}")}
@@ -850,9 +865,9 @@ defmodule SnippetSaverWeb.CoreComponents do
       >
         <span class={if @selected == [], do: "text-gray-500", else: "text-gray-900"}>
           <%= if @selected == [] do %>
-            <%= @placeholder %>
+            {@placeholder}
           <% else %>
-            <%= Enum.join(@selected_labels, ", ") %>
+            {Enum.join(@selected_labels, ", ")}
           <% end %>
         </span>
         <.icon name="hero-chevron-down" class="h-5 w-5 text-gray-400" />
@@ -871,12 +886,12 @@ defmodule SnippetSaverWeb.CoreComponents do
                 checked={val in @selected}
                 class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
               />
-              <span class="text-sm text-gray-700"><%= label %></span>
+              <span class="text-sm text-gray-700">{label}</span>
             </label>
           </div>
         </div>
       </div>
-      <.error :for={msg <- @errors}><%= msg %></.error>
+      <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
@@ -917,7 +932,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   def label(assigns) do
     ~H"""
     <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </label>
     """
   end
@@ -931,7 +946,7 @@ defmodule SnippetSaverWeb.CoreComponents do
     ~H"""
     <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
       <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </p>
     """
   end
@@ -950,13 +965,13 @@ defmodule SnippetSaverWeb.CoreComponents do
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
-          <%= render_slot(@inner_block) %>
+          {render_slot(@inner_block)}
         </h1>
         <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
-          <%= render_slot(@subtitle) %>
+          {render_slot(@subtitle)}
         </p>
       </div>
-      <div class="flex-none"><%= render_slot(@actions) %></div>
+      <div class="flex-none">{render_slot(@actions)}</div>
     </header>
     """
   end
@@ -997,9 +1012,9 @@ defmodule SnippetSaverWeb.CoreComponents do
       <table class="w-[40rem] mt-11 sm:w-full">
         <thead class="text-sm text-left leading-6 text-zinc-500">
           <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal"><%= col[:label] %></th>
+            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">{col[:label]}</th>
             <th :if={@action != []} class="relative p-0 pb-4">
-              <span class="sr-only"><%= gettext("Actions") %></span>
+              <span class="sr-only">{gettext("Actions")}</span>
             </th>
           </tr>
         </thead>
@@ -1017,7 +1032,7 @@ defmodule SnippetSaverWeb.CoreComponents do
               <div class="block py-4 pr-6">
                 <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
-                  <%= render_slot(col, @row_item.(row)) %>
+                  {render_slot(col, @row_item.(row))}
                 </span>
               </div>
             </td>
@@ -1028,7 +1043,7 @@ defmodule SnippetSaverWeb.CoreComponents do
                   :for={action <- @action}
                   class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
                 >
-                  <%= render_slot(action, @row_item.(row)) %>
+                  {render_slot(action, @row_item.(row))}
                 </span>
               </div>
             </td>
@@ -1058,8 +1073,8 @@ defmodule SnippetSaverWeb.CoreComponents do
     <div class="mt-14">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={item <- @item} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-          <dt class="w-1/4 flex-none text-zinc-500"><%= item.title %></dt>
-          <dd class="text-zinc-700"><%= render_slot(item) %></dd>
+          <dt class="w-1/4 flex-none text-zinc-500">{item.title}</dt>
+          <dd class="text-zinc-700">{render_slot(item)}</dd>
         </div>
       </dl>
     </div>
@@ -1161,26 +1176,26 @@ defmodule SnippetSaverWeb.CoreComponents do
             <%= for section <- @nav_section do %>
               <li class="mt-4 mb-2">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
-                  <%= section.title %>
+                  {section.title}
                 </p>
               </li>
 
-              <%= render_slot(section) %>
+              {render_slot(section)}
             <% end %>
 
-            <%= render_slot(@inner_block) %>
+            {render_slot(@inner_block)}
           </ul>
         </nav>
 
         <div :if={@bottom_nav != []} class="px-4 pb-3">
-          <%= render_slot(@bottom_nav) %>
+          {render_slot(@bottom_nav)}
         </div>
 
         <div class="p-4 border-t border-gray-200 space-y-2">
           <%= if @current_user do %>
             <p class="text-xs text-gray-500 px-1 truncate">
               Signed in as<br />
-              <span class="font-medium text-gray-900"><%= @current_user.email %></span>
+              <span class="font-medium text-gray-900">{@current_user.email}</span>
             </p>
 
             <.sidebar_link
@@ -1238,26 +1253,26 @@ defmodule SnippetSaverWeb.CoreComponents do
           <%= for section <- @nav_section do %>
             <li class="mt-4 mb-2">
               <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3">
-                <%= section.title %>
+                {section.title}
               </p>
             </li>
 
-            <%= render_slot(section) %>
+            {render_slot(section)}
           <% end %>
 
-          <%= render_slot(@inner_block) %>
+          {render_slot(@inner_block)}
         </ul>
       </nav>
 
       <div :if={@bottom_nav != []} class="px-4 pb-3">
-        <%= render_slot(@bottom_nav) %>
+        {render_slot(@bottom_nav)}
       </div>
 
       <div class="p-4 border-t border-gray-200 space-y-2">
         <%= if @current_user do %>
           <p class="text-xs text-gray-500 px-1 truncate">
             Signed in as<br />
-            <span class="font-medium text-gray-900"><%= @current_user.email %></span>
+            <span class="font-medium text-gray-900">{@current_user.email}</span>
           </p>
 
           <.sidebar_link
@@ -1316,11 +1331,12 @@ defmodule SnippetSaverWeb.CoreComponents do
         {@rest}
       >
         <.icon name={@icon} class="h-5 w-5" />
-        <span><%= @name %></span>
+        <span>{@name}</span>
       </button>
     <% else %>
       <.link
-        patch={@path}
+        href={@path}
+        method={@method}
         class={[
           "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-200 text-sm font-medium",
           if(@active,
@@ -1331,7 +1347,7 @@ defmodule SnippetSaverWeb.CoreComponents do
         {@rest}
       >
         <.icon name={@icon} class="h-5 w-5" />
-        <span><%= @name %></span>
+        <span>{@name}</span>
       </.link>
     <% end %>
     """
@@ -1355,7 +1371,7 @@ defmodule SnippetSaverWeb.CoreComponents do
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
       </.link>
     </div>
     """

@@ -378,12 +378,23 @@ defmodule SnippetSaver.ContactsTest do
     alias SnippetSaver.Contacts.ContactRoleType
 
     import SnippetSaver.ContactsFixtures
+    import SnippetSaver.AccountsFixtures
 
     @invalid_attrs %{name: nil}
 
-    test "list_contact_role_types/0 returns all contact_role_types" do
+    test "list_contact_role_types/0 returns active contact_role_types only" do
       contact_role_type = contact_role_type_fixture()
       assert Contacts.list_contact_role_types() == [contact_role_type]
+    end
+
+    test "list_contact_role_types/0 excludes archived types" do
+      active = contact_role_type_fixture(%{name: "active-unique-name-#{System.unique_integer([:positive])}"})
+      archived = contact_role_type_fixture(%{name: "archived-unique-name-#{System.unique_integer([:positive])}"})
+      assert {:ok, _} = Contacts.archive_contact_role_type(archived, nil)
+
+      ids = Contacts.list_contact_role_types() |> Enum.map(& &1.id)
+      assert active.id in ids
+      refute archived.id in ids
     end
 
     test "get_contact_role_type!/1 returns the contact_role_type with given id" do
@@ -396,6 +407,16 @@ defmodule SnippetSaver.ContactsTest do
 
       assert {:ok, %ContactRoleType{} = contact_role_type} = Contacts.create_contact_role_type(valid_attrs)
       assert contact_role_type.name == "some name"
+      assert contact_role_type.archived == false
+    end
+
+    test "create_contact_role_type/2 records inserted_by and updated_by" do
+      user = user_fixture()
+      name = "audited-role-#{System.unique_integer([:positive])}"
+
+      assert {:ok, %ContactRoleType{} = rt} = Contacts.create_contact_role_type(%{name: name}, user.id)
+      assert rt.inserted_by_id == user.id
+      assert rt.updated_by_id == user.id
     end
 
     test "create_contact_role_type/1 with invalid data returns error changeset" do
@@ -416,10 +437,11 @@ defmodule SnippetSaver.ContactsTest do
       assert contact_role_type == Contacts.get_contact_role_type!(contact_role_type.id)
     end
 
-    test "delete_contact_role_type/1 deletes the contact_role_type" do
+    test "delete_contact_role_type/1 soft-deletes (archives) the contact_role_type" do
       contact_role_type = contact_role_type_fixture()
-      assert {:ok, %ContactRoleType{}} = Contacts.delete_contact_role_type(contact_role_type)
-      assert_raise Ecto.NoResultsError, fn -> Contacts.get_contact_role_type!(contact_role_type.id) end
+      assert {:ok, %ContactRoleType{archived: true}} = Contacts.delete_contact_role_type(contact_role_type)
+      assert %ContactRoleType{archived: true} = Contacts.get_contact_role_type!(contact_role_type.id)
+      assert Contacts.list_contact_role_types() == []
     end
 
     test "change_contact_role_type/1 returns a contact_role_type changeset" do

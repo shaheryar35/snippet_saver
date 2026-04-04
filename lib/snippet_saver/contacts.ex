@@ -129,6 +129,13 @@ defmodule SnippetSaver.Contacts do
     Repo.all(ContactRole)
   end
 
+  def list_contact_roles_with_assocs do
+    ContactRole
+    |> order_by([cr], asc: cr.id)
+    |> preload([:contact, :contact_role_type])
+    |> Repo.all()
+  end
+
   def list_contact_roles_for_contact(contact_id) do
     ContactRole
     |> where([cr], cr.contact_id == ^contact_id)
@@ -526,16 +533,23 @@ defmodule SnippetSaver.Contacts do
   alias SnippetSaver.Contacts.ContactRoleType
 
   @doc """
-  Returns the list of contact_role_types.
-
-  ## Examples
-
-      iex> list_contact_role_types()
-      [%ContactRoleType{}, ...]
-
+  Active contact role types only (`archived: false`), for dropdowns and associations.
   """
   def list_contact_role_types do
-    Repo.all(ContactRoleType)
+    from(crt in ContactRoleType,
+      where: crt.archived == false,
+      order_by: [asc: crt.name]
+    )
+    |> Repo.all()
+  end
+
+  @doc """
+  All contact role types (including archived), for admin settings UI.
+  """
+  def list_contact_role_types_for_admin do
+    from(crt in ContactRoleType, order_by: [asc: crt.name])
+    |> preload([:inserted_by, :updated_by])
+    |> Repo.all()
   end
 
   @doc """
@@ -555,55 +569,58 @@ defmodule SnippetSaver.Contacts do
   def get_contact_role_type!(id), do: Repo.get!(ContactRoleType, id)
 
   @doc """
-  Creates a contact_role_type.
-
-  ## Examples
-
-      iex> create_contact_role_type(%{field: value})
-      {:ok, %ContactRoleType{}}
-
-      iex> create_contact_role_type(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Creates a contact_role_type. Pass `user_id` to record audit columns.
   """
-  def create_contact_role_type(attrs) do
+  def create_contact_role_type(attrs, user_id \\ nil) do
     %ContactRoleType{}
     |> ContactRoleType.changeset(attrs)
+    |> apply_contact_role_type_insert_audit(user_id)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a contact_role_type.
-
-  ## Examples
-
-      iex> update_contact_role_type(contact_role_type, %{field: new_value})
-      {:ok, %ContactRoleType{}}
-
-      iex> update_contact_role_type(contact_role_type, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Updates a contact_role_type. Pass `user_id` to set `updated_by_id`.
   """
-  def update_contact_role_type(%ContactRoleType{} = contact_role_type, attrs) do
+  def update_contact_role_type(%ContactRoleType{} = contact_role_type, attrs, user_id \\ nil) do
     contact_role_type
     |> ContactRoleType.changeset(attrs)
+    |> apply_contact_role_type_update_audit(user_id)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a contact_role_type.
+  Soft-deletes a contact role type (`archived: true`).
+  """
+  def archive_contact_role_type(%ContactRoleType{} = contact_role_type, user_id \\ nil) do
+    update_contact_role_type(contact_role_type, %{archived: true}, user_id)
+  end
 
-  ## Examples
+  @doc """
+  Restores an archived contact role type.
+  """
+  def restore_contact_role_type(%ContactRoleType{} = contact_role_type, user_id \\ nil) do
+    update_contact_role_type(contact_role_type, %{archived: false}, user_id)
+  end
 
-      iex> delete_contact_role_type(contact_role_type)
-      {:ok, %ContactRoleType{}}
-
-      iex> delete_contact_role_type(contact_role_type)
-      {:error, %Ecto.Changeset{}}
-
+  @doc """
+  Soft-deletes a contact role type. Prefer `archive_contact_role_type/2`.
   """
   def delete_contact_role_type(%ContactRoleType{} = contact_role_type) do
-    Repo.delete(contact_role_type)
+    archive_contact_role_type(contact_role_type, nil)
+  end
+
+  defp apply_contact_role_type_insert_audit(changeset, nil), do: changeset
+
+  defp apply_contact_role_type_insert_audit(changeset, user_id) do
+    changeset
+    |> Ecto.Changeset.put_change(:inserted_by_id, user_id)
+    |> Ecto.Changeset.put_change(:updated_by_id, user_id)
+  end
+
+  defp apply_contact_role_type_update_audit(changeset, nil), do: changeset
+
+  defp apply_contact_role_type_update_audit(changeset, user_id) do
+    Ecto.Changeset.put_change(changeset, :updated_by_id, user_id)
   end
 
   @doc """
