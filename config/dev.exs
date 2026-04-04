@@ -1,5 +1,7 @@
 import Config
 
+Code.eval_file(Path.join(__DIR__, "load_dotenv.exs"))
+
 pg_port =
   case System.get_env("PGPORT") do
     nil -> 5432
