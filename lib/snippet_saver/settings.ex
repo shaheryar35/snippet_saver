@@ -397,4 +397,142 @@ defmodule SnippetSaver.Settings do
   defp apply_settings_update_audit(changeset, user_id) do
     Ecto.Changeset.put_change(changeset, :updated_by_id, user_id)
   end
+
+  alias SnippetSaver.Settings.AppointmentType
+
+  @doc """
+  Active appointment types for scheduling: not archived, `is_active: true`.
+  """
+  def list_appointment_types do
+    from(t in AppointmentType,
+      where: t.archived == false and t.is_active == true,
+      order_by: [asc: t.name]
+    )
+    |> Repo.all()
+  end
+
+  @doc """
+  All appointment types (including archived), for admin settings UI.
+  """
+  def list_appointment_types_for_admin do
+    from(t in AppointmentType, order_by: [asc: t.name])
+    |> preload([:inserted_by, :updated_by])
+    |> Repo.all()
+  end
+
+  def get_appointment_type!(id), do: Repo.get!(AppointmentType, id)
+
+  @doc """
+  Creates an appointment type. Pass `user_id` to record audit columns.
+  """
+  def create_appointment_type(attrs, user_id \\ nil) do
+    %AppointmentType{}
+    |> AppointmentType.changeset(attrs)
+    |> apply_settings_insert_audit(user_id)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates an appointment type. Pass `user_id` to set `updated_by_id`.
+  """
+  def update_appointment_type(%AppointmentType{} = appointment_type, attrs, user_id \\ nil) do
+    appointment_type
+    |> AppointmentType.changeset(attrs)
+    |> apply_settings_update_audit(user_id)
+    |> Repo.update()
+  end
+
+  @doc """
+  Soft-deletes an appointment type (`archived: true`).
+  """
+  def archive_appointment_type(%AppointmentType{} = appointment_type, user_id \\ nil) do
+    update_appointment_type(appointment_type, %{archived: true}, user_id)
+  end
+
+  @doc """
+  Restores an archived appointment type.
+  """
+  def restore_appointment_type(%AppointmentType{} = appointment_type, user_id \\ nil) do
+    update_appointment_type(appointment_type, %{archived: false}, user_id)
+  end
+
+  @doc """
+  Soft-deletes an appointment type. Prefer `archive_appointment_type/2`.
+  """
+  def delete_appointment_type(%AppointmentType{} = appointment_type) do
+    archive_appointment_type(appointment_type, nil)
+  end
+
+  def change_appointment_type(%AppointmentType{} = appointment_type, attrs \\ %{}) do
+    AppointmentType.changeset(appointment_type, attrs)
+  end
+
+  alias SnippetSaver.Settings.AppointmentStatus
+
+  @doc """
+  Active appointment statuses only (`archived: false`), for dropdowns and associations.
+  """
+  def list_appointment_status do
+    from(s in AppointmentStatus,
+      where: s.archived == false,
+      order_by: [asc: s.name]
+    )
+    |> Repo.all()
+  end
+
+  @doc """
+  All appointment statuses (including archived), for admin settings UI.
+  """
+  def list_appointment_status_for_admin do
+    from(s in AppointmentStatus, order_by: [asc: s.name])
+    |> preload([:inserted_by, :updated_by])
+    |> Repo.all()
+  end
+
+  def get_appointment_status!(id), do: Repo.get!(AppointmentStatus, id)
+
+  @doc """
+  Creates an appointment status. Pass `user_id` to record audit columns.
+  """
+  def create_appointment_status(attrs, user_id \\ nil) do
+    %AppointmentStatus{}
+    |> AppointmentStatus.changeset(attrs)
+    |> apply_settings_insert_audit(user_id)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates an appointment status. Pass `user_id` to set `updated_by_id`.
+  """
+  def update_appointment_status(%AppointmentStatus{} = appointment_status, attrs, user_id \\ nil) do
+    appointment_status
+    |> AppointmentStatus.changeset(attrs)
+    |> apply_settings_update_audit(user_id)
+    |> Repo.update()
+  end
+
+  @doc """
+  Soft-deletes an appointment status (`archived: true`).
+  """
+  def archive_appointment_status(%AppointmentStatus{} = appointment_status, user_id \\ nil) do
+    update_appointment_status(appointment_status, %{archived: true}, user_id)
+  end
+
+  @doc """
+  Restores an archived appointment status.
+  """
+  def restore_appointment_status(%AppointmentStatus{} = appointment_status, user_id \\ nil) do
+    update_appointment_status(appointment_status, %{archived: false}, user_id)
+  end
+
+  @doc """
+  Soft-deletes an appointment status. Prefer `archive_appointment_status/2`.
+  """
+  def delete_appointment_status(%AppointmentStatus{} = appointment_status) do
+    archive_appointment_status(appointment_status, nil)
+  end
+
+  def change_appointment_status(%AppointmentStatus{} = appointment_status, attrs \\ %{}) do
+    AppointmentStatus.changeset(appointment_status, attrs)
+  end
 end

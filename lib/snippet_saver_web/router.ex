@@ -41,6 +41,8 @@ defmodule SnippetSaverWeb.Router do
       live "/setting/patient/colours", SettingLive.ColoursLive, :index
       live "/setting/patient/problem_templates", SettingLive.MasterProblemTemplatesLive, :index
       live "/setting/clinic", SettingLive.ClinicHub, :index
+      live "/setting/clinic/appointment_types", SettingLive.AppointmentTypesLive, :index
+      live "/setting/clinic/appointment_status", SettingLive.AppointmentStatusLive, :index
       live "/tasks", TaskLive.Index, :index
       live "/employees", EmployeeLive.Index, :index
       live "/employees/new", EmployeeLive.Index, :new

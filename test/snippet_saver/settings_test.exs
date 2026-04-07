@@ -264,4 +264,132 @@ defmodule SnippetSaver.SettingsTest do
       assert %Ecto.Changeset{} = Settings.change_master_problem_template(master_problem_template)
     end
   end
+
+  describe "appointment_types" do
+    alias SnippetSaver.Settings.AppointmentType
+
+    import SnippetSaver.SettingsFixtures
+
+    @invalid_attrs %{name: nil, color: nil, duration_minutes: nil, is_active: nil}
+
+    test "list_appointment_types/0 returns active, non-archived types only" do
+      visible = appointment_type_fixture(%{name: "visible", is_active: true})
+      _inactive = appointment_type_fixture(%{name: "inactive", is_active: false})
+      assert Settings.list_appointment_types() == [visible]
+    end
+
+    test "get_appointment_type!/1 returns the appointment_type with given id" do
+      appointment_type = appointment_type_fixture()
+      assert Settings.get_appointment_type!(appointment_type.id) == appointment_type
+    end
+
+    test "create_appointment_type/2 with valid data creates a appointment_type" do
+      valid_attrs = %{name: "some name", color: "some color", duration_minutes: 42, is_active: true}
+
+      assert {:ok, %AppointmentType{} = appointment_type} = Settings.create_appointment_type(valid_attrs)
+      assert appointment_type.name == "some name"
+      assert appointment_type.color == "some color"
+      assert appointment_type.duration_minutes == 42
+      assert appointment_type.is_active == true
+      assert appointment_type.archived == false
+    end
+
+    test "create_appointment_type/2 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Settings.create_appointment_type(@invalid_attrs)
+    end
+
+    test "update_appointment_type/3 with valid data updates the appointment_type" do
+      appointment_type = appointment_type_fixture()
+      update_attrs = %{name: "some updated name", color: "some updated color", duration_minutes: 43, is_active: false}
+
+      assert {:ok, %AppointmentType{} = appointment_type} =
+               Settings.update_appointment_type(appointment_type, update_attrs)
+
+      assert appointment_type.name == "some updated name"
+      assert appointment_type.color == "some updated color"
+      assert appointment_type.duration_minutes == 43
+      assert appointment_type.is_active == false
+    end
+
+    test "update_appointment_type/3 with invalid data returns error changeset" do
+      appointment_type = appointment_type_fixture()
+      assert {:error, %Ecto.Changeset{}} = Settings.update_appointment_type(appointment_type, @invalid_attrs)
+      assert appointment_type == Settings.get_appointment_type!(appointment_type.id)
+    end
+
+    test "delete_appointment_type/1 archives the appointment_type" do
+      appointment_type = appointment_type_fixture()
+      assert {:ok, %AppointmentType{archived: true}} = Settings.delete_appointment_type(appointment_type)
+      assert Settings.list_appointment_types() == []
+      assert %AppointmentType{archived: true} = Settings.get_appointment_type!(appointment_type.id)
+    end
+
+    test "change_appointment_type/1 returns a appointment_type changeset" do
+      appointment_type = appointment_type_fixture()
+      assert %Ecto.Changeset{} = Settings.change_appointment_type(appointment_type)
+    end
+  end
+
+  describe "appointment_status" do
+    alias SnippetSaver.Settings.AppointmentStatus
+
+    import SnippetSaver.SettingsFixtures
+
+    @invalid_attrs %{name: nil, color: nil}
+
+    test "list_appointment_status/0 returns non-archived statuses only" do
+      status = appointment_status_fixture(%{name: "shown"})
+      assert Settings.list_appointment_status() == [status]
+      assert {:ok, archived} = Settings.archive_appointment_status(status)
+      assert Settings.list_appointment_status() == []
+      assert Settings.get_appointment_status!(archived.id).archived == true
+    end
+
+    test "get_appointment_status!/1 returns the appointment_status with given id" do
+      appointment_status = appointment_status_fixture()
+      assert Settings.get_appointment_status!(appointment_status.id) == appointment_status
+    end
+
+    test "create_appointment_status/2 with valid data creates a appointment_status" do
+      valid_attrs = %{name: "some name", color: "some color"}
+
+      assert {:ok, %AppointmentStatus{} = appointment_status} = Settings.create_appointment_status(valid_attrs)
+      assert appointment_status.name == "some name"
+      assert appointment_status.color == "some color"
+      assert appointment_status.archived == false
+    end
+
+    test "create_appointment_status/2 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Settings.create_appointment_status(@invalid_attrs)
+    end
+
+    test "update_appointment_status/3 with valid data updates the appointment_status" do
+      appointment_status = appointment_status_fixture()
+      update_attrs = %{name: "some updated name", color: "some updated color"}
+
+      assert {:ok, %AppointmentStatus{} = appointment_status} =
+               Settings.update_appointment_status(appointment_status, update_attrs)
+
+      assert appointment_status.name == "some updated name"
+      assert appointment_status.color == "some updated color"
+    end
+
+    test "update_appointment_status/3 with invalid data returns error changeset" do
+      appointment_status = appointment_status_fixture()
+      assert {:error, %Ecto.Changeset{}} = Settings.update_appointment_status(appointment_status, @invalid_attrs)
+      assert appointment_status == Settings.get_appointment_status!(appointment_status.id)
+    end
+
+    test "delete_appointment_status/1 archives the appointment_status" do
+      appointment_status = appointment_status_fixture()
+      assert {:ok, %AppointmentStatus{archived: true}} = Settings.delete_appointment_status(appointment_status)
+      assert Settings.list_appointment_status() == []
+      assert %AppointmentStatus{archived: true} = Settings.get_appointment_status!(appointment_status.id)
+    end
+
+    test "change_appointment_status/1 returns a appointment_status changeset" do
+      appointment_status = appointment_status_fixture()
+      assert %Ecto.Changeset{} = Settings.change_appointment_status(appointment_status)
+    end
+  end
 end

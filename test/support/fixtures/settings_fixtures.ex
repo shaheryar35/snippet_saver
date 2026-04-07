@@ -59,4 +59,36 @@ defmodule SnippetSaver.SettingsFixtures do
 
     master_problem_template
   end
+
+  @doc """
+  Generate a appointment_type.
+  """
+  def appointment_type_fixture(attrs \\ %{}) do
+    {:ok, appointment_type} =
+      attrs
+      |> Enum.into(%{
+        color: "some color",
+        duration_minutes: 42,
+        is_active: true,
+        name: "some name"
+      })
+      |> SnippetSaver.Settings.create_appointment_type()
+
+    appointment_type
+  end
+
+  @doc """
+  Generate a appointment_status.
+  """
+  def appointment_status_fixture(attrs \\ %{}) do
+    {:ok, appointment_status} =
+      attrs
+      |> Enum.into(%{
+        color: "some color",
+        name: "some name"
+      })
+      |> SnippetSaver.Settings.create_appointment_status()
+
+    appointment_status
+  end
 end
