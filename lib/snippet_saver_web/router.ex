@@ -29,8 +29,17 @@ defmodule SnippetSaverWeb.Router do
       live "/contacts/:id", ContactLive.Index, :show
       live "/contacts/:id/:subtab", ContactLive.Index, :show
       live "/contacts/:id/edit", ContactLive.Index, :edit
+      live "/patients", PatientLive.Index, :index
+      live "/patients/new", PatientLive.Index, :new
+      live "/patients/:id", PatientLive.Index, :show
+      live "/patients/:id/edit", PatientLive.Index, :edit
       live "/setting/contact/role_types", SettingLive.ContactRoleTypesLive, :index
       live "/setting/contact", SettingLive.ContactHub, :index
+      live "/setting/patient", SettingLive.PatientHub, :index
+      live "/setting/patient/species", SettingLive.SpeciesLive, :index
+      live "/setting/patient/breeds", SettingLive.BreedsLive, :index
+      live "/setting/patient/colours", SettingLive.ColoursLive, :index
+      live "/setting/patient/problem_templates", SettingLive.MasterProblemTemplatesLive, :index
       live "/setting/clinic", SettingLive.ClinicHub, :index
       live "/tasks", TaskLive.Index, :index
       live "/employees", EmployeeLive.Index, :index

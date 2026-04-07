@@ -1,0 +1,2507 @@
+# One master problem template name per line.
+# Lines starting with # are ignored.
+
+2,4-D Herbicide Intoxication
+Abdominal Cryptorchid
+Abdominal Distension
+Abdominal Hernia
+Abdominal Lymphadenopathy
+Abdominal Mass
+Abdominal Pain
+Abdominal Percussion Tympanitic
+Abdominal Respiration
+Abdominal Rigidity
+Abdominal Trauma
+Abduction Of Forelimb
+Abduction Of Hindlimb
+Aberrant Right Subclavian Artery
+Abnormal Behavior
+Abnormal Cytological Findings In Csf
+Abnormal Ecg
+Abnormal Growth Of Toenail
+Abnormal Pigmentation Of Sclera
+Abnormal Preputial Discharge
+Abnormal Reflex
+Abnormal Shape Of Kidney
+Abnormal Spinal Cord Evoked Potential
+Abnormal Stance
+Abnormal Tooth Attrition
+Abnormal Urine Odor
+Abortion
+Abrasion Of Skin
+Abscess
+Abscess Of Nasal Mucosa
+Absence Of Reflex
+Absence Of Sensation
+Absence Of Sensation Of Forelimb
+Absence Of Sensation Of Hindlimb
+Absent Eyeball
+Acanthocytosis
+Acantholysis
+Acanthomatous Ameloblastoma
+Acanthosis
+Acanthosis Nigricans
+Accidental Death
+Acetabular Fracture
+Acetaminophen Intoxication
+Acetone Breath Odor
+Achalasia
+Achilles Tendon Rupture
+Achondroplasia
+Acidosis
+Aciduria
+Acne
+Acquired Heart Murmur
+Acquired Portal Systemic Shunt
+Acquired Tracheal Collapse
+Acral Lick Granuloma
+Acromegaly
+Acth Concentration Decreased
+Acth Concentration Increased
+Acth Response Diminished
+Acth Response Increased
+Acth Response Normal
+Actinomycotic Infection
+Acute Abdomen
+Acute Bronchitis
+Acute Colitis
+Acute Cough
+Acute Cystitis
+Acute Febrile Neutrophilic Dermatosis
+Acute Gastric Dilatation
+Acute Gastritis
+Acute Hepatopathy
+Acute Infective Bronchitis
+Acute Large Bowel Diarrhea
+Acute Lymphoblastic Leukaemia
+Acute Moist Dermatitis
+Acute Myeloid Leukaemia
+Acute Otitis Externa
+Acute Pancreatitis
+Acute Renal Failure
+Acute Renal Insufficiency
+Acute Renal Tubular Necrosis
+Acute Respiratory Distress Syndrome
+Acute Rhinitis
+Acute Sinusitis
+Acute Small Bowel Diarrhea
+Acute Vomiting
+Addison'S Disease
+Adenocarcinoma
+Adenocarcinoma Of Nasal Cavity
+Adenocarcinoma Of Pancreas
+Adenocarcinoma Of Salivary Gland
+Adenocarcinoma Of Thyroid
+Adenoma Of Liver
+Adipsia
+Adrenal Gland Calcification
+Adrenal Gland Mass
+Adrenal Hyperadrenocorticism
+Adrenal Hyperplasia
+Adverse Drug Reaction
+Adverse Reaction To Vaccine
+Aerophagia
+Aflatoxicosis
+Aggression
+Agitated
+Air Bronchogram
+Air In Esophagus On Radiograph
+Alariasis
+Albuminuria
+Alkalosis
+Alkaluria
+Allergic Colitis
+Allergic Conjunctivitis
+Allergic Contact Dermatitis
+Allergic Dermatitis
+Allergic Dermatitis To Fly Bite
+Allergic Inhalant Dermatitis
+Allergic Otitis Externa
+Allergic Reaction
+Allergic Reaction To Insect Bite
+Allergic Rhinitis
+Allergy
+Alopecia
+Alopecia Of Pinna
+Alopecia X
+Alt (Sgpt) Concentration Increased Above Normal
+Alveolar Bone Loss
+Alveolar Pattern
+Alveolar Pneumopathy
+Amaurosis
+Amblyopia
+Ameloblastoma Of Jaw
+Amended Insulin Glucose Ratio Elevated
+Amino Acid Level In Urine Elevated
+Amitraz Intoxication
+Ammonium Biurate Crystal In Urine
+Ammonium Magnesium Phosphate Urolithiasis
+Ammonium Urate Urolithiasis
+Amputated Right Forelimb
+Amputated Right Hindlimb
+Amputation - Forelimb
+Amputation - Hindlimb
+Amylasemia
+Anal Discharge
+Anal Mass
+Anal Mucosa Vesicle
+Anal Pain
+Anal Pruritus
+Anal Reflex Reduced
+Anal Region Licking
+Anal Sac Abscess
+Anal Sac Adenocarcinoma
+Anal Sac Carcinoma
+Anal Sac Disease
+Anal Sac Enlarged
+Anal Sac Fistula
+Anal Sac Full
+Anal Sac Impacted
+Anal Sac Infection
+Anal Sac Rupture
+Anal Sacculitis
+Anal Tone Decreased
+Anaphylaxis
+Anaplasmosis
+Anconeal Process Fixation
+Anemia
+Anemia Due To Blood Loss
+Anemia Due To Chronic Blood Loss
+Anemia Due To Decreased Red Cell Production
+Anemia Due To Infection
+Anemia Due To Lead
+Anemia Due To Nuclear Maturation Defect
+Anemia Due To Starvation
+Anemia In Neoplastic Disease
+Anemia Of Chronic Disease
+Anemia Of Chronic Renal Failure
+Anemia Of Endocrine Disorder
+Anesthesia Reaction
+Anesthetic Death
+Anestrus
+Angioedema
+Angiokeratoma Of Skin
+Angular Limb Deformity - Pelvic Limb
+Angular Limb Deformity - Thoracic Limb
+Animal Bite Wound
+Anisocoria
+Anisocytosis, Red Cells
+Ankyloblepharon
+Ankylosis Of Joint
+Ankylosis Of Shoulder Joint
+Anodontia
+Anonychia
+Anophthalmia
+Anorectal Abscess
+Anorexia
+Anoxia
+Anterior Chamber Eye Mass
+Anterior Crossbite
+Anterior Synechiae
+Anterior Uveitis
+Antineoplastic Chemotherapeutic Intoxication
+Antinuclear Antibody Negative
+Antinuclear Antibody Positive
+Antithrombin Iii Activity Reduced
+Anuria
+Anus Protruding
+Anxiety
+Anxiety Hysteria
+Aorta Overriding Septal Defect
+Aortic Aneurysm
+Aortic Stenosis
+Aortic Valve Degenerated
+Aortic Valve Thickened
+Apatite Urolithiasis
+Aphakia
+Aphakic Crescent
+Aplastic Anemia
+Apnoea
+Apocrine Cyst
+Apocrine Gland Carcinoma
+Apprehensive
+Aptt Increased
+Apudoma
+Aqueous Flare
+Arched Back
+Arrhythmia
+Arrhythmogenic Right Ventricular Cardiomyopathy
+Arsenic Intoxication
+Arterial Flow Obstruction
+Arterial Thrombosis
+Arteritis
+Arthritis
+Arthropathy
+Articular Cartilage Erosion
+Articular Cartilage Flap
+Ascending Paralysis
+Ascites, Unspecified
+Ascitic Fluid Cells Increased
+Ascitic Fluid Cloudy
+Ascitic Fluid Creatinine Increased Above Normal
+Ascitic Fluid Has Honey Appearance
+Ascitic Fluid Protein Equal To Serum Protein
+Ascitic Fluid Protein Increased Above Normal
+Ascitic Fluid Purulent
+Aseptic Meningitis
+Aspergillosis
+Aspiration Pneumonia
+Aspirin Intoxication
+Ast/Sgot Level Normal
+Ast/Sgot Level Raised
+Asteroid Hyalosis
+Asthma
+Astrocytoma
+Asymptomatic Bacteriuria (Bladder Colonization)
+Asystole
+Ataxia
+Atelectasis
+Atherosclerosis
+Atlantoaxial Instability
+Atlantoaxial Subluxation
+Atopic Dermatitis
+Atopy
+Atresia Of External Auditory Canal
+Atrial Arrest
+Atrial Arrhythmia
+Atrial Dilation
+Atrial Fibrillation
+Atrial Flutter
+Atrial Paroxysmal Tachycardia
+Atrial Thrombus
+Atrichia
+Atrioventricular Dissociation
+Atrioventricular Heart Block
+Atrophic Gastritis
+Atrophy Of Adrenal Gland
+Atrophy Of Biceps Femoris
+Atrophy Of Gastrocnemius
+Atrophy Of Infraspinatus Muscle
+Atrophy Of Muscle Of Hindlimb
+Atrophy Of Semitendinosus Muscle
+Atrophy Of Testis
+Attacks Of Weakness
+Aural Hematoma
+Auto-Agglutination Of Red Blood Cell
+Autoimmune Thrombocytopenia
+Aversion To Litter Box
+Avulsion Of Tooth
+Axillary Dermatitis
+Axillary Lymphadenopathy
+Axon Degeneration
+Azoospermia
+Azotemia
+Back Pain
+Bacteraemia
+Bacterial Colitis
+Bacterial Conjunctivitis
+Bacterial Cystitis
+Bacterial Endocarditis
+Bacterial Gastroenteritis
+Bacterial Infection
+Bacterial Infection Due To Pseudomonas
+Bacterial Meningitis
+Bacterial Otitis Externa
+Bacterial Pneumonia
+Bacterial Prostatitis
+Bacterial Pyoderma
+Bacteriuria
+Balanitis
+Balanoposthitis
+Band Neutrophil Count Above Reference Range
+Bandage Wound
+Bartonella Infection
+Basal Cell Carcinoma Of Skin
+Base Narrow Mandibular Canine Tooth
+Basophilia
+Behavior Change
+Bence-Jones Proteinuria
+Benign Prostatic Hyperplasia
+Benign Prostatic Hypertrophy
+Biceps Reflex Absent
+Biceps Tendon Injury
+Bile Acids Increased
+Bile Duct Carcinoma
+Bile Duct Hyperplasia
+Bile Duct Nodular Hyperplasia
+Bile Duct Obstruction
+Bile Duct Proliferation
+Bile Duct Rupture
+Bile In Ascitic Fluid
+Biliary Cirrhosis
+Biliary Mucocoele
+Biliary Obstruction
+Biliary Stasis
+Bilious Vomiting
+Bilirubin Crystal In Urine
+Bilirubin Increased
+Bilirubinuria
+Bite Wounds
+Black Granules In Neutrophil
+Bladder Diverticulum
+Bladder Mass
+Bladder Sand
+Bladder Stone
+Blastomycosis
+Bleeding
+Bleeding Pinna
+Blepharitis
+Blepharospasm
+Blood Bicarbonate Decreased
+Blood Bicarbonate Level Above Normal
+Blood Carbon Dioxide Level Above Normal
+Blood Carbon Dioxide Level Below Normal
+Blood Coagulation Disorder
+Blood Glucose Increased Above Normal
+Blood Oxygen Level Below Normal
+Bloody Stool
+Bone Cyst
+Bone Deformity
+Bone Growth Abnormal
+Bone Lesion
+Bone Lysis
+Bone Marrow Aplasia
+Bone Marrow Histiocytes Increased
+Bone Marrow Lymphoblasts Increased
+Bone Marrow Lymphocytes Increased
+Bone Marrow Megakaryocytopenia
+Bone Marrow Megakaryocytosis
+Bone Marrow Neoplastic Cell Infiltration
+Bone Marrow Plasma Cell Infiltration
+Bone Pain
+Bone Pin Migration
+Bone Proliferation
+Bone Remodeling
+Bone Sequestrum
+Bone Shaft Pain
+Bone Shortened
+Both Ears Cyanotic
+Botulism
+Bowel Sounds Hyperactive
+Boxer Cardiomyopathy
+Brachial Plexus Avulsion
+Brachial Plexus Injury
+Brachycephalic Airway Obstruction Syndrome
+Brachycephalic Airway Syndrome
+Brachyonychia
+Bradycardia
+Brain Trauma
+Breath Odor Abnormal
+Broken Nail
+Bronchial Exudate
+Bronchial Hyperplasia
+Bronchial Hypertrophy
+Bronchial Obstruction
+Bronchiectasis
+Bronchiolar Pattern
+Bronchitis
+Bronchoalveolar Pneumonia
+Bronchomalacia; Collapsing Bronchi
+Bronchopneumonia
+Bronchopulmonary Lymphadenopathy
+Bulbar Immobility
+Bulging Tympanic Membrane
+Bullous Keratopathy
+Bullous Pemphigoid
+Bulls-Eye Skin Lesion
+Bun Decreased
+Bun Increased
+Bundle Branch Block
+Bunny-Hopping Gait
+Buphthalmos
+Burn Of Skin
+Burping
+Burr Cells Present
+Bursitis
+Burst Blood Vessel
+Cachexia
+Caesarian Section
+Calcanean Tendon Injury
+Calcification Of Joint
+Calcification Of Lung
+Calcinosis Cutis
+Calcium Oxalate Crystal In Urine
+Calcium Oxalate Urolithiasis
+Calcium Phosphate Urolithiasis
+Campylobacter Infection
+Canine Acanthomatous Ameloblastoma
+Canine Acne
+Canine Coronavirus Infection
+Canine Distemper
+Canine Parainfluenza Infection
+Canine Parvovirus Infection
+Capillaria Aerophila Infection
+Capillariasis
+Capillary Bleeding
+Carbamate Intoxication
+Carbon Monoxide Intoxication
+Carcinoid Neoplasm Of Liver
+Carcinoma
+Carcinoma In Situ (Bowen'S Disease)
+Cardiac Apical Thrust Displaced
+Cardiac Arrest
+Cardiac Hypercontractility
+Cardiac Infarct
+Cardiac Mass
+Cardiac Silhouette Displaced
+Cardiac Silhouette Enlarged
+Cardiac Silhouette Indistinct
+Cardiac Silhouette Rounded
+Cardiac Silhouette Separated From Sternum
+Cardiac Silhouette Small
+Cardiac Tamponade
+Cardiogenic Pulmonary Oedema
+Cardiogenic Shock
+Cardiomegaly
+Cardiopulmonary Arrest
+Carnitine Deficiency
+Carpal Fracture
+Carpal Hyperextension Injury
+Carpal Lameness
+Carpal Valgus Deformity
+Cartilage Degeneration
+Cartilage Lesion
+Castrated Male
+Cat Bite - Wound
+Cataract
+Catarrhal Enteritis
+Cauda Equina Syndrome
+Caudal Cervical Spondylomyelopathy (Wobbler'S Syndrome)
+Caudal Cruciate Ligament Injury
+Caudal Cruciate Ligament Tear
+Caudal Displacement Of Carina
+Cavitation Of Lung
+Cecal Mass
+Cellular Infiltration Of Lung
+Cellulitis
+Central Diabetes Insipidus
+Central Nervous System Sign
+Central Vestibular Disease
+Centrilobular Hepatic Necrosis
+Centrilobular Hepatitis
+Cerebellar Atrophy
+Cerebellar Degeneration
+Cerebellar Disease
+Cerebellar Hypoplasia
+Cerebellar Infarction
+Cerebral Hemorrhage
+Cerebral Infarction
+Cerebral Oedema
+Cerebral Vascular Arteriosclerosis
+Cerebral Vascular Atherosclerosis
+Cerebral Vasculitis
+Cerebral Ventricles Dilated
+Cerebrospinal Fluid (Csf) Abnormal
+Cerebrospinal Fluid (Csf) Globulin Concentration Increased
+Cerebrospinal Fluid (Csf) Glucose Concentration Decreased
+Cerebrospinal Fluid (Csf) Lymphocytosis
+Cerebrospinal Fluid Canine Distemper Titer Increased
+Cerebrospinal Fluid Clots On Standing
+Cerebrospinal Fluid Contains Pas Positive Cells
+Cerebrospinal Fluid Discolored
+Cerebrospinal Fluid Macrophage Contain Hemosiderin
+Cerebrospinal Fluid Mononuclear Pleocytosis
+Cerebrospinal Fluid Neutrophilia
+Cerebrospinal Fluid Protein Increased Above Normal
+Cerebrovascular Accident
+Cerebrum Abnormal
+Ceruminous Gland Adenocarcinoma
+Ceruminous Gland Adenoma
+Cervical Ankylosis
+Cervical Intervertebral Disc Disease
+Cervical Lymphadenopathy
+Cervical Mucocoele
+Cervical Rigidity
+Cervical Spinal Cord Lesion
+Cervical Spondylomyelopathy
+Cervical Tracheal Collapse
+Cervical Vertebral Instability
+Cervicitis
+Chalazion
+Change Of Hair Color
+Cheilitis
+Cheilosis
+Chemodectoma
+Chemosis
+Chest Percussion Dull
+Chest Percussion Tympanitic
+Cheyletiella Mite Infestation
+Chiari Malformation
+Chiari-Type Malformation
+Chin Papule
+Chin Pustule
+Chlamydial Infection
+Chocolate Poisoning
+Choking
+Cholangiohepatitis
+Cholangitis
+Cholecystitis
+Cholelithiasis
+Chondrodystrophy
+Chondroma Of Bone
+Chondrosarcoma
+Choppy Gait
+Chordae Tendinae Rupture
+Chorea
+Chorioretinitis
+Choroid Hypoplasia
+Choroiditis
+Chronic Active Hepatitis
+Chronic Bronchitis
+Chronic Colitis
+Chronic Cough
+Chronic Cystitis
+Chronic Dental Disease
+Chronic Gastritis
+Chronic Hepatitis
+Chronic Hypertrophic Pyloric Gastropathy
+Chronic Large Bowel Diarrhea
+Chronic Lymphocytic Leukaemia
+Chronic Obstructive Pulmonary Disease
+Chronic Otitis Externa
+Chronic Pancreatitis
+Chronic Renal Failure
+Chronic Renal Insufficiency
+Chronic Rhinitis
+Chronic Sinusitis
+Chronic Small Bowel Diarrhea
+Chronic Vomiting
+Chylothorax
+Circling
+Circumscribed Pulmonary Nodules
+Ck Concentration Increased
+Class I Malocclusion
+Claw Sloughed
+Cleft Palate
+Cloacal Prolapse
+Clonic Seizure
+Clostridium Perfringens Enterotoxicosis
+Cloudy Urine
+Coagulation Factor Deficiency Syndrome
+Cobblestone Appearance To Skin
+Coccidioidomycosis
+Coccidiosis
+Coccygeal Agenesis
+Coccygeal Luxation
+Cognitive Dysfunction
+Coin Lesion Of Lung
+Cold Coombs Test Positive
+Cold-Mediated Vasculitis
+Colitis
+Coloboma Of Eye
+Colon Fibrotic
+Colon Friable
+Colon Necrosis
+Colon Thickened
+Colonic Filling Defect
+Colonic Hemorrhage
+Colonic Lymphadenopathy
+Coma
+Comedone
+Common Bile Duct Enlarged
+Compensated Metabolic Acidosis
+Complete Cataract
+Complication
+Congenital Defect Of Vagina
+Congenital Dilatation Of Aortic Arch
+Congenital Elliptocytosis
+Congenital Heart Disease
+Congenital Heart Murmur
+Congenital Hereditary Muscular Dystrophy
+Congenital Malformation
+Congenital Malformation Of Vagina
+Congenital Portosystemic Shunt
+Congenital Stenosis Of Trachea
+Congenital Tracheal Collapse
+Congestion Of Nasal Mucosa
+Congestive Heart Failure
+Conjunctival Cyst
+Conjunctival Discharge
+Conjunctival Foreign Body
+Conjunctival Hemorrhage
+Conjunctival Hyperemia
+Conjunctival Lymphoid Hyperplasia
+Conjunctival Mass
+Conjunctival Oedema
+Conjunctival Petechia
+Conjunctival Pigmentation
+Conjunctival Scar Tissue
+Conjunctival Ulcer
+Conjunctival Vesicle
+Conjunctivitis
+Constipation
+Contact Dermatitis
+Continuous Murmur
+Contracture Of Digital Flexor Of Forelimb
+Contracture Of Digital Flexor Of Hindlimb
+Contusion Of Brain
+Coonhound Paralysis
+Coprophagia
+Corneal Abrasion
+Corneal Clouding
+Corneal Degeneration
+Corneal Dystrophy
+Corneal Ectasia
+Corneal Endothelial Dystrophy
+Corneal Facet
+Corneal Foreign Body
+Corneal Laceration
+Corneal Lesion
+Corneal Lipid Deposit
+Corneal Mass
+Corneal Oedema
+Corneal Opacity
+Corneal Perforation
+Corneal Pigmentation
+Corneal Plaque
+Corneal Reflex Depressed
+Corneal Scarring
+Corneal Stippling
+Corneal Ulcer
+Corneal Vascularization
+Coronary Sinus/Right Ventricular Fistula
+Corrective Radial Osteotomy
+Cortical Bone Destruction
+Cortisol Concentration Decreased Below Normal
+Cortisol Concentration Increased Above Normal
+Costrochondral Subluxation
+Cough
+Cough-Induced Syncope
+Coxa Plana
+Coxa Valga
+Coxa Vara
+Coxofemoral Ankylosis
+Coxofemoral Luxation
+Coxofemoral Osteophytosis
+Coxofemoral Subluxation
+Cranial Cruciate Ligament Injury
+Cranial Cruciate Ligament Tear
+Cranial Drawer Sign Negative
+Cranial Drawer Sign Positive
+Cranial Mediastinal Lymphadenopathy
+Cranial Mediastinal Mass
+Cranial Mediastinum Widened
+Cranial Nerve Disorder
+Cranial Sutures Open
+Cranial Tibial Reflex Exaggerated
+Craniomandibular Osteopathy
+Creatinine Clearance Decreased
+Cricopharyngeal Achalasia
+Crop Stasis
+Crossbite
+Crossed Extensor Reflex Present
+Crouched Gait
+Crowding Of Teeth
+Crusting Of Pinna
+Crusty Nasal Planum
+Crying Out
+Cryptococcosis
+Cryptococcus
+Cryptorchid
+Cryptorchidism, Bilateral
+Cryptorchidism, Unilateral
+Cryptosporidiosis
+Crystalluria
+Cushings
+Cutaneous Cyst
+Cutaneous Hyperesthesia
+Cutaneous Hypoesthesia
+Cutaneous Lupus Erythematosus
+Cutaneous Swelling
+Cutaneous Vasculitis
+Cyanosis
+Cyanotic Tongue
+Cyclical Neutropenia
+Cyst Of Central Nervous System
+Cyst Of Hair Follicle
+Cyst Of Lung Containing Fluke
+Cystadenocarcinoma
+Cystic Endometrial Hyperplasia
+Cysticercosis
+Cystine Crystal In Urine
+Cystine Urolithiasis
+Cystitis
+Dacryocystitis
+Dalmatian Bronzing Syndrome
+Dead
+Dead On Arrival At Hospital
+Debris In Ear Canal
+Decrease In Appetite
+Decreased Aldosterone
+Decreased Breath Sounds
+Decreased Cranial Lung Sounds
+Decreased Ekg Voltage
+Decreased Frequency Of Defecation
+Decreased Intraocular Pressure
+Decreased Mental Alertness
+Decreased Progesterone Level
+Decreased Renal Clearance
+Decreased Serum Vitamin A
+Decreased Skin Sensitivity
+Decreased Sperm Motility
+Decreased Vascular Flow
+Deep Anterior Chamber Of Eye
+Deep Corneal Ulcer
+Deep Pyoderma
+Defecation Painful
+Defect Of Diaphragm
+Degenerate Neutrophil
+Degenerative Joint Disease
+Degenerative Myelopathy
+Degloving Injury
+Degloving Wound
+Dehydration
+Delayed Gastric Emptying
+Delayed Recovery From Anaesthesia
+Delayed Tooth Eruption
+Dementia
+Demyelination
+Dental Caries
+Dental Plaque Formation
+Dentigerous Cyst
+Dependent Oedema
+Depigmenting Dermatitis
+Dermal Crust
+Dermatitis
+Dermatomyositis
+Dermatophytosis
+Dermatophytosis Due To Trichophyton
+Dermatosis
+Dermoid Cyst
+Dermoid Sinus
+Descemetocoele
+Desquamation
+Destruction Of Nasal Turbinate
+Diabetes Insipidus
+Diabetes Mellitus
+Diabetic Hyperosmolar Non-Ketotic State
+Diabetic Ketoacidosis
+Diabetic Neuropathy
+Diaphragm Silhouette Indistinct
+Diaphragmatic Hernia
+Diaphyseal Bone Pain
+Diaphyseal Periosteal Proliferation
+Diarrhea
+Diastolic Murmur
+Diestrus
+Dietary Change
+Dietary Indiscretion
+Dietary Intolerance
+Difficulty Rising
+Difficulty Standing
+Difficulty Walking
+Diffuse Dermatitis
+Diffuse Muscle Necrosis
+Diffuse Slow Wave Activity On Eeg
+Digit Pain
+Digit Swollen
+Digit/Foot Mass
+Digital Hyperkeratosis
+Digital Mass
+Dilatation Of Pulmonary Artery
+Dilated Cardiomyopathy
+Diminished Response To Pain
+Direct Coombs Test Negative
+Direct Coombs Test Positive
+Disc Material In Spinal Canal
+Discharge From Ear Canal
+Discoid Lupus Erythematosus
+Discolored Mammary Gland Skin
+Discolored Milk
+Discolored Urine
+Discospondylitis
+Disease Due To Calicivirus
+Disease Due To Papilloma Virus
+Disease Due To Poxviridae
+Disease Of Lip
+Diskospondylitis
+Dislocated Patella
+Dislocation Of Sacrococcygeal Joint
+Dislocation Of Sacroiliac Joint
+Dislocation Of Shoulder Joint
+Dislocation Of Tooth
+Dislocation Or Subluxation Of Carpus
+Disorder Characterized By Leukocytosis
+Disorder Characterized By Lymphocytosis
+Disorder Characterized By Lymphopenia
+Disorder Characterized By Monocytosis
+Disorder Of Abducens Nerve
+Disorder Of Accessory Nerve
+Disorder Of Bronchus
+Disorder Of Cervical Spine
+Disorder Of Cornea
+Disorder Of Facial Nerve
+Disorder Of Glossopharyngeal Nerve
+Disorder Of Hypoglossal Nerve
+Disorder Of Oculomotor Nerve
+Disorder Of Olfactory Nerve
+Disorder Of Optic Nerve
+Disorder Of Small Intestine
+Disorder Of The Peripheral Nervous System
+Disorder Of Trigeminal Nerve
+Disorder Of Trochlear Nerve
+Disorder Of Vagus Nerve
+Disorder Of Vestibulocochlear Nerve
+Disoriented
+Disseminated Intravascular Coagulation
+Distended Bladder
+Distended Caudal Epigastric Vein
+Distichiasis
+Distorted Laryngeal Cartilage
+Distressed Respiration
+Dog Bite - Wound
+Dominance Aggression
+Down On Hock
+Dragging Leg
+Dragging Paw
+Draining Abscess
+Dribbling Of Urine
+Drooling
+Dropped Hock
+Dropped Jaw
+Drowning
+Drowsiness
+Drug Interaction
+Drug Intoxication
+Drug-Induced Cutaneous Eruption
+Drug-Induced Nephrotoxicosis
+Dry Cornea
+Dry Cough
+Dry Eye
+Dry Fur
+Dry Skin
+Dumb Form Of Rabies
+Duodenal Ulcer
+Dwarfism
+Dynamic Left Ventricular Outflow Tract Obstruction
+Dysautonomia
+Dysbiosis/Antibiotic-Responsive Diarrhea
+Dysmetria
+Dysmyelinogenesis
+Dysphagia
+Dyspnea
+Dystocia
+Dysuria
+Ear Canal Inflamed
+Ear Canal Papule
+Ear Canal Stenotic
+Ear Discharge
+Ear Margin Dermatosis
+Ear Mass
+Ear Odor Abnormal
+Ear Painful
+Ear-Margin Vasculitis
+Eating Painful
+Eccentrocytosis
+Ecchymosis Of Epicardium
+Ecchymosis Of Nasal Mucosa
+Ecchymosis Of Skin
+Eclampsia
+Ectopic Atrial Beats
+Ectopic Cilia
+Ectopic Ureter
+Ectopic Ureters
+Ectropion
+Egg Bound
+Ehrlichiosis
+Elbow Ankylosis
+Elbow Callus
+Elbow Dysplasia
+Elbow Hygroma
+Elbow Luxation
+Electroencephalogram Abnormal
+Electromyography Abnormal
+Electroretinogram Diminished
+Elevated Urine Creatinine
+Elliptocytosis
+Elongated Soft Palate
+Emaciated
+Emphysematous Bulla Of Lung
+Emphysematous Cystitis
+Enamel Defect
+Enamel Mottled
+Encephalitis
+Encephalomyelitis
+Encephalopathy
+Endocardial Fibroelastosis
+Endocardial Oedema
+Endocardiosis
+Endocardiosis Of Mitral Valve
+Endocardiosis Of Tricuspid Valve
+Endocardium Hyperechogenic
+Endocrine Alopecia
+Endocrine Myopathy
+Endometrial Hyperplasia
+Endomyocardial Fibrosis
+Endosteal Thickening
+Enlarged Bronchial Artery
+Enlarged Colon
+Enlarged Kidney
+Enlarged Prostate
+Enlarged Pulmonary Artery
+Enlarged Testicle
+Enlarged Thyroid Gland
+Enlarged Tonsil
+Enlarged Tympanic Bulla
+Enlargement Of Caudal Vena Cava
+Enlargement Of Tongue
+Enophthalmos
+Enostosis
+Enteritis
+Enteritis Due To Rotavirus
+Entropion
+Eosinopenia
+Eosinophilia
+Eosinophilic Colitis
+Eosinophilic Dermatitis
+Eosinophilic Enteritis
+Eosinophilic Enterocolitis
+Eosinophilic Gastritis
+Eosinophilic Gastroenteritis
+Eosinophilic Inflammatory Bowel Disease
+Eosinophilic Keratitis
+Eosinophilic Meningoencephalitis
+Eosinophilic Meningoencephalomyelitis
+Eosinophilic Myositis
+Eosinophilic Proctitis
+Epidermal Collarette
+Epidermal Hyperplasia
+Epidermal Inclusion Cyst
+Epidermolysis Bullosa
+Epididymitis
+Epilepsy
+Epileptic Aura
+Epileptic Seizure
+Epiphora
+Epiphysis Closure Disorder
+Episcleral Injection
+Episcleritis
+Epistaxis
+Epithelial Nest
+Epulis
+Erosion Of Enamel
+Erosion Of Nasal Bone
+Erosion Of Oral Mucosa
+Erosion Of Subchondral Bone
+Erythema Multiforme
+Erythema Of Nasal Planum
+Erythema Of Oral Mucosa
+Erythema Of Pinna
+Erythema Of Skin
+Erythrocyte Basophilic Stippling
+Erythrocyte Sedimentation Rate Increased
+Erythroid Hyperplasia Of Bone Marrow
+Erythroid Hypoplasia Of Bone Marrow
+Erythrophagocytosis
+Esophageal Diverticulum
+Esophageal Foreign Body
+Esophageal Mass
+Esophageal Obstruction
+Esophageal Ulcer
+Esotropia
+Estrogen-Responsive Urinary Incontinence
+Estrous Cycle Irregular
+Estrus
+Ethanol Intoxication
+Ethylene Glycol Antifreeze Intoxication
+Euthanasia
+Euthyroid
+Eversion Of Cartilage Of Third Eyelid
+Exaggerated Auditory Response
+Exaggerated Pleural Fissures
+Exaggerated Response To Pain
+Excess Ketones In Urine
+Excess Of Hair Follicles In Catagen
+Excess Of Hair Follicles In Telogen
+Excessive Appetite
+Excessive Cerumen In Ear Canal
+Excessive Growth Of Hair
+Excessive Hair In Ear Canal
+Excessive Head Shaking
+Excessive Scratching Of Ear
+Excessive Shedding Of Hair
+Excessive Sleeping
+Excessive Thirst
+Excessive Vocalization
+Excitement Increases Tremor
+Excoriation Of Ear
+Excoriation Of Skin
+Exercise Induced Weakness
+Exercise Intolerance
+Exercise Induced Cough
+Exocrine Pancreatic Insufficiency
+Exophthalmia
+Exostosis
+Exotropia
+Expiratory Dyspnea
+Expiratory Stridor
+Extensor Postural Thrust Depressed
+Extensor Rigidity
+Extremities Cold
+Eye Painful
+Eye Proptosis
+Eye Rubbing
+Eyeball Enlarged
+Eyelid Crusty
+Eyelid Defect
+Eyelid Deformity
+Eyelid Erythema
+Eyelid Hyperaemia
+Eyelid Margin Defect
+Eyelid Margin Thickened
+Eyelid Scaling
+Eyelid Swelling
+Eyelid Ulceration
+Eyes Sensitive To Light
+Face Rubbing
+Facial Alopecia
+Facial Dysmorphism
+Facial Exostosis
+Facial Mass
+Facial Nerve Paralysis
+Facial Nerve Paresis
+Facial Oedema
+Facial Pruritus
+Facial Swelling
+Facial Trauma
+Facial Twitching
+Failure Of Lactation
+Familial Renal Hypoplasia
+Fanconi Syndrome
+Fasting Bile Acids Increased
+Fasting Plasma Gastrin Increased
+Fatty Liver
+Faucitis
+Fear-Related Aggression
+Feather Picking
+Fecal Impaction
+Fecal Incontinence
+Feeling Distress
+Feline Acne
+Feline Acquired Immune Deficiency Syndrome
+Feline Allergic Bronchitis
+Feline Coronavirus Infection
+Feline Eosinophilic Granuloma Complex
+Feline Hyperesthesia Syndrome
+Feline Infectious Anemia
+Feline Infectious Peritonitis
+Feline Infectious Peritonitis (Fip)
+Feline Leukemia Virus Infection
+Feline Lower Urinary Tract Disease
+Feline Miliary Dermatitis
+Feline Panleukopenia
+Feline Syncytial Virus Infection
+Feline Urethral Plug
+Feline Viral Rhinotracheitis
+Femoral Fracture
+Femoral Head Flattened
+Femoral Neck Thickened
+Femoral Pulse Absent
+Fibrin Split Products Increased
+Fibrinogen Concentration Decreased Below Normal
+Fibrinous Epicarditis
+Fibrinous Peritoneal Effusion
+Fibrinous Peritonitis
+Fibroadnexal Hamartoma
+Fibrocartilagenous Emboli Of Spinal Cord
+Fibrocartilaginous Embolism (Fce)
+Fibroma
+Fibrosarcoma
+Fibrosarcoma - Oral
+Fibrosarcoma Of Bone
+Fibrosarcoma Of Gingiva
+Fibrosarcoma Of Nose
+Fibrosarcoma Of Paranasal Sinus
+Fibrous Subaortic Stenosis
+Fibular Fracture
+Fireworks Phobia
+First Degree Atrioventricular Block
+Fistulous Tract Between Dorsal Spine And Skin
+Fiv Infection
+Flaccid Paralysis
+Flank Biting
+Flattened P Wave
+Flattened T Wave
+Flatulence/Wind
+Flea Allergy Dermatitis
+Flea Bite Anemia
+Flea Dirt On Skin
+Flea Infestation
+Floating Bodies In Vitreous
+Fluid Filled Skin Cyst
+Fluid In Esophagus
+Fluid In Intestine
+Fluorescence Of Hair Shaft Positive
+Fly Biting
+Fly Larva Infestation
+Foaming At Mouth
+Focal Adnexal Dysplasia
+Focal Alopecia
+Focal Calcification Of Lung
+Focal Hepatic Necrosis
+Focal Hyperesthesia
+Focal Motor Nerve Conduction Slowing
+Focal Motor Seizure
+Focal Myocarditis
+Focal Myositis
+Follicular Dysplasia
+Follicular Hyperkeratosis
+Follicular Plugging
+Follicular Thyroid Carcinoma
+Folliculitis
+Fontanelle Open
+Food Aggression
+Food Allergy
+Food Allergy Dermatitis
+Food Poisoning
+Foot Licking
+Footpad Laceration
+Footpad Painful
+Footpad Swollen
+Footpad Ulcerated
+Footpad Vesicle
+Forefoot Pain
+Foreign Body
+Foreign Body Caused Colitis
+Foreign Body In Digestive Tract
+Foreign Body In Ear
+Foreign Body In Eye
+Foreign Body In Oral Cavity
+Foreign Body Reaction/Draining Sinus
+Foreign Material Ingestion
+Forelimb Conscious Proprioception Deficit
+Forelimb Conscious Proprioception Normal
+Forelimb Deformed
+Forelimb Lameness
+Forelimb Mass
+Forelimb Oedema
+Forelimb Painful
+Forelimb Swelling
+Forelimb Unconscious Proprioception Deficit
+Foxtail Foreign Body
+Fracture
+Fracture - Acetabulum
+Fracture - Cervical Spine
+Fracture - Cranium
+Fracture - Femur
+Fracture - Humerus
+Fracture - Ilium
+Fracture - Lumbosacral Spine
+Fracture - Mandible
+Fracture - Maxilla
+Fracture - Metacarpus
+Fracture - Patella
+Fracture - Phalange
+Fracture - Pubis
+Fracture - Radius/Ulna
+Fracture - Rib
+Fracture - Sacrum
+Fracture - Scapula
+Fracture - Tarsus
+Fracture - Thoracolumbar Spine
+Fracture - Tibia
+Fracture Malunion
+Fracture Of Pelvis
+Fracture Of Radius
+Fracture Of Radius And Ulna
+Fracture Of Sacrum
+Fracture Of Scapula
+Fracture Of Tibia And Fibula
+Fracture Of Ulna
+Fracture Of Ulnar Styloid Process
+Fracture - Metatarsus
+Fracture - Pubis/Ischium
+Fracture, Closed
+Fracture, Comminuted
+Fracture, Compound
+Fracture, Compression
+Fracture, Delayed Union
+Fracture, Folding
+Fracture, Oblique
+Fracture, Spiral
+Fracture, Transverse
+Fractured Shell
+Fractured Tooth
+Fragmented Coronoid Process
+Fragmented Sesamoid Bone
+Free Air In Abdomen
+Free T4 Decreased
+Free T4 Increased
+Fright
+Frostbite
+Fructosamine Levels Increased
+Fsh Decreased Below Normal
+Fsh Increased Above Normal
+Fungal Infection
+Fungal Meningitis
+Fungal Otitis Externa
+Fungal Pneumonia
+Furunculosis
+Gagging
+Gait Abnormal
+Gallbladder Contents Hyperechogenic
+Gallbladder Mucocoele
+Gallbladder Ruptured
+Gallbladder Thickened
+Gallop Rhythm
+Gallstones
+Garbage Poisoning
+Gasping
+Gastric Adenocarcinoma
+Gastric Bleeding
+Gastric Dilatation And Volvulus Syndrome
+Gastric Dilatation/Volvulus (Gdv)
+Gastric Fibrosis
+Gastric Foreign Body
+Gastric Lymphadenomegaly
+Gastric Lymphocytic Infiltration
+Gastric Mass
+Gastric Motility Disorder
+Gastric Mucosal Atrophy
+Gastric Mucosal Crater
+Gastric Mucosal Erosion
+Gastric Mucosal Hemorrhage
+Gastric Mucosal Hyperemia
+Gastric Mucosal Hypertrophy
+Gastric Perforation
+Gastric Stasis
+Gastric Ulcer
+Gastric Volvulus
+Gastritis
+Gastro-Enteritis
+Gastro-Esophageal Reflux
+Gastrocnemius Muscle Hypertrophy
+Gastrocnemius Muscle Necrosis
+Gastrocnemius Reflex Exaggerated
+Gastrocnemius Reflex Reduced
+Gastrocnemius Tendon Rupture
+Gastroenteritis
+Gastrointestinal Hemorrhage
+Gastrointestinal Necrosis
+Gastrointestinal Tract Obstruction
+Gastrointestinal Ulcer
+Generalized Demodecosis
+Generalized Dermatitis
+Generalized Oedema
+Generalized Papules Of Skin
+Generalized Seizure
+Genu Valgum
+Ggt Increased Above Normal
+Giardiasis
+Gingiva Red
+Gingival Bleeding
+Gingival Ecchymosis
+Gingival Erosion
+Gingival Erythema
+Gingival Hyperplasia
+Gingival Lymphocytic Infiltrate
+Gingival Lymphocytic Plasmacytic Infiltrate
+Gingival Mass
+Gingival Necrosis
+Gingival Oedema
+Gingival Papule
+Gingival Ulcer
+Gingival Vesicle
+Gingivitis
+Glaucoma
+Gliosis
+Glomerulonephritis
+Glomerulopathy
+Glossitis
+Glottis Narrowed
+Glucagon Stimulation Test Positive
+Glucose Tolerance Test Impaired
+Glucosuria
+Glycogen Storage Disease
+Goose-Stepping Gait
+Granulocytic Hypoplasia
+Granulocytic Leukemia
+Granulocytic Sarcoma
+Granuloma Of Trachea
+Granulomatous Chorioretinitis
+Granulomatous Choroiditis
+Granulomatous Dermatitis
+Granulomatous Encephalitis
+Granulomatous Hepatitis
+Granulomatous Inflammation
+Granulomatous Meningoencephalitis
+Granulomatous Meningoencephalomyelitis
+Granulomatous Meningoencephalomyelitis (Gme)
+Granulomatous Myocarditis
+Grape Intoxication
+Greasy Stool
+Ground Glass Appearance Of Abdomen
+Growth Delay
+Growth Hormone Decreased
+Growth Hormone Increased
+Growth Plate Wide
+Gynecomastia
+Hacking Cough
+Hair Brittle
+Hair Coat Dull
+Hair Coat Slow Regrowth
+Hair Coat Unkempt
+Hair Easily Epilates
+Hair Follicle Atrophic
+Hair Follicle Ruptured
+Hair Matted
+Hair Oily
+Hairs Broken Close To The Skin
+Hallucinations
+Hard Prostate
+Hard Stool
+Head Pressing
+Head Tilt
+Head Trauma
+Head Tremor
+Healthy Animal
+Hearing Loss
+Heart Base Mass
+Heart Block
+Heart Murmur
+Heart Murmur, Loudness Grade I Out Of Vi
+Heart Murmur, Loudness Grade Ii Out Of Vi
+Heart Murmur, Loudness Grade Iii Out Of Vi
+Heart Murmur, Loudness Grade Iv Out Of Vi
+Heart Murmur, Loudness Grade V Out Of Vi
+Heart Murmur, Loudness Grade Vi Out Of Vi
+Heart Sounds Muffled
+Heartworm Disease, Infection By Dirofilaria Immitis With Signs Of Heartworm Disease
+Heat Intolerance
+Heat Stroke
+Heinz Bodies
+Heinz Body Anemia
+Hemangioma
+Hemangiopericytoma
+Hemangiosarcoma
+Hemangiosarcoma Of Heart
+Hemangiosarcoma Of Liver
+Hemangiosarcoma Of Skin
+Hemangiosarcoma Of Spleen
+Hemarthrosis
+Hematemesis
+Hematocrit Decreased Below Normal
+Hematologic Neoplasm
+Hematoma
+Hematuria
+Hemifacial Spasm
+Hemilaminectomy - Lumbar
+Hemilaminectomy - Tl
+Hemiparesis
+Hemiplegia
+Hemivertebra
+Hemoconcentration
+Hemoglobinemia
+Hemoglobinuria
+Hemolysis
+Hemolytic Anemia
+Hemolytic Anemia Due To Bartonella
+Hemolytic Anemia Due To Pyruvate Kinase Deficiency
+Hemophilia
+Hemophilia A
+Hemophilia B
+Hemoptysis
+Hemorrhage Of Nasal Planum
+Hemorrhage Of Penis
+Hemorrhagic Colitis
+Hemorrhagic Cystitis
+Hemorrhagic Diarrhea
+Hemorrhagic Enteritis
+Hemorrhagic Enterocolitis
+Hemorrhagic Eye Discharge
+Hemorrhagic Gastritis
+Hemorrhagic Gastroenteritis
+Hemorrhagic Nasal Discharge
+Hemorrhagic Pericardial Effusion
+Hemorrhagic Peritoneal Effusion
+Hemorrhagic Skin Discharge
+Hemorrhagic Vaginal Discharge
+Hemothorax
+Hepatic Adenoma
+Hepatic Amyloidosis
+Hepatic Atrophy
+Hepatic Cirrhosis
+Hepatic Congestion
+Hepatic Copper Accumulation
+Hepatic Disease
+Hepatic Encephalopathy
+Hepatic Failure
+Hepatic Fibrosis
+Hepatic Granuloma
+Hepatic Hemorrhage
+Hepatic Intoxication
+Hepatic Lipidosis
+Hepatic Necrosis
+Hepatic Neoplasia
+Hepatic Vein Dilated
+Hepatitis
+Hepatocellular Degeneration
+Hepatocutaneous Syndrome
+Hepatocyte Necrosis
+Hepatocyte Vacuolation
+Hepatomegaly
+Hepatoportal Microvascular Dysplasia
+Hepatozoonosis
+Hereditary Collagen Disorder Of Skin
+Hereditary Elliptocytosis
+Hereditary Macrothrombocytopenia
+Hereditary Myopathy Of Labrador Retrievers
+Hereditary Myotonia
+Hernia
+Hernia - Abdominal
+Hernia - Hiatal
+Hernia - Perineal
+Hernia - Diaphragmatic
+Herpesvirus Infection
+Herpetic Keratitis
+Hiatal Hernia
+Hiding Behavior
+High Dose Dexamethasone Suppression Abnormal
+High Dose Dexamethasone Suppression Normal
+Hilar Lymphadenopathy
+Hindfoot Painful
+Hindlimb Conscious Proprioception Deficit
+Hindlimb Conscious Proprioception Normal
+Hindlimb Contracture
+Hindlimb Deformity
+Hindlimb Knuckling
+Hindlimb Lameness
+Hindlimb Mass
+Hindlimb Oedema
+Hindlimb Painful
+Hindlimb Reflexes Increased
+Hindlimb Swelling
+Hindlimb Unconscious Proprioception Deficit
+Hindlimb Weakness
+Hip Dysplasia
+Hip Joint Crepitation
+Hip Painful
+Hirsutism
+Histiocytic Sarcoma
+Histiocytic Ulcerative Colitis Of Boxer Dogs
+Histiocytoma
+Histoplasmosis
+Hit By Car
+Honey Appearance Of Joint Fluid
+Honey-Like Pleural Effusion
+Hookworm Anemia
+Hookworm Infection
+Horizontal Nystagmus
+Horner'S Syndrome
+Howell Jolly Bodies
+Humeral Fracture
+Hydrocephalus
+Hydronephrosis
+Hydrothorax
+Hydroureter
+Hydroxyapatite Crystal In Urine
+Hyperactive Behavior
+Hyperadrenocorticism
+Hyperalbuminemia
+Hyperaldosteronism
+Hyperammonemia
+Hyperbilirubinemia
+Hypercalcaemia
+Hypercalcemia
+Hypercalciuria
+Hypercholesterolemia
+Hyperfibrinogenemia
+Hypergammaglobulinemia
+Hyperglobulinemia
+Hyperinflation Of Lung
+Hyperinsulinemia
+Hyperkalemia
+Hyperkeratosis
+Hyperlipidemia
+Hypermetria
+Hypernatremia
+Hyperparathyroidism
+Hyperphosphatemia
+Hyperphosphaturia
+Hyperplasia Of Ear Canal
+Hyperplasia Of Pituitary Gland
+Hyperplasia Of Prostate
+Hyperpnea
+Hyperproteinaemia
+Hyperreflexia
+Hypersalivation
+Hypertension
+Hypertensive Retinopathy
+Hyperthermia
+Hyperthyroidism
+Hypertrichosis
+Hypertrophic Cardiomyopathy
+Hypertrophic Osteoarthropathy
+Hypertrophic Osteodystrophy
+Hypertrophic Osteopathy
+Hypertrophic Subaortic Stenosis
+Hypertropia
+Hyperventilation
+Hyphema
+Hypoadrenocorticism
+Hypoalbuminemia
+Hypoandrogenism
+Hypocalcaemia
+Hypochloremia
+Hypochromasia Of Rbc
+Hypoechogenic Vacuole Of Prostate
+Hypoestrogenism
+Hypoglobulinemia
+Hypoglycemia
+Hypoinsulinemia
+Hypokalemia
+Hypokalemic Myopathy
+Hyponatremia
+Hypoparathyroidism
+Hypophosphatemia
+Hypoplasia Of Tooth Enamel
+Hypoplastic Anemia
+Hypoproteinaemia
+Hypopyon
+Hyporeflexia
+Hyporexia
+Hyposegmented Megakaryocytes In Bone Marrow
+Hyposthenuria
+Hypotension
+Hypothermia
+Hypothyroidism
+Hypotrichosis
+Hypotropia
+Hypoventilation
+Hypovolaemic Shock
+Hypoxia
+Hypoxic Brain Injury
+Iatrogenic Hyperadrenocorticism
+Icterus
+Idiopathic Cystitis
+Idiopathic Facial Paralysis
+Idiopathic Feline Polioencephalomyelitis
+Idiopathic Generalized Epilepsy
+Idiopathic Peripheral Vestibular Disease
+Idiopathic Vestibular Disease
+Iliac Fracture
+Iliac Lymphadenopathy
+Immature Monocytes In Bone Marrow
+Immune Mediated Dermatitis
+Immune Mediated Erosive Polyarthritis
+Immune Mediated Hemolytic Anemia
+Immune Mediated Meningitis
+Immune Mediated Neutropaenia
+Immune Mediated Non-Erosive Polyarthritis
+Immune Mediated Thrombocytopaenia
+Immune Mediated Vasculitis
+Immune Thrombocytopenia
+Immune-Complex Glomerulonephritis
+Immune-Mediated Arthritis
+Immune-Mediated Neutropenia
+Immunoproliferative Enteropathy
+Impaired Wound Healing
+Imperforate Anus
+Impetigo
+Implant Infection
+Implant Removal
+Inappropriate Defecation
+Inappropriate Elimination
+Inappropriate Fecal Marking Behavior
+Inappropriate Increase In Nucleated Red Blood Cells
+Inappropriate Urination
+Inappropriate Urine Marking Behavior
+Incision Dehiscence
+Incision Infection
+Incision Inflamed
+Incomplete Cataract
+Incoordination
+Increased Aldosterone
+Increased Anion Gap
+Increased Appetite
+Increased Blood Lead Level
+Increased Bronchial Sounds
+Increased Eosinophils In Bronchial Wash
+Increased Eosinophils In Pulmonary Exudate
+Increased Frequency Of Defecation
+Increased Hemoglobin
+Increased Intracranial Pressure
+Increased Level Of Macroglobulin In Blood
+Increased Lymphocytes In Bronchial Wash
+Increased Macrophages In Bronchial Wash
+Increased Myeloid:Erythroid Ratio
+Increased Neutrophils In Bronchial Wash
+Increased Space Of Hip Joint
+Indolent Corneal Ulcer
+Infarct
+Infection
+Infection By Aelurostrongylus
+Infection By Cytauxzoon
+Infection By Dipetalonema
+Infection By Dipylidium Caninum
+Infection By Encephalitozoon Cuniculi
+Infection By Filaroides
+Infection By Paragonimus
+Infection By Pasteurella Multocida
+Infection By Strongyloides Stercoralis
+Infection By Taenia
+Infection By Trichomonas
+Infection By Tritrichomonas
+Infection Due To Brucella
+Infection Due To Clostridium Botulinum
+Infection Due To Escherichia Coli
+Infection Due To Helicobacter
+Infection Due To Lungworm
+Infection Due To Mycobacteria
+Infection Due To Toxascaris
+Infection Due To Toxocara
+Infectious Canine Hepatitis
+Infectious Canine Tracheobronchitis
+Infectious Corneal Ulcer
+Infertility
+Infestation By Cuterebra
+Infestation By Hard Tick
+Infestation By Notoedres
+Infestation By Otodectes
+Infestation By Otodectes Cynotis
+Infestation By Sarcoptes
+Infestation By Soft Tick
+Infestation By Tick
+Infestation With Spinous Ear Tick
+Infiltration Of Lung Lobe
+Infiltrative Lipoma
+Inflammation Of Pinna
+Inflammation Of Scrotum
+Inflammation Of Third Eyelid
+Inflammatory Bowel Disease
+Inflammatory Cells In Ejaculate
+Inflammatory Polyarthritis
+Infundibular Keratinizing Acanthoma
+Ingrown Toenail
+Inguinal Cryptorchidism
+Inguinal Hernia
+Inguinal Lymphadenopathy
+Inguinal Region Painful
+Inguinal Swelling
+Injection Site Nodule
+Injection Site Reaction
+Injury Of Axillary Nerve
+Injury Of Collateral Ligament Of Carpus
+Injury Of Collateral Ligament Of Stifle
+Injury Of Collateral Ligament Of Tarsus
+Injury Of Eyeball
+Injury Of Medial Meniscus
+Injury Of Nail
+Insect Bite
+Insect Sting
+Insecticide Intoxication
+Inspiratory Dyspnoea
+Inspiratory Stridor
+Insulinoma
+Intention Tremor
+Intercat Aggression
+Interdental Space Increased
+Interdigital Abscess
+Interdigital Dermatitis
+Interdigital Erythema
+Interdigital Skin Granuloma
+Interdog Aggression
+Intermittent Diarrhea
+Intermittent Lameness
+Intermittent Vomiting
+Intermuscular Lipoma
+Interstitial Nephritis
+Interstitial Pattern
+Interstitial Pneumonia
+Interstitial Pulmonary Disease
+Intervertebral Disc Degeneration
+Intervertebral Disc Disease
+Intervertebral Disc Narrowed
+Intervertebral Disc Prolapse
+Intervertebral Disc Rupture
+Intervertebral Disk Disease - Cervical
+Intervertebral Disk Disease - Lumbosacral
+Intervertebral Disk Disease - Thoracolumbar
+Intervertebral Disk Mineralized
+Intervertebral Foramen Narrowed
+Intestinal Adhesion
+Intestinal Crypt Cell Degeneration
+Intestinal Crypt Deepened
+Intestinal Dilatation
+Intestinal Foreign Body
+Intestinal Granuloma
+Intestinal Hemorrhage
+Intestinal Hypermotility
+Intestinal Intussusception
+Intestinal Lymphangiectasia
+Intestinal Mass
+Intestinal Mucosa Congested
+Intestinal Mucosa Hemorrhagic
+Intestinal Mucosa Inflamed
+Intestinal Necrosis
+Intestinal Obstruction
+Intestinal Obstruction - Foreign Body
+Intestinal Obstruction - Neoplasia
+Intestinal Perforation
+Intestinal Plication Resulting From Intestinal Obstruction
+Intestinal Plication Resulting From Surgical Procedure
+Intestinal Stasis
+Intestinal Stenosis
+Intestinal Transit Time Prolonged
+Intestinal Villous Blunting
+Intestine Distended By Gas
+Intestine Distended With Fluid
+Intestine Thickened
+Intestine Ulceration
+Intoxication
+Intraabdominal Hemorrhage
+Intraarticular Radiodensity
+Intracranial Hemorrhage
+Intracranial Mass
+Intracytoplasmic Inclusion Bodies
+Intradermal Allergy Skin Test Positive
+Intradural Cyst
+Intraepidermal Pustular Dermatitis
+Intranuclear Inclusion Bodies
+Intraocular Hemorrhage
+Intrathoracic Lymphadenopathy
+Intrathoracic Tracheal Collapse
+Intraventricular Conduction Defect
+Intussusception
+Iridodonesis
+Iris Atrophy
+Iris Bombe
+Iris Cyst
+Iris Depigmentation
+Iris Melanosis
+Iris Pigmentation Abnormal
+Iritis
+Iron-Deficiency Anemia
+Irritant Conjunctivitis
+Ischemia
+Isosthenuria
+Ivermectin Intoxication
+Jaw Chattering
+Jaw Pain
+Jaw Rubbery
+Jaw Tone Decreased
+Joint Crepitation
+Joint Deformed
+Joint Effusion
+Joint Fistula
+Joint Fluid Bloody
+Joint Fluid Cloudy
+Joint Fluid Contains Degenerate Neutrophils
+Joint Fluid Fibrin Clot
+Joint Fluid Lymphocyte Count Increased
+Joint Fluid Monocyte Count Increased
+Joint Fluid Neutrophil Count Increased
+Joint Fluid Opaque White
+Joint Fluid Plasma Cell Count Increased
+Joint Fluid Protein Equals Serum Protein
+Joint Fluid Protein Increased
+Joint Fluid Synovial Cell Count Increased
+Joint Fluid Thin
+Joint Fluid Turbid
+Joint Fluid Viscosity Decreased
+Joint Fluid Yellow
+Joint Heat
+Joint Hyperextension
+Joint Laxity
+Joint Luxation
+Joint Mouse
+Joint Movement Decreased
+Joint Pain
+Joint Stiffness
+Joint Subluxation
+Joint Swelling
+Jugular Vein Distended
+Juvenile Carpal Hyperflexion
+Juvenile Pyoderma
+Keratic Precipitates
+Keratin Plug In Hair Follicle
+Keratin Plug In Sebaceous Gland
+Keratitis
+Keratoacanthoma Of Eyelid
+Keratoconjunctivitis Sicca
+Ketonemia
+Ketosis
+Kidney Disease
+Kidney Mass
+Kidney Pain
+Knuckling
+Kyphosis
+Lab Error
+Labored Respiration
+Laceration Of Rectum
+Laceration Of Skin
+Laceration Of Trachea
+Lacrimal Duct Obstruction, Complete
+Lacrimal Sac Abscess
+Lacrimal Sac Fistula
+Lacrimation Decreased
+Lacrimation Increased
+Lactating
+Lactation Decreased
+Lactic Acidosis
+Lagophthalmos
+Lameness
+Lanugo
+Large Bladder
+Laryngeal Mass
+Laryngeal Paralysis
+Laryngeal Spasm
+Larynx Inflamed
+Lateral Laryngeal Saccules Everted
+Lateral Meniscal Injury
+Lateral Patellar Luxation
+Lateral Recumbency
+Lead Intoxication
+Left Anterior Fascicular Block
+Left Atrial Enlargement
+Left Atrium Dilated
+Left Bundle Branch Block
+Left Forelimb Amputated
+Left Heart Failure
+Left Hindlimb Amputated
+Left Ventricular Chamber Dilated
+Left Ventricular Enlargement
+Left Ventricular Hypertrophy
+Legg-Calve-Perthes Disease
+Legs Bowed
+Leiomyoma
+Leiomyosarcoma
+Leishmaniasis
+Lens Capsule Rupture
+Lens In Anterior Chamber
+Lens In Posterior Chamber
+Lens Luxation
+Lens Opacity
+Lens Subluxation
+Lens-Induced Uveitis
+Lenticonus
+Lenticular Sclerosis
+Leptomeningitis
+Leptospirosis
+Lesion Of Pinna
+Lethargy
+Leukaemia
+Leukocytes In Urine
+Leukocytosis
+Leukoderma
+Leukoencephalomyelopathy
+Leukonychia
+Leukopenia
+Leukopenia With Degenerative Left Shift
+Leukorrhoea
+Leukotrichia
+Lh Decreased
+Lh Increased
+Lichenification
+Licking Skin Excessively
+Ligament Avulsion
+Ligament Injury
+Ligament Sprain
+Lily Intoxication
+Limb Oedema
+Limb Pain
+Limb Swelling
+Limbs Stiff
+Limping On Forelimb
+Linear Granuloma Of Skin
+Linear Ulcer On Tongue
+Lip Fold Dermatitis
+Lip Licking
+Lip Paralysis
+Lip Ulcer
+Lip Vesicle
+Lipoma
+Liposarcoma
+Liver Cell Carcinoma
+Liver Degeneration
+Liver Disease
+Liver Mass
+Lizard Envenomation
+Lobar Pneumonia
+Localized Demodecosis
+Localized Dermatitis
+Loose Tooth
+Lordosis
+Louse Infestation
+Low Dose Dexamethasone Suppression Abnormal
+Low Dose Dexamethasone Suppression Normal
+Lower Motor Neuron Disease
+Lower Motor Neuron Disease Of Forelimb
+Lower Motor Neuron Disease Of Hindlimb
+Lower Respiratory Disease
+Lower Urinary Tract Infection
+Lumbar Back Pain
+Lumbar Intervertebral Disk Disorder
+Lumbar Vertebral Formation Abnormal
+Lumbosacral Instability
+Lumbosacral Pain
+Lumbosacral Spinal Canal Stenosis
+Lung Adenocarcinoma
+Lung Consolidation
+Lung Lobe Torsion
+Lupoid Onychodystrophy
+Luxation - Patella - Lateral
+Luxation - Atlantoaxial
+Luxation - Carpo-Metacarpal
+Luxation - Coxofemoral
+Luxation - Elbow
+Luxation - Intertarsal
+Luxation - Metatarsophalangeal
+Luxation - Patella - Medial
+Luxation - Radial Head
+Luxation - Sacroiliac
+Luxation - Scapula
+Luxation - Shoulder - Craniomedial
+Luxation - Stifle
+Luxation - Tarsometatarsal
+Luxation - Tibiotarsal
+Luxation Of Accessory Carpal Bone
+Luxation Of Sternum
+Luxation Of Tarsal Joint
+Lying Down
+Lyme Disease
+Lymph Node Abscessed
+Lymph Node Draining
+Lymphadenitis
+Lymphadenopathy
+Lymphangiectasia
+Lymphangiectasia - Intestinal
+Lymphangiogram Abnormal
+Lymphatic Dilatation
+Lymphoblastic Lymphoma
+Lymphocyte Abnormality
+Lymphocytic Enteritis
+Lymphocytic Enterocolitis
+Lymphocytic Gastritis
+Lymphocytic Meningitis
+Lymphocytic Parathyroiditis
+Lymphocytic Plasmacytic Cholangiohepatitis
+Lymphocytic Plasmacytic Dermatitis
+Lymphocytic Plasmacytic Enterocolitis
+Lymphocytic Plasmacytic Gastroenteritis
+Lymphocytic Plasmacytic Gingivitis
+Lymphocytic Plasmacytic Stomatitis
+Lymphocytic Thyroiditis
+Lymphocytic-Plasmacytic Colitis
+Lymphocytic-Plasmacytic Enteritis
+Lymphocytosis
+Lymphoid Depletion
+Lymphoid Hyperplasia
+Lymphoma
+Lymphopenia
+Lysosomal Storage Disease
+Macrocytic Hypochromic Anemia
+Macrocytic Normochromic Anemia
+Macrocytosis
+Macroglobulinemia
+Macronychia
+Macropalpebral Fissure
+Main Stem Bronchus Compression
+Malabsorption Syndrome
+Malaise
+Malassezia Dermatitis
+Male Feminizing Syndrome
+Male Infertility
+Malignant Fibrous Histiocytoma
+Malignant Histiocytosis
+Malignant Hyperthermia
+Malnutrition
+Malocclusion
+Malodorous Urine
+Mammary Adenocarcinoma
+Mammary Carcinoma
+Mammary Gland Abscess
+Mammary Gland Cold
+Mammary Gland Discharge
+Mammary Gland Erythematous
+Mammary Gland Firm
+Mammary Gland Gangrenous
+Mammary Gland Hyperplasia
+Mammary Gland Mass
+Mammary Gland Oedematous
+Mammary Gland Painful
+Mammary Gland Scabby
+Mammary Gland Swollen
+Mammary Gland Ulcer
+Mammary Gland Warm
+Mammary Lymphadenopathy
+Mandible Enlarged
+Mandibular Abscess
+Mandibular Fracture
+Mandibular Lymphadenopathy
+Mandibular Osteolysis
+Mandibular Swelling
+Mandibular Symphyseal Fracture
+Marking Behavior Finding
+Mass In Ear Canal
+Mass In Eyelid
+Mass In Iris
+Mass In Pinna
+Mass Of Body Region
+Mass Of Bone
+Mass Of Colon
+Mass Of Cortex Of Kidney
+Mass Of Front Foot
+Mass Of Hind Foot
+Mass Of Large Intestine
+Mass Of Penis
+Mass Of Renal Medulla
+Mass Of Sclera
+Mass Of Small Intestine
+Mass Of Soft Palate
+Mass Of Third Eyelid
+Mass Resection
+Masseter Muscle Atrophy
+Mast Cell Infiltration Of Skin
+Mast Cell Neoplasm
+Mast Cell Tumour
+Masticatory Muscle Atrophy
+Masticatory Myositis
+Mastitis
+Maternal Autoimmune Hemolytic Anemia
+Maxillary Fracture
+Maxillary Osteolysis
+Maxillectomy
+Mchc Increased Above Normal
+Mcv Increased Above Normal
+Mean Electrical Axis Deviation
+Medial Canthus Inflamed
+Medial Canthus Swollen
+Medial Hyperplasia Of Pulmonary Artery
+Medial Luxation Of Patella
+Mediastinal Hemorrhage
+Mediastinal Lymphadenopathy
+Mediastinal Mass
+Mediastinum Widened
+Medication Administered In Error
+Medication Dispensed In Error
+Medication Error
+Medication Prescribed In Error
+Megacolon
+Megaloblastic Anemia
+Megaloblastic Erythropoiesis
+Megaoesophagus
+Megathrombocytosis
+Meibomian Gland Adenoma
+Melanoma
+Melanoma - Oral
+Melanoma Of Uvea
+Melanosarcoma
+Melena
+Menace Response Absent
+Meningial Petechia
+Meningioma
+Meningitis
+Meningitis Due To Neospora
+Meningoencephalitis
+Meningoencephalomyelitis
+Meniscal Click
+Mental Dullness
+Mesenteric Granuloma
+Mesenteric Lymphadenopathy
+Mesenteric Mass
+Mesothelioma
+Metabolic Acidosis
+Metabolic Alkalosis
+Metabolic Bone Disease
+Metabolic Myopathy
+Metacarpal Fracture
+Metachromatic Granules In Neutrophil
+Metaldehyde Intoxication
+Metaphyseal Lipping
+Metastatic Neoplasm
+Metatarsal Fracture
+Metatarsal Periosteal Proliferation
+Methemalbuminemia
+Methemoglobinaemia
+Metritis
+Microalbuminuria
+Microangiopathic Hemolytic Anemia
+Microcardia
+Microcytic Anemia
+Microcytic Hypochromic Anemia
+Microcytic Normochromic Anemia
+Microcytosis
+Microfilaremia
+Microhepatia
+Micromelia
+Micronychia
+Microphthalmia
+Microvesicular Steatosis
+Microvesicular Steatosis Of Kidney
+Microvesicular Steatosis Of Liver
+Microvesicular Steatosis Of Muscle
+Midsystolic Click
+Mineralization
+Mineralization Of Cortex Of Kidney
+Miosis
+Mite Infestation
+Mite Infestation Of Skin
+Mitral Chordae Tendinae Too Long
+Mitral Chordae Tendinae Too Short
+Mitral Valve Abnormal
+Mitral Valve Disease
+Mitral Valve Dysplasia
+Mitral Valve Insufficiency
+Mitral Valve Leaflet Flailing
+Mitral Valve Prolapsed
+Mitral Valve Stenosis
+Mixed Mammary Tumour
+Mixed Pattern
+Mobitz Type 1A Incomplete Atrioventricular Block
+Mobitz Type 1B Incomplete Atrioventricular Block
+Mobitz Type 2 Second Degree Atrioventricular Block
+Modified Transudate
+Modified Transudative Peritoneal Effusion
+Moist Pyoderma
+Monoclonal Gammopathy
+Monocytes Hyposegmented
+Monocytes Vacuolated
+Monocytic Leukemia
+Monocytosis
+Monoparesis
+Monorchidism
+Moribund
+Motion Sickness
+Motor Deficit
+Mottling Of Liver
+Mucinosis Affecting Skin
+Mucocoele Of Salivary Gland
+Mucocutaneous Pyoderma
+Mucocutaneous Ulcer
+Mucoid Diarrhea
+Mucoid Eye Discharge
+Mucoid Vaginal Discharge
+Mucopurulent Conjunctivitis
+Mucopurulent Discharge From Punctum
+Mucopurulent Eye Discharge
+Mucous Membrane Oedema
+Mucous Membranes Cyanotic
+Mucous Membranes Hyperemic
+Mucous Membranes Pale
+Mucous Nasal Discharge
+Mucus Discharge From Anus
+Multifocal Alopecia
+Multiple Myeloma
+Muscle Atrophy
+Muscle Contracture
+Muscle Disorder
+Muscle Fasciculation
+Muscle Fiber Degeneration
+Muscle Hypertrophy
+Muscle Laceration
+Muscle Pain
+Muscle Rigidity
+Muscle Spasticity
+Muscle Strain
+Muscle Tremor
+Muscle Weakness
+Muscular Dystrophy
+Mushroom Intoxication
+Myasthenia Gravis
+Myelocytes In Blood
+Myelofibrosis
+Myelography Abnormal
+Myeloid Dysplasia
+Myeloid Hyperplasia
+Myeloid Hypoplasia
+Myeloid Leukemia
+Myelopathy
+Myocardial Carnitine Decreased
+Myocardial Contractility Reduced
+Myocardial Degeneration
+Myocardial Fibrosis
+Myocardial Hemorrhage
+Myocardial Mineralization
+Myocardial Mononuclear Infiltration
+Myocardial Necrosis
+Myocarditis
+Myoclonus
+Myocyte Disarray
+Myodystrophic Calcification
+Myofibrosarcoma
+Myofibrosis
+Myoglobinuria
+Myositis
+Myositis Ossificans
+Myotonia
+Myotonus
+Myxoedema
+Myxoid Degeneration Of Mitral Valve
+Na K Ratio Decreased
+Nail Avulsion
+Nail Bed Crusty
+Nail Bed Infection
+Nail Bed Mass
+Nail Bed Ulcer
+Nail Bed Vesicle
+Nail Hypertrophy
+Nail Painful
+Nails Of Hindlimb Worn
+Nares Stenotic
+Nasal Bone Fracture
+Nasal Bridge Swollen
+Nasal Discharge
+Nasal Discharge Bloody
+Nasal Discharge Mucopurulent
+Nasal Discharge Purulent
+Nasal Discharge Serous
+Nasal Mass
+Nasal Mucosa Hyperemic
+Nasal Planum Crusty
+Nasal Planum Depigmented
+Nasal Planum Ulcer
+Nasal Polyp
+Nasal Septum Perforated
+Nasal Turbinate Destruction
+Nasal Ulcer
+Nasolacrimal Duct Obstruction
+Nasopharyngeal Polyp
+Necrosis Of Liver
+Necrosis Of Muscle
+Necrosis Of Skin
+Necrotic Dermatitis
+Necrotizing Vasculitis
+Neck Pain
+Neck Swelling
+Neck Trauma
+Necrotizing Myositis
+Neonatal Isoerythrolysis
+Nephritis
+Nephroblastoma
+Nephrocalcinosis
+Nephrolithiasis
+Nephropathy
+Nephrosis
+Nephrotic Syndrome
+Nerve Root Compression
+Nervousness
+Neuritis
+Neurogenic Bladder
+Neurologic Disorder
+Neurologic Signs
+Neuroma
+Neutropenia
+Neutrophilia
+Neutrophilic Dermatitis
+Neutrophilic Inflammation
+Neutrophils Toxic
+Nictitating Membrane Prolapse
+Nictitating Membrane Swollen
+Night Blindness
+Nipple Discharge
+Nipple Ulcer
+Nipple Vesicle
+No Menace Response
+No Pupillary Light Reflex
+Noisy Breathing
+Non Healing Wound
+Non Productive Cough
+Non Regenerative Anemia
+Nonambulatory
+Nonambulatory Paraparesis
+Nonambulatory Tetraparesis
+Noncardiogenic Pulmonary Edema
+Nonhealing Ulcer
+Nonproductive Cough
+Normal Pregnancy
+Normocytic Anemia
+Normocytic Hypochromic Anemia
+Normocytic Normochromic Anemia
+Normoglycemia
+Normokalemia
+Normotension
+Normothermia
+Nuclear Left Shift
+Nuclear Right Shift
+Nucleated Red Blood Cells
+Nystagmus
+Obesity
+Obstruction Of Bile Duct
+Obstruction Of Nasolacrimal Duct
+Obstruction Of Small Intestine
+Obstructive Uropathy
+Occipital Bone Fracture
+Occult Blood In Stool
+Ocular Discharge
+Ocular Hemorrhage
+Ocular Pain
+Ocular Trauma
+Ocular Ulcer
+Oculomotor Nerve Paralysis
+Odor Of Mouth Abnormal
+Oedema
+Oedema Of Eyelid
+Oedema Of Pinna
+Oedema Of Scrotum
+Oesophageal Dilatation
+Oesophageal Foreign Body
+Oesophageal Obstruction
+Oesophageal Stricture
+Oesophagitis
+Oliguria
+Onychodystrophy
+Onychogryphosis
+Onycholysis
+Onychomadesis
+Open Fontanelle
+Open Fracture
+Open Mouth Breathing
+Operculum Deformed
+Ophthalmoplegia
+Opisthotonos
+Opportunistic Infection
+Optic Nerve Atrophy
+Optic Nerve Hypoplasia
+Optic Neuritis
+Oral Abscess
+Oral Bleeding
+Oral Cavity Mass
+Oral Foreign Body
+Oral Melanoma
+Oral Papilloma
+Oral Ulcer
+Orchitis
+Orthopnea
+Osmotic Diarrhea
+Osteoarthritis
+Osteochondritis Dissecans
+Osteochondrosis
+Osteodystrophy
+Osteolysis
+Osteoma
+Osteomyelitis
+Osteopenia
+Osteophyte Formation
+Osteosarcoma
+Otitis Externa
+Otitis Media
+Otitis Interna
+Otohematoma
+Overgrown Nails
+Overweight
+Ovulation Failure
+Pain On Palpation
+Painful Abdomen
+Painful Defecation
+Painful Swallowing
+Palatal Defect
+Palate Swelling
+Pale Mucous Membranes
+Pancreatic Atrophy
+Pancreatic Mass
+Pancreatic Neoplasia
+Pancreatitis
+Pannus
+Papilledema
+Papilloma
+Papillomatosis
+Paralysis
+Paraparesis
+Paraplegia
+Parasite Infestation
+Parasites In Stool
+Parathyroid Tumor
+Paresis
+Patellar Luxation
+Paw Licking
+Paw Swelling
+Pelvic Fracture
+Pelvic Pain
+Pelvic Limb Lameness
+Pelvic Mass
+Pelvic Pain
+Pericardial Effusion
+Pericarditis
+Periodontal Disease
+Perineal Hernia
+Peritonitis
+Persistent Pupillary Membrane
+Petechiae
+Pharyngitis
+Photophobia
+Pigmentation Disorder
+Pigmentary Keratitis
+Pinna Crusting
+Pinna Swelling
+Pleuritis
+Pleural Effusion
+Pleural Mass
+Pleural Thickening
+Pneumonia
+Pneumothorax
+Polydipsia
+Polyneuropathy
+Polyarthritis
+Polycythemia
+Polyuria
+Poor Appetite
+Poor Coat Condition
+Post Surgical Infection
+Postoperative Pain
+Pregnancy
+Proptosis
+Prostate Enlargement
+Prostatitis
+Pruritus
+Pulmonary Edema
+Pulmonary Fibrosis
+Pulmonary Hypertension
+Pulmonary Mass
+Pulmonary Thromboembolism
+Pupil Dilated
+Pyelonephritis
+Pyoderma
+Pyometra
+Rectal Prolapse
+Renal Failure
+Respiratory Distress
+Retinal Detachment
+Retinal Degeneration
+Retinal Hemorrhage
+Retinal Atrophy
+Retching
+Rib Fracture
+Salivation Excessive
+Salivary Gland Enlargement
+Scrotal Swelling
+Seizure
+Shock
+Skin Mass
+Skin Lesion
+Skin Ulcer
+Sneezing
+Soft Tissue Swelling
+Spinal Cord Injury
+Spinal Pain
+Splenomegaly
+Stomatitis
+Strabismus
+Subcutaneous Mass
+Sudden Death
+Swelling
+Syncope
+Tail Injury
+Tachycardia
+Tachypnea
+Testicular Mass
+Testicular Swelling
+Thrombocytopenia
+Thrombosis
+Tongue Ulcer
+Tonsillitis
+Tremor
+Tumor
+Ulcer
+Urethral Obstruction
+Urinary Incontinence
+Urinary Tract Infection
+Urolithiasis
+Uveitis
+Vaginal Discharge
+Ventricular Tachycardia
+Vestibular Disease
+Vomiting
+Weakness
+Weight Loss
+Wound Infection

@@ -1,40 +1,38 @@
 # Script for populating the database. You can run it as:
 #
-#     mix run priv/repo/seeds.exs
+#   mix run priv/repo/seeds.exs
 #
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     SnippetSaver.Repo.insert!(%SnippetSaver.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# Optional selective run:
+#   SEED_ONLY=species mix run priv/repo/seeds.exs
+#   SEED_ONLY=super_admin,species mix run priv/repo/seeds.exs
+#   SEED_ONLY=colours mix run priv/repo/seeds.exs
+#   SEED_ONLY=breeds mix run priv/repo/seeds.exs
+#   SEED_ONLY=master_problem_templates mix run priv/repo/seeds.exs
 
-alias SnippetSaver.Accounts
-alias SnippetSaver.Accounts.User
+seed_scripts = %{
+  "super_admin" => "seeds/super_admin.exs",
+  "species" => "seeds/species.exs",
+  "colours" => "seeds/colours.exs",
+  "breeds" => "seeds/breeds.exs",
+  "master_problem_templates" => "seeds/master_problem_templates.exs"
+}
 
-super_admin_email = System.get_env("SUPER_ADMIN_EMAIL") || "admin@example.com"
-super_admin_password = System.get_env("SUPER_ADMIN_PASSWORD") || "ChangeMe123456!"
+seed_only =
+  System.get_env("SEED_ONLY")
+  |> case do
+    nil -> :all
+    value ->
+      value
+      |> String.split(",", trim: true)
+      |> Enum.map(&String.trim/1)
+      |> MapSet.new()
+  end
 
-case Accounts.get_user_by_email(super_admin_email) do
-  nil ->
-    case Accounts.register_user(%{
-           email: super_admin_email,
-           password: super_admin_password
-         }) do
-      {:ok, user} ->
-        {:ok, _} = Accounts.update_user_role(user, "super_admin")
-        IO.puts("Created super admin: #{super_admin_email}")
+Enum.each(seed_scripts, fn {name, relative_path} ->
+  should_run? = seed_only == :all or MapSet.member?(seed_only, name)
 
-      {:error, changeset} ->
-        IO.puts("Failed to create super admin: #{inspect(changeset.errors)}")
-    end
-
-  %User{} = user ->
-    if user.role == "super_admin" do
-      IO.puts("Super admin already exists: #{super_admin_email}")
-    else
-      {:ok, _} = Accounts.update_user_role(user, "super_admin")
-      IO.puts("Promoted existing user to super admin: #{super_admin_email}")
-    end
-end
+  if should_run? do
+    IO.puts("Running seed: #{name}")
+    Code.require_file(relative_path, __DIR__)
+  end
+end)

@@ -1,0 +1,818 @@
+# One breed name per line.
+# Lines starting with # are ignored.
+#
+# Example:
+# Abyssinian
+# American Bulldog
+# Arabian
+#
+# Paste your cleaned breed list below this line, one breed per line.
+
+
+Abaco Barb
+Aberdeen Angus
+Abstang
+Abyssinian
+Aegean
+Aegidienberger
+Affenpinscher
+Afghan Hound
+Africander
+African Grey Parrots
+Ainos Pony
+Airedale Terrier
+Akhal-Teke
+Akita
+Alaskan Malamute
+Albanian Horse
+Altwurttemberg
+Amazon Parrot
+American Albino
+American Bashkir
+American Bobtail
+American Bulldog
+American Cream Draft
+American Curl
+American Drum Horse
+American Eskimo
+American Indian Horse
+American Long Hair
+American Mammoth Jack
+American Miniature Horse
+American Mustang
+American Paint Horse
+American Polydactyl
+American Quarter Horse
+American Saddlebred
+American Shetland
+American Shorthair
+American Sport Pony
+American Spotted Paso
+American Staffordshire Terrier
+American Standardbred
+American Thoroughbred
+American Walking Pony
+American Warmblood
+American Wirehair
+Anatolian Shepherd
+Andalusian
+Andino Pony
+Angelfish
+Anglo-Arabian
+Anglo-Arabo-Sardo
+Anglo-Luso
+Anglo-Norman
+Anthias
+Appaloosa
+Appaloosa Sport Horse
+Appendix Quarter Horse
+AraAppaloosa
+Arabian
+Arabian-Berber
+Arabian-Haflinger
+Arabian Mau
+Arabo-Friesian
+Aralusian
+Argentine Anglo
+Argentine Criollo
+Argentine Polo Pony
+Argentinian Ranch Horse
+Asian Semi-Longhair
+Assateague Pony
+Aubrac
+Australian Brumby
+Australian Cattle Dog
+Australian Cobberdog
+Australian Draught
+Australian Kelpie
+Australian Mist
+Australian Pony
+Australian Shepherd
+Australian Silky Terrier
+Australian Stock Horse
+Australian Terrier
+Australian Warmblood
+Austrian Warmblood
+Axolotl
+Azawakh
+Azores
+Azteca
+Baguio Light Horse
+Balinese
+Bali Pony
+Bambino
+Banker Pony
+Barb
+Barzona
+Basenji
+Basset Fauve De Bretagne
+Basset Hound
+Bavarian Warmblood
+Bazadaise
+Beagle
+Bearded Collie
+Bearded Collie Mix
+Beauceron
+Bedlington Terrier
+Beefalo
+Beefmaster
+Beef Shorthorn
+Belgian Blue
+Belgian Draft
+Belgian Laekinois
+Belgian Malinois
+Belgian Malinois Mix
+Belgian Shepherd (Groenendael)
+Belgian Sport Horse
+Belgian Tervueren
+Belgian Warmblood
+Belmont Red
+Belted Galloway
+Bengal
+Bengalese
+Bergamasco
+Bernese Mountain Dog
+Bichon Frise
+Bichon Mix
+Birman
+Black And Tan Coonhound
+Black Bird
+Black Russian Terrier
+Blazer Horse
+Blennies
+Blonde d'Aquitaine
+Bloodhound
+Bluetick Coonhound
+Bolivian Pony
+Bolognese
+Bombay
+Bonsmara
+Boran
+Border Collie
+Border Collie Mix
+Border Terrier
+Borzoi
+Boston Terrier
+Bouvier Des Flandres
+Boxer
+Boxer Mix
+Bracco Italiano
+Braford
+Brahman
+Brahmousin
+Brandenburger
+Brangus
+Brazilian Pony
+Brazilian Shorthair
+Brazilian Sport Horse
+Briard
+British Appaloosa
+British Blue
+British Longhair
+British Riding Pony
+British Shetland
+British SH Mixed
+British Shorthair
+British Spotted Pony
+British Thoroughbred
+British Warmblood
+British White
+Brittany Spaniel
+Brussels Griffon
+Budgie
+Buelingo
+Bulldog
+Bullmastiff
+Bullmastiff Mix
+Bull Terrier
+Burmese
+Burmilla
+Caiques
+Cairn Terrier
+Calabrese
+California Spangled
+Camarillo White Horse
+Canaan Dog
+Canadian Cutting Horse
+Canadian Eskimo Dog
+Canadian Horse
+Canadian Pacer
+Canadian Rustic Pony
+Canadian Sport Horse
+Canadian Warmblood
+Canaries
+Canchim
+Cane Corso
+Caracu
+Cardigan Welsh Corgi
+Carolina Marsh Tacky
+Carthusian Horse
+Cashmere
+Castilian Horse
+Caucasian Shepherd
+Cavalier King Charles Spaniel
+Cavalier King Charles Spaniel Mix
+Cavanchon
+Cavapoo
+Celtic Pony
+Central Asian Shepherd Dog
+Cesky Fousek
+Cesky Terrier
+Champagne Horse
+Chapman Horse
+Charolais
+Chartreux
+Chausie
+Chesapeake Bay Retriever
+Cheval de Corlay
+Chianina
+Chicken
+Chicksaw Pony
+Chihuahua
+Chihuahua (Long Coat)
+Chilean Corralero
+Chinchilla
+Chincoteague Pony
+Chinese Crested
+Chinese Li Hua
+Choctaw Horse
+Chow Chow
+Cleveland Bay
+Clownfish
+Clumber Spaniel
+Clydesdale
+Cob
+Cockapoo
+Cockatiels
+Cockatoos
+Cocker Spaniel
+Cocker Spaniel Mix
+Coffin Bay Pony
+Coldblooded Trotter
+Collie
+Colonial Spanish
+Colorado Ranger
+Colorpoint Shorthair
+Composite
+Conures
+Cornish Rex
+Corriente
+Costa Rican Saddle Horse
+Coton De Tulear
+Country Saddle Horse
+Courage Pony
+Crossbreed
+Crow
+Cuban Paso
+Cuban Pinto
+Curly
+Curly Coated Retriever
+Curly Haired Fox Trotter
+Cymric
+Cyprus
+Czech Coldblood
+Czechoslovakian Small Riding Horse
+Czech Warmblood
+Dachshund
+Dachshund (Min. Long Haired)
+Dachshund (Min. Wire Haired)
+Dachshund (Smooth Haired)
+Dachshund (Wire Haired)
+Dalmatian
+Dalmatian Mix
+Damselfish
+Dandie Dinmont Terrier
+Danish Sport Pony
+Danish Warmblood
+Desert Mix
+Desert Norman Horse
+Devon
+Devon Rex
+Dexter
+Doberman Pinscher
+Dogo Argentino
+Dogue De Bordeaux
+Domestic Longhair
+Domestic Medium Hair
+Domestic Shorthair
+Don
+Donskoy
+Dottybacks
+Dove
+Drakensberger
+Droughtmaster
+Drum Horse
+Duck
+Dun
+Dutch Draft
+Dutch Harness Horse
+Dutch Shepherd
+Dutch Warmblood
+East Friesian Warmblood
+East Prussian
+Eclectus
+Egyptian Arabian
+Egyptian Mau
+Elo
+English Cocker Spaniel
+English Longhorn
+English Setter
+English Springer Spaniel
+English Toy Terrier (Black & Tan)
+Estonian Draft
+Estonian Native
+Estrela Mountain Dog
+Eurasier
+European Burmese
+European Rabbit
+European Shorthair
+European Starling
+Exotic
+Fairy and Flasher Wrasses
+Fell Pony
+Fennec Fox
+Ferret
+Field Spaniel
+Fila Brasileiro
+Finches
+Finnish Lapphund
+Finnish Spitz
+Finnish Warmblood
+Fjord Horse
+Flat-Coated Retriever
+Flemish Horse
+Flores Pony
+Florida Cracker Horse
+Foundation Quarter Horse
+Foxhound
+Frederiksborg Horse
+Freiberger Horse
+French Anglo Arab
+French Ardennais
+French Bulldog
+French Bulldog Mix
+French Cob
+French Saddlebred / Halfblood
+French Saddle Pony
+French Sport Horse
+French Trotter
+Friesian
+Galloway
+Galloway Pony
+Gelbvieh
+Gelderlander
+German Coach Horse
+German Cold-Blooded
+German Hunting Terrier
+German Pinscher
+German Riding Pony
+German Shepherd
+German Shorthaired Pointer
+German Spitz (Klein)
+German Spitz (Mittel)
+German Wirehaired Pointer
+Giant Schnauzer
+Glen Of Imaal Terrier
+Gloucester
+Gobies
+Golden American Saddlebred
+Golden Doodle
+Golden Retriever
+Goldfinch
+Goldfish
+Goose
+Gordon Setter
+Gotland Pony
+Grackle
+Grand Basset Griffon Vendeen
+Grand Noir du Berry Donkey
+Great Dane
+Greater Swiss Mountain Dog
+Great Poland Horse
+Great Pyrenees
+Greek Pony
+Greek Tortoise
+Green-Cheeked Conure
+Greyhound
+Greyhound Mix
+Griffon Mix
+Guernsey
+Guppies
+Gypsy Vanner
+Hackney Horse
+Hackney Pony
+Haflinger
+Half-Saddlebred
+Hamiltonstovare
+Hamster
+Hanoverian
+Harrier
+Hava Malt
+Havana Brown
+Havanese
+Havanese Terrier
+Havapoo
+Havashire (Havanese & Yorkshire Mix)
+Hawk
+Hays Converter
+Heading Dog
+Hen
+Hereford
+Highland
+Highlander
+Highlander Horse
+Highland Pony
+Himalayan
+Himalayan Mixed
+Hispano
+Holsteiner
+Holstein-Friesian
+Horse of the Americas
+Hungarian Draft
+Hungarian Dun
+Hungarian Horse
+Hungarian Puli
+Huntaway Mix
+Husky Mix
+Hybridmaster
+Ibizan Hound
+Icelandic Horse
+Icelandic Sheepdog
+Ichabod
+Indian Country Bred Horse
+Indian Horse
+Indian Pariah
+Irish Cob
+Irish Draft
+Irish Hobby
+Irish Hunter
+Irish Setter
+Irish Setter Mix
+Irish Terrier
+Irish Water Spaniel
+Irish Wolfhound
+Italian Greyhound
+Italian Heavy Draft
+Italian Spinone
+Italian Trotter
+Jackachon
+Jack Russel Doodle
+Jack Russell Terrier
+Jack Russell Terrier Mix
+Japanese Bobtail
+Japanese Chin
+Japanese Coy
+Japanese Spitz
+Javanese
+Jennet
+Jersey
+Kangal Dog
+Keeshond
+Kentucky Mountain Saddle Horse
+Kerry Blue Terrier
+Kerry Bog Pony
+Kokoni
+Komondor
+Korat
+Kurilian Bobtail
+Kuvasz
+Labrador Retriever
+Labrador Retriever Mix
+Lagotto Romagnolo
+Lakeland Terrier
+LaPerm
+Large Munsterlander
+Leonberger
+Lhasa Apso
+Limousin
+Lincoln Red
+Lipizzaner
+Lithuanian Heavy Draft
+Little Poland Horse
+Lories/Lorikeets
+Lovebirds
+Lowchen
+Lowline
+Luing
+Lusitano
+Lyngen Horse
+Macassar
+Macaws
+Maine Coon
+Malayan
+Maltese
+Maltese Mix
+Malti Poo
+Maltipoo
+Manchester Terrier
+Mandalay
+Manx
+Marchigiana
+Maremma Sheepdog
+Marsh Tacky
+Marwari
+Mastiff
+Mastiff Mix
+Miniature Bull Terrier
+Miniature Dachshund
+Miniature English Bull Terrier
+Miniature Fox Terrier
+Miniature Hereford
+Miniature Horse
+Miniature Pinscher
+Miniature Poodle
+Miniature Schnauzer
+Mini Maltese
+Mini Spitz
+Mini Yorki
+Minor Bird
+Minskin
+Mirandesa
+Missouri Fox Trotting Horse
+Mix
+Mollies
+Mongolian
+Mongolian Wild Horse
+Montana Travler
+Moodle
+Morab
+Morgan
+Morkie
+Moroccan Barb
+Mountain Pleasure Horse
+Munchkin
+Murray Grey
+Mustang
+N/A
+Neapolitan Mastiff
+Nebelung
+Nelore
+Newfoundland
+Nguni
+Norfolk Terrier
+Norman Cob
+Norwegian Buhund
+Norwegian Elkhound
+Norwegian Forest
+Norwich Plainhead
+Norwich Terrier
+Nova Scotia Duck Tolling Retriever
+Nz Huntaway
+Oberlander Horse
+Ocicat
+Ojos Azules
+Old Austrian Warmblood
+Oldenburg
+Old English Black Horse
+Old English Sheepdog
+Oriental Longhair
+Oriental Shorthair
+Other Wrasses
+Otterhound
+Outer Banks Ponies
+Paint Horse
+Paint Pony
+Papillon
+Parrot
+Parrotlets
+Parson Russell Terrier
+Parthenais
+Paso Fino
+Pekingese
+Pembroke Welsh Corgi
+Percheron
+Periangan Pony
+Persano Horse
+Persian
+Persian & British Cross
+Persian Mix
+Peruvian Hairless (Large)
+Peruvian Hairless (Medium)
+Peruvian Hairless (Small)
+Peruvian Paso
+Peterbald
+Petit Basset Griffon Vendeen
+Pharaoh Hound
+Piemontese
+Pigeon
+Pinzgauer
+Pionus Parrots
+Pitbull
+Pitbull Mix
+Pixiebob
+Platies
+Plecostomus (Suckerfish)
+Poicephalus
+Pointer Mix
+Polish Lowland Sheepdog
+Pomeranian
+Pomeranian Mix
+Pomsky
+Pony of the Americas
+Poodle
+Poodle Mix
+Portuguese Water Dog
+Prairie Horse
+Prairie Pony
+Presa Canario
+Pug
+Pumi
+Pyrenean Mastiff
+Pyrenean Sheepdog
+Quaker Parakeet
+Quarab
+Quarter Horse
+Quarter Pony
+Rabbit
+Raccoon
+Racking Horse
+Rafeiro do Alentejo
+Ragamuffin
+Ragdoll
+Rajapalayam
+Rampur Greyhound
+Rangerbred Horse
+Ratonero Bodeguero Andaluz
+Rat Terrier
+Red Angus
+Redbone Coonhound
+Red Eared Slider
+Red Poll
+Red Setter
+Retinta
+Retriever Mix
+Rhineland Heavy Draft
+Rhodesian Ridgeback
+Rhodesian Ridgeback Mix
+Ringneck Parakeet
+Robin
+Rocky Mountain Horse
+Romagnola
+Romanian Saddle Horse
+Romanian Trotter
+Rooster
+Rottweiler
+Russell Terrier
+Russian Blue
+Russian Don
+Russian Harlequin Hound
+Russian Heavy Draft
+Russian Hound
+Russian Riding Horse
+Russian Setter
+Russian Spaniel
+Russian Tortoise
+Russian Toy Terrier
+Russian Trotter
+Sable Island Pony
+Saddlebred
+Saint Bernard
+Sakhalin Husky
+Salers
+Saluki
+Saluki Mix
+Samoyed
+Sandalwood Pony
+Sanganer
+Santa Cruz
+Santa Gertrudis
+Sardinian Anglo-Arab
+Savannah
+Saxony Warmblood
+Schipperke
+Schleswiger Heavy Draft
+Scottish Deerhound
+Scottish Fold
+Scottish Mix
+Scottish Straight
+Scottish Terrier
+Sea Gull
+Sealyham Terrier
+Selkirk Rex
+Selle Francais
+Seminole Pony
+Senepol
+Serbian Hound
+Serengeti
+Serval
+Shackleford Banks Horse
+Shar Pei
+Sheepadoodle
+Sheepdog
+Shetland
+Shetland Pony
+Shetland Sheepdog
+Shiba Inu
+Shih Tzu
+Shih Tzu x Maltese
+Shih Tzu & Yorkshire Mix
+Shire Horse
+Siamese
+Siamese Mix
+Siberian
+Siberian Husky
+Simbrah
+Simmental
+Singapura
+Skye Terrier
+Smooth Fox Terrier
+Snowshoe
+Sokoke
+Somali
+South African Warmblood
+South Devon
+South German Coldblood
+Soviet Heavy Draft
+Spaniel Mix
+Spanish Anglo-Arabian
+Spanish Barb
+Spanish Colonial Horse
+Spanish Greyhound
+Spanish Jennet
+Spanish Mastiff
+Spanish Mustang
+Spanish Norman
+Spanish Water Dog
+Sparrow
+Speckle Park
+Sphynx
+Spitz Mix
+Spoodle
+Spotted Saddle Horse
+Square Meaters
+Staffordshire Bull Terrier
+Staffordshire Bull Terrier Mix
+Standardbred
+Standard Poodle
+Standard Schnauzer
+Sugarbush Draft
+Sussex
+Sussex Spaniel
+Swedish Elkhound
+Swedish Lapphund
+Swedish Vallhund
+Swedish Warmblood
+Swiss Shepherd
+Swiss Warmblood
+Tabby
+Tangs (aka Surgeonfish)
+Tarentaise
+Tatra Shepherd Dog
+Teacup Pomeranian
+Teacup Poodle
+Tennessee Walking Horse
+Tenterfield Terrier
+Tetras
+Texas Longhorn
+Thoroughbred
+Tibetan Mastiff
+Tibetan Spaniel
+Tibetan Terrier
+Tiffany
+Tiger Horse
+Tonkinese
+Torpe
+Tortoise Terrapene
+Toyger
+Toy Poodle
+Trakehner
+Tuli
+Turkey
+Turkish Angora
+Turkish Angora Mix
+Turkish Van
+Ukrainian Levkoy
+Ukrainian Saddle-Riding Horse
+Venezuelan Criollo
+Virginia Highlander
+Vizsla
+Vladimir Heavy Draft
+Volpino
+Wagyu
+Walkaloosa
+Washu Horse
+Watusi
+Weimaraner
+Welsh Black
+Welsh Cob
+Welsh Mountain Pony
+Welsh Pony
+Welsh Pony of Cob Type
+Welsh Springer Spaniel
+Welsh Terrier
+West African Barb
+Westfalen
+Westfalen Pony
+West Highland White Terrier
+West Norwegian
+Wheaten Terrier
+Whippet
+Whitebred Shorthorn
+Wire Fox Terrier
+Wirehaired Vizsla
+Woodpecker
+York
+Yorkshire Coach Horse
+Yorkshire Terrier
+Yorktown Mix
+Zebu

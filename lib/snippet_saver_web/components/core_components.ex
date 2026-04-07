@@ -3,7 +3,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   Provides core UI components.
 
   At first glance, this module may seem daunting, but its goal is to provide
-  core building blocks for your application, such as modals, tables, and
+  core building blocks for your application, such as modals, drawers, tables, and
   forms. The components consist mostly of markup and are well-documented
   with doc strings and declarative assigns. You may customize and style
   them in any way you want, based on your application growth and needs.
@@ -84,6 +84,80 @@ defmodule SnippetSaverWeb.CoreComponents do
             </.focus_wrap>
           </div>
         </div>
+      </div>
+    </div>
+    """
+  end
+
+  @doc """
+  Renders a right-side drawer (slide-over panel).
+
+  Same lifecycle as `modal/1`: use `show_drawer/2` and `hide_drawer/2`, optional `show={true}` to open on mount,
+  and `on_cancel` for close / LiveView events.
+
+  ## Examples
+
+      <.drawer id="item-drawer" on_cancel={hide_drawer("item-drawer")}>
+        Content
+      </.drawer>
+
+      <.drawer id="detail-drawer" show={true} on_cancel={JS.push("close_detail")}>
+        Details
+      </.drawer>
+  """
+  attr :id, :string, required: true
+  attr :show, :boolean, default: false
+  attr :on_cancel, JS, default: %JS{}
+  slot :inner_block, required: true
+
+  def drawer(assigns) do
+    ~H"""
+    <div
+      id={@id}
+      phx-mounted={@show && show_drawer(@id)}
+      phx-remove={hide_drawer(@id)}
+      data-cancel={JS.exec(@on_cancel, "phx-remove")}
+      class="relative z-50 hidden"
+    >
+      <div
+        id={"#{@id}-bg"}
+        class="fixed inset-0 z-40 bg-zinc-900/40 transition-opacity opacity-0"
+        aria-hidden="true"
+        phx-click={JS.exec("data-cancel", to: "##{@id}")}
+      />
+      <div
+        class="fixed inset-y-0 right-0 z-50 flex w-full max-w-[40rem] mx-auto"
+        aria-labelledby={"#{@id}-title"}
+        aria-describedby={"#{@id}-description"}
+        role="dialog"
+        aria-modal="true"
+        tabindex="0"
+      >
+        <.focus_wrap
+          id={"#{@id}-container"}
+          phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
+          phx-key="escape"
+          class="h-full w-full"
+        >
+          <div
+            id={"#{@id}-panel"}
+            class="relative flex h-full w-full translate-x-full transform flex-col overflow-y-auto bg-white p-6 shadow-xl ring-1 ring-zinc-700/10 transition-transform hidden"
+          >
+            <div class="absolute end-3 top-3 z-10">
+              <button
+                phx-click={JS.exec("data-cancel", to: "##{@id}")}
+                type="button"
+                class="-m-2 flex-none rounded-lg p-2 text-gray-500 opacity-70 hover:bg-gray-100 hover:opacity-100"
+                aria-label={gettext("close")}
+              >
+                <.icon name="hero-x-mark-solid" class="h-5 w-5" />
+              </button>
+            </div>
+            <div id={"#{@id}-content"} class="min-h-0 flex-1 pt-6 pe-2">
+              {render_slot(@inner_block)}
+            </div>
+          </div>
+        </.focus_wrap>
       </div>
     </div>
     """
@@ -444,7 +518,7 @@ defmodule SnippetSaverWeb.CoreComponents do
             {@rest}
           />
       <% end %>
-      
+
     <!-- Error messages -->
       <div :if={length(@errors) > 0} class="mt-1">
         <p :for={msg <- @errors} class="text-sm text-danger-600">
@@ -453,6 +527,137 @@ defmodule SnippetSaverWeb.CoreComponents do
       </div>
     </div>
     """
+  end
+
+  @doc """
+  Searchable single-select (combobox) for large option lists.
+
+  Uses a hidden input for the real form value and a text input for filtering.
+  Wire `phx-target` on the LiveView/LiveComponent and handle `search_event`,
+  `focus_event`, `close_event`, and `pick_event` on the server.
+
+  ## Examples
+
+      <.searchable_select
+        field={@form[:breed_id]}
+        label="Breed"
+        placeholder="Search breeds..."
+        display={@breed_combobox_display}
+        open={@breed_combobox_open}
+        suggestions={@breed_combobox_suggestions}
+        search_name="breed_combobox_q"
+        search_event="breed-combobox-search"
+        focus_event="breed-combobox-focus"
+        close_event="breed-combobox-close"
+        pick_event="breed-combobox-pick"
+        clear_event="breed-combobox-clear"
+        phx_target={@myself}
+      />
+  """
+  attr :id, :string, default: nil
+  attr :field, Phoenix.HTML.FormField, required: true
+  attr :label, :string, default: nil
+  attr :required, :boolean, default: false
+  attr :placeholder, :string, default: "Search..."
+  attr :display, :string, default: ""
+  attr :open, :boolean, default: false
+  attr :suggestions, :list, default: [], doc: "list of {label, id} tuples"
+  attr :search_name, :string, required: true
+  attr :search_event, :string, required: true
+  attr :focus_event, :string, required: true
+  attr :close_event, :string, required: true
+  attr :pick_event, :string, required: true
+  attr :clear_event, :string, default: nil
+  attr :phx_target, :any, required: true
+
+  def searchable_select(assigns) do
+    field = assigns.field
+    base_id = assigns[:id] || "#{field.id}-searchable"
+    hidden_value = hidden_select_value(field.value)
+    errors = Enum.map(field.errors, &translate_error/1)
+
+    assigns =
+      assigns
+      |> assign(:base_id, base_id)
+      |> assign(:hidden_value, hidden_value)
+      |> assign(:errors, errors)
+
+    ~H"""
+    <div
+      id={@base_id}
+      class="relative mb-4"
+      phx-click-away={JS.push(@close_event, target: @phx_target)}
+      phx-feedback-for={@field.name}
+    >
+      <label
+        :if={@label}
+        for={"#{@base_id}-query"}
+        class="block text-sm font-medium text-gray-700 mb-1"
+      >
+        {@label}
+        <span :if={@required} class="text-danger-500 ml-1">*</span>
+      </label>
+      <input type="hidden" name={@field.name} id={"#{@base_id}-hidden"} value={@hidden_value} />
+      <div class="relative flex gap-1">
+        <input
+          type="text"
+          id={"#{@base_id}-query"}
+          name={@search_name}
+          value={@display}
+          placeholder={@placeholder}
+          autocomplete="off"
+          class={[
+            "w-full rounded-lg border focus:outline-none focus:ring-2 focus:ring-offset-2",
+            "px-3 py-2 text-sm phx-no-feedback:border-gray-300",
+            input_size("md"),
+            input_variant("default", @errors)
+          ]}
+          phx-target={@phx_target}
+          phx-focus={JS.push(@focus_event, target: @phx_target)}
+          phx-change={@search_event}
+          phx-debounce="200"
+        />
+        <button
+          :if={@clear_event && @hidden_value != ""}
+          type="button"
+          class="shrink-0 rounded-lg border border-gray-300 px-2 py-2 text-xs text-gray-600 hover:bg-gray-50"
+          phx-target={@phx_target}
+          phx-click={JS.push(@clear_event, target: @phx_target)}
+          aria-label={gettext("Clear selection")}
+        >
+          <.icon name="hero-x-mark" class="h-4 w-4" />
+        </button>
+      </div>
+      <div
+        :if={@open && @suggestions != []}
+        class="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+        role="listbox"
+      >
+        <button
+          :for={{label, id} <- @suggestions}
+          type="button"
+          role="option"
+          class="block w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-primary-50"
+          phx-target={@phx_target}
+          phx-click={JS.push(@pick_event, value: %{id: to_string(id), label: label}, target: @phx_target)}
+        >
+          {label}
+        </button>
+      </div>
+      <div :if={length(@errors) > 0} class="mt-1">
+        <p :for={msg <- @errors} class="text-sm text-danger-600">
+          {msg}
+        </p>
+      </div>
+    </div>
+    """
+  end
+
+  defp hidden_select_value(nil), do: ""
+  defp hidden_select_value(""), do: ""
+
+  defp hidden_select_value(val) do
+    val |> to_string() |> String.trim()
   end
 
   @doc """
@@ -704,15 +909,27 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :rest, :global, include: ~w(disabled required)
 
   def yes_no(assigns) do
-    assigns = assign(assigns, :yes_checked, assigns[:value] == true)
-    assigns = assign(assigns, :no_checked, assigns[:value] == false)
+    normalized_value = normalize_yes_no_value(assigns[:value])
+
+    name_key =
+      assigns[:name]
+      |> to_string()
+      |> String.replace(~r/[^a-zA-Z0-9_-]/, "_")
+
+    assigns =
+      assigns
+      |> assign(:yes_checked, normalized_value == true)
+      |> assign(:no_checked, normalized_value == false)
+      |> assign(:yes_id, "#{name_key}_yes")
+      |> assign(:no_id, "#{name_key}_no")
 
     ~H"""
     <div class="mb-4" phx-feedback-for={@name}>
       <label :if={@label} class="block text-sm font-medium text-gray-700 mb-2">{@label}</label>
       <div class="flex gap-6">
-        <label class="flex items-center gap-2 cursor-pointer">
+        <label class="flex items-center gap-2 cursor-pointer" for={@yes_id}>
           <input
+            id={@yes_id}
             type="radio"
             name={@name}
             value="true"
@@ -722,8 +939,9 @@ defmodule SnippetSaverWeb.CoreComponents do
           />
           <span class="text-sm text-gray-700">Yes</span>
         </label>
-        <label class="flex items-center gap-2 cursor-pointer">
+        <label class="flex items-center gap-2 cursor-pointer" for={@no_id}>
           <input
+            id={@no_id}
             type="radio"
             name={@name}
             value="false"
@@ -738,6 +956,10 @@ defmodule SnippetSaverWeb.CoreComponents do
     </div>
     """
   end
+
+  defp normalize_yes_no_value(value) when value in [true, "true", 1, "1"], do: true
+  defp normalize_yes_no_value(value) when value in [false, "false", 0, "0"], do: false
+  defp normalize_yes_no_value(_), do: nil
 
   @doc """
   Renders a group of radio buttons (single selection).
@@ -1446,6 +1668,40 @@ defmodule SnippetSaverWeb.CoreComponents do
       transition: {"transition-all transform ease-in duration-200", "opacity-100", "opacity-0"}
     )
     |> hide("##{id}-container")
+    |> JS.hide(to: "##{id}", transition: {"block", "block", "hidden"})
+    |> JS.remove_class("overflow-hidden", to: "body")
+    |> JS.pop_focus()
+  end
+
+  def show_drawer(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.show(to: "##{id}")
+    |> JS.show(
+      to: "##{id}-bg",
+      transition: {"transition-opacity ease-out duration-300", "opacity-0", "opacity-100"}
+    )
+    |> JS.show(
+      to: "##{id}-panel",
+      transition:
+        {"transition-transform ease-out duration-300", "translate-x-full", "translate-x-0"}
+    )
+    |> JS.add_class("overflow-hidden", to: "body")
+    |> JS.focus_first(to: "##{id}-content")
+  end
+
+  def hide_drawer(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.hide(
+      to: "##{id}-bg",
+      transition: {"transition-opacity ease-in duration-200", "opacity-100", "opacity-0"},
+      time: 200
+    )
+    |> JS.hide(
+      to: "##{id}-panel",
+      transition:
+        {"transition-transform ease-in duration-200", "translate-x-0", "translate-x-full"},
+      time: 200
+    )
     |> JS.hide(to: "##{id}", transition: {"block", "block", "hidden"})
     |> JS.remove_class("overflow-hidden", to: "body")
     |> JS.pop_focus()

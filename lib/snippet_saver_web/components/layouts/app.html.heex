@@ -7,8 +7,10 @@
       if is_nil(raw_active_page) do
         cond do
           String.starts_with?(current_path, "setting/contact") -> "settings_contacts"
+          String.starts_with?(current_path, "setting/patient") -> "settings_patient"
           String.starts_with?(current_path, "setting/clinic") -> "clinic"
           String.starts_with?(current_path, "contacts") -> "contacts"
+          String.starts_with?(current_path, "patients") -> "patients"
           String.starts_with?(current_path, "employees") -> "employees"
           String.starts_with?(current_path, "tasks") -> "tasks"
           String.starts_with?(current_path, "dashboard") or current_path == "" -> "dashboard"
@@ -52,7 +54,7 @@
       <:bottom_nav>
         <details
           class="group rounded-lg border border-gray-200 bg-white"
-          open={active_page in ["settings_contacts", "clinic"]}
+          open={active_page in ["settings_contacts", "settings_patient", "clinic"]}
         >
           <summary class="cursor-pointer list-none px-3 py-2 text-xs font-semibold text-gray-600 uppercase tracking-wider flex items-center justify-between hover:bg-gray-50 rounded-lg">
             <span>Settings</span>
@@ -69,6 +71,12 @@
                 path={~p"/setting/contact"}
                 icon="hero-users"
                 active={active_page == "settings_contacts"}
+              />
+              <.sidebar_link
+                name="Settings Patient"
+                path={~p"/setting/patient"}
+                icon="hero-heart"
+                active={active_page == "settings_patient"}
               />
               <.sidebar_link
                 name="Clinic"

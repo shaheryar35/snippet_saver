@@ -1,0 +1,192 @@
+alias SnippetSaver.Repo
+alias SnippetSaver.Settings
+alias SnippetSaver.Settings.Colour
+
+colour_names = [
+  "Albino",
+  "Amber",
+  "Apricot",
+  "Ash",
+  "Auburn",
+  "Bald",
+  "Beige",
+  "Beige & White",
+  "Bicolor",
+  "Black",
+  "Black and Grey",
+  "Black & Brindle",
+  "Black & Brindle & White",
+  "Black & Brown",
+  "Black & Ginger",
+  "Black Roan",
+  "Black & Silver",
+  "Black & Tan",
+  "Black & Tan & White",
+  "Black & White",
+  "Blenheim",
+  "Blenheim & White",
+  "Blonde",
+  "Blue",
+  "Blue and White",
+  "Blue Classic Tabby",
+  "Blue Cream Point",
+  "Blue Lynx Point",
+  "Blue Merle",
+  "Blue Point",
+  "Blue Roan",
+  "Blue Smoke",
+  "Blue & Tan",
+  "Brindle",
+  "Brindle & White",
+  "Brindle White",
+  "Bronze",
+  "Brown",
+  "Brown and Cream",
+  "Brown & White",
+  "Buff",
+  "Calico",
+  "Calico & Tabby",
+  "Calico & White",
+  "Caramel",
+  "Champagne",
+  "Charcoal",
+  "Charcoal Spotted Tabby",
+  "Chocolate",
+  "Chocolate Point",
+  "Chocolate Roan",
+  "Cinnamon",
+  "Cream",
+  "Cream Point",
+  "Cremello",
+  "Dapple Brown",
+  "Dapple Grey",
+  "Dapple Silver",
+  "Dark Point",
+  "Dilute Calico",
+  "Fawn",
+  "Fawn & Black",
+  "Fawn & White",
+  "Flame Point",
+  "Ginger",
+  "Ginger and White",
+  "Ginger & White",
+  "Golden",
+  "Golden Tabby",
+  "Golden white",
+  "Golden Yellow & Black Spots",
+  "Gray",
+  "Gray & White",
+  "Green",
+  "Grey",
+  "Grey & Tan",
+  "Harlequin",
+  "Lavender",
+  "Light brown",
+  "Lilac",
+  "Lilac & Cream",
+  "Lilac Point",
+  "Lilac & White",
+  "Liver",
+  "Liver & White",
+  "Lynx Point",
+  "Mackerel Tabby",
+  "Mahogany",
+  "Mahogany & White",
+  "Mantle",
+  "Marbled",
+  "Merle",
+  "Mix",
+  "Multicolor",
+  "Multicolored",
+  "N/A",
+  "Off White",
+  "Orange",
+  "Orange Belton",
+  "Orange Tabby",
+  "Orange & White",
+  "Orange/White",
+  "Parti",
+  "Peach",
+  "Peach & White",
+  "Pepper & Salt",
+  "Platinum",
+  "Red",
+  "Red and Black",
+  "Red and Fawn",
+  "Red & Tan",
+  "Red & White",
+  "Reverse Brindle",
+  "Roan",
+  "Royal Black",
+  "Ruby",
+  "Ruddy",
+  "Rust",
+  "Sable",
+  "Sable & White",
+  "Salt & Pepper",
+  "Sand and Black",
+  "Seal Point",
+  "Silk",
+  "Silver",
+  "Silver Point",
+  "Silver & White",
+  "Smoke",
+  "Steel Point",
+  "Strawberry Blonde",
+  "Tabby",
+  "Tabby and Black",
+  "Tabby and Brown",
+  "Tabby & Grey",
+  "Tabby & Silver",
+  "Tabby & White",
+  "Tan",
+  "Tan & White",
+  "Tawny",
+  "Tortishell",
+  "Tortishell & White",
+  "Tortoise",
+  "Tortoiseshell",
+  "Tri Coloured",
+  "Tuxedo",
+  "Wheaten",
+  "White",
+  "White and Brown",
+  "White & Chocolate",
+  "White & Cream",
+  "White & Grey",
+  "White & Peach",
+  "White & Spots",
+  "White & Ticked",
+  "Wolf",
+  "Yellow and Black"
+]
+
+{created, restored, skipped} =
+  Enum.reduce(colour_names, {0, 0, 0}, fn name, {c, r, s} ->
+    case Repo.get_by(Colour, name: name) do
+      nil ->
+        case Settings.create_colour(%{name: name, archived: false}) do
+          {:ok, _} ->
+            {c + 1, r, s}
+
+          {:error, changeset} ->
+            IO.puts("Failed to create colour '#{name}': #{inspect(changeset.errors)}")
+            {c, r, s}
+        end
+
+      %Colour{archived: true} = colour ->
+        case Settings.update_colour(colour, %{archived: false}) do
+          {:ok, _} ->
+            {c, r + 1, s}
+
+          {:error, changeset} ->
+            IO.puts("Failed to restore colour '#{name}': #{inspect(changeset.errors)}")
+            {c, r, s}
+        end
+
+      %Colour{} ->
+        {c, r, s + 1}
+    end
+  end)
+
+IO.puts("Colour seed complete: created=#{created}, restored=#{restored}, skipped=#{skipped}")
