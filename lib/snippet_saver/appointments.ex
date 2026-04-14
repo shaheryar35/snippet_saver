@@ -21,6 +21,44 @@ defmodule SnippetSaver.Appointments do
     Repo.all(Appointment)
   end
 
+  @appointment_calendar_preloads [
+    :patient,
+    :doctor_contact,
+    :owner_contact,
+    :appointment_type,
+    :appointment_status,
+    :recurring_appointment
+  ]
+
+  @doc """
+  Lists appointments that overlap `[utc_start, utc_end)` (half-open on end),
+  with associations needed for calendar display.
+  """
+  def list_appointments_between(%DateTime{} = utc_start, %DateTime{} = utc_end) do
+    from(a in Appointment,
+      where: a.appointment_datetime < ^utc_end,
+      where:
+        fragment(
+          "? + (COALESCE(?, 0) * interval '1 minute') > ?",
+          a.appointment_datetime,
+          a.duration_minutes,
+          ^utc_start
+        ),
+      order_by: [asc: a.appointment_datetime]
+    )
+    |> preload(^@appointment_calendar_preloads)
+    |> Repo.all()
+  end
+
+  @doc """
+  Gets a single appointment with calendar-related associations preloaded.
+  """
+  def get_appointment_for_calendar!(id) do
+    Appointment
+    |> Repo.get!(id)
+    |> Repo.preload(@appointment_calendar_preloads)
+  end
+
   @doc """
   Gets a single appointment.
 

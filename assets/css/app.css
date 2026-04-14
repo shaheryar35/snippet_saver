@@ -3,6 +3,7 @@
 @import "tailwindcss/utilities";
 /* @source "../../deps/live_table/lib"; */
 @import "../../deps/live_table/priv/static/live-table.css";
+@import "../../deps/calendar_component/priv/static/assets/main.css";
 
 /* This file is for your main application CSS */
 
@@ -149,4 +150,210 @@
 
 .employee-tabs-child-row .employee-child-tab:hover {
   @apply bg-gray-100;
+}
+
+/* ---- Appointments schedule: Google Calendar–like EventCalendar chrome ---- */
+.appointment-calendar-host {
+  padding: 0.5rem 0.75rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+/* Hook root must stretch so EventCalendar height: 100% fills the viewport area */
+.appointment-calendar-host #schedule-calendar {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-height: 0;
+}
+
+.appointment-calendar-host .ec {
+  flex: 1 1 0%;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --ec-accent-color: #1a73e8;
+  --ec-event-bg-color: #1a73e8;
+  --ec-event-text-color: #fff;
+  --ec-border-color: #e6e9ef;
+  --ec-today-bg-color: rgba(255, 220, 40, 0.28);
+  --ec-bg-color: #fff;
+  --ec-text-color: #3c4043;
+  --ec-button-bg-color: #fff;
+  --ec-button-border-color: #dadce0;
+  --ec-button-text-color: #3c4043;
+  --ec-button-active-bg-color: #f1f3f4;
+  --ec-button-active-border-color: #dadce0;
+  --ec-button-active-text-color: #3c4043;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.appointment-calendar-host {
+  border-color: #e8edf3;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.appointment-calendar-host .ec-toolbar {
+  display: none;
+}
+
+.appointment-calendar-host .ec-title {
+  font-size: 1.375rem;
+  font-weight: 400;
+  color: #3c4043;
+  letter-spacing: 0;
+}
+
+.appointment-calendar-host .ec-button {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: 0.25rem;
+  line-height: 1.25;
+}
+
+.appointment-calendar-host .ec-button-group .ec-button.ec-active {
+  background-color: #5f6368;
+  border-color: #5f6368;
+  color: #fff;
+  z-index: 2;
+}
+
+.appointment-calendar-host .ec-button-group .ec-button.ec-active:hover {
+  background-color: #494c50;
+  border-color: #494c50;
+  color: #fff;
+}
+
+.appointment-calendar-host .ec-day-head {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: #768092;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.appointment-calendar-host .ec-day.ec-today {
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.appointment-calendar-host .ec-day {
+  transition: background-color 120ms ease;
+}
+
+.appointment-calendar-host .ec-day:hover {
+  background-color: rgba(15, 23, 42, 0.03);
+}
+
+.appointment-calendar-toolbar .calendar-toolbar-btn {
+  @apply inline-flex h-8 items-center justify-center rounded-md px-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+}
+
+.appointment-calendar-toolbar .calendar-toolbar-select {
+  @apply h-8 rounded-md border border-gray-200 bg-white px-3 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500;
+}
+
+.appointment-calendar-toolbar .calendar-toolbar-add-btn {
+  @apply inline-flex h-8 items-center gap-1.5 rounded-md bg-gray-900 px-3 text-xs font-medium text-white hover:bg-gray-800;
+}
+
+.appointment-calendar-toolbar .calendar-toolbar-date-trigger:focus-visible {
+  @apply outline-none ring-2 ring-primary-500 ring-offset-1;
+}
+
+.appointment-calendar-toolbar .calendar-toolbar-date-input {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keep all filter controls visually aligned in calendar toolbar */
+#appointment-patient-filter,
+#appointment-type-filter-searchable,
+#appointment-status-filter-searchable {
+  margin-bottom: 0;
+}
+
+#appointment-patient-filter > label,
+#appointment-type-filter-searchable > label,
+#appointment-status-filter-searchable > label {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  color: rgb(75 85 99);
+}
+
+/* Remove extra focus ring so active state shows a single clean border */
+#appointment-patient-filter-query:focus,
+#appointment-type-filter-searchable-query:focus,
+#appointment-status-filter-searchable-query:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+/* ---- Calendar events: soft UI; fill/border from --event-color (status → type → fallback) ---- */
+.appointment-calendar-host .fc-event,
+.appointment-calendar-host .calendar-event.ec-event,
+.appointment-calendar-host .calendar-event.fc-event {
+  --event-bg: var(--event-bg, color-mix(in srgb, var(--event-color, #64748b) 8%, white));
+  --event-border: var(--event-border, color-mix(in srgb, var(--event-color, #64748b) 18%, white));
+
+  background-color: var(--event-bg) !important;
+  color: var(--event-color, #475569) !important;
+  border: 1px solid var(--event-border) !important;
+
+  border-radius: 6px !important;
+  padding: 2px 6px !important;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.appointment-calendar-host .fc-event:hover,
+.appointment-calendar-host .calendar-event.ec-event:hover,
+.appointment-calendar-host .calendar-event.fc-event:hover {
+  --event-bg: var(--event-bg-hover, color-mix(in srgb, var(--event-color, #64748b) 12%, white));
+  background-color: var(--event-bg) !important;
+}
+
+.appointment-calendar-host .calendar-event.ec-event.ec-pointer,
+.appointment-calendar-host .calendar-event.fc-event.ec-pointer {
+  cursor: default;
+}
+
+.appointment-calendar-host .calendar-event .ec-event-time,
+.appointment-calendar-host .calendar-event .ec-event-title {
+  font-weight: 400;
+}
+
+.appointment-calendar-host .ec-day-grid .calendar-event .ec-event-body,
+.appointment-calendar-host .ec-all-day .calendar-event .ec-event-body,
+.appointment-calendar-host .ec-timeline .calendar-event .ec-event-body {
+  align-items: center;
+}
+
+.appointment-calendar-host .ec-event-tag {
+  display: none;
+}
+
+.appointment-calendar-host .ec-list .calendar-event.ec-event {
+  margin: 3px 10px;
+}
+
+.appointment-calendar-host .fc-daygrid-event {
+  margin-bottom: 3px;
+}
+
+.appointment-calendar-host .ec-day-grid .ec-event {
+  margin-bottom: 3px;
 }

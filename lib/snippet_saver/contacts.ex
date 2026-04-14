@@ -22,6 +22,17 @@ defmodule SnippetSaver.Contacts do
   end
 
   @doc """
+  Contacts ordered for schedule dropdowns (capped for performance).
+  """
+  def list_contacts_for_schedule_select do
+    from(c in Contact,
+      order_by: [asc: c.last_name, asc: c.first_name],
+      limit: 400
+    )
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single contact.
 
   Raises `Ecto.NoResultsError` if the Contact does not exist.

@@ -13,6 +13,7 @@
           String.starts_with?(current_path, "patients") -> "patients"
           String.starts_with?(current_path, "employees") -> "employees"
           String.starts_with?(current_path, "tasks") -> "tasks"
+          String.starts_with?(current_path, "appointments") -> "appointments"
           String.starts_with?(current_path, "dashboard") or current_path == "" -> "dashboard"
           true -> nil
         end

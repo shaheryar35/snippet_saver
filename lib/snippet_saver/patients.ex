@@ -22,6 +22,26 @@ defmodule SnippetSaver.Patients do
   end
 
   @doc """
+  Returns up to 25 patients matching a trimmed search on name or code (case-insensitive).
+  """
+  def search_patients(q) when is_binary(q) do
+    q = String.trim(q)
+
+    if q == "" do
+      []
+    else
+      term = "%#{q}%"
+
+      from(p in Patient,
+        where: ilike(p.patient_name, ^term) or ilike(p.code, ^term),
+        order_by: [asc: p.patient_name],
+        limit: 25
+      )
+      |> Repo.all()
+    end
+  end
+
+  @doc """
   Gets a single patient.
 
   Raises `Ecto.NoResultsError` if the Patient does not exist.

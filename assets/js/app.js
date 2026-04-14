@@ -26,8 +26,15 @@ import EmployeeTabs from "./hooks/employee_tabs.js";
 import ContactTabs from "./hooks/contact_tabs.js";
 import PatientTabs from "./hooks/patient_tabs.js";
 import SectionScrollSpy from "./hooks/section_scroll_spy.js";
+import AppointmentScheduleCalendar, {
+  AppointmentCalendarToolbar,
+} from "./hooks/appointment_schedule_calendar.js";
+/* JS only — calendar styles live in css/app.css (Tailwind) */
+import CalendarHooks from "calendar_component/hooks";
 
-const hooks = Object.assign({}, hooks_default, {
+const hooks = Object.assign({}, hooks_default, CalendarHooks, {
+  AppointmentScheduleCalendar,
+  AppointmentCalendarToolbar,
   EmployeeTabs,
   ContactTabs,
   PatientTabs,
@@ -50,6 +57,36 @@ window.addEventListener("phx:page-loading-stop", (_info) => topbar.hide());
 
 // connect if there are any LiveViews on the page
 liveSocket.connect();
+
+// Appointments: open new-appointment drawer after server handles calendar click.
+// execJS from the `phx-update="ignore"` calendar node is unreliable; the server sends
+// serialized `show_drawer` JS and we run it from the LiveView root.
+function execPhxDrawerJs(detail, label) {
+  const js = detail && detail.js;
+  const root = document.querySelector("[data-phx-session]");
+  if (!js || !root || !window.liveSocket) return;
+  try {
+    window.liveSocket.execJS(root, js, "click");
+  } catch (e) {
+    console.error(`${label} execJS failed`, e);
+  }
+}
+
+window.addEventListener("phx:appointment_show_new_drawer", ({ detail }) => {
+  execPhxDrawerJs(detail, "appointment_show_new_drawer");
+});
+
+window.addEventListener("phx:appointment_show_view_drawer", ({ detail }) => {
+  execPhxDrawerJs(detail, "appointment_show_view_drawer");
+});
+
+window.addEventListener("phx:appointment_hide_new_drawer", ({ detail }) => {
+  execPhxDrawerJs(detail, "appointment_hide_new_drawer");
+});
+
+window.addEventListener("phx:appointment_hide_view_drawer", ({ detail }) => {
+  execPhxDrawerJs(detail, "appointment_hide_view_drawer");
+});
 
 // expose liveSocket on window for web console debug logs and latency simulation:
 // >> liveSocket.enableDebug()

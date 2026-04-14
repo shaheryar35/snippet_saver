@@ -64,6 +64,7 @@ defmodule SnippetSaver.MixProject do
 
       # LiveTable 0.3.1 - Simple and stable
       {:live_table, "~> 0.3.1"},
+      {:calendar_component, "~> 0.2.1"},
 
       # Required for exports
       {:oban, "~> 2.19"}

@@ -8,19 +8,25 @@
 #   SEED_ONLY=colours mix run priv/repo/seeds.exs
 #   SEED_ONLY=breeds mix run priv/repo/seeds.exs
 #   SEED_ONLY=master_problem_templates mix run priv/repo/seeds.exs
+#   SEED_ONLY=appointment_types mix run priv/repo/seeds.exs
+#   SEED_ONLY=appointment_status mix run priv/repo/seeds.exs
 
 seed_scripts = %{
   "super_admin" => "seeds/super_admin.exs",
   "species" => "seeds/species.exs",
   "colours" => "seeds/colours.exs",
   "breeds" => "seeds/breeds.exs",
-  "master_problem_templates" => "seeds/master_problem_templates.exs"
+  "master_problem_templates" => "seeds/master_problem_templates.exs",
+  "appointment_types" => "seeds/appointment_types.exs",
+  "appointment_status" => "seeds/appointment_status.exs"
 }
 
 seed_only =
   System.get_env("SEED_ONLY")
   |> case do
-    nil -> :all
+    nil ->
+      :all
+
     value ->
       value
       |> String.split(",", trim: true)

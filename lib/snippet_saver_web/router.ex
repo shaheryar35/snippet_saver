@@ -43,6 +43,7 @@ defmodule SnippetSaverWeb.Router do
       live "/setting/clinic", SettingLive.ClinicHub, :index
       live "/setting/clinic/appointment_types", SettingLive.AppointmentTypesLive, :index
       live "/setting/clinic/appointment_status", SettingLive.AppointmentStatusLive, :index
+      live "/appointments", AppointmentLive.Schedule, :index
       live "/tasks", TaskLive.Index, :index
       live "/employees", EmployeeLive.Index, :index
       live "/employees/new", EmployeeLive.Index, :new

@@ -9,7 +9,8 @@ defmodule SnippetSaverWeb.Layouts do
       %{name: "Patients", path: ~p"/patients", icon: "hero-heart", key: "patients"},
       %{name: "Dashboard", path: ~p"/dashboard", icon: "hero-home", key: "dashboard"},
       %{name: "Employees", path: ~p"/employees", icon: "hero-users", key: "employees"},
-      %{name: "Tasks", path: ~p"/tasks", icon: "hero-check-circle", key: "tasks"}
+      %{name: "Tasks", path: ~p"/tasks", icon: "hero-check-circle", key: "tasks"},
+      %{name: "Appointments", path: ~p"/appointments", icon: "hero-calendar-days", key: "appointments"}
     ]
   end
 end

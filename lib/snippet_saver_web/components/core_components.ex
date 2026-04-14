@@ -518,7 +518,7 @@ defmodule SnippetSaverWeb.CoreComponents do
             {@rest}
           />
       <% end %>
-
+      
     <!-- Error messages -->
       <div :if={length(@errors) > 0} class="mt-1">
         <p :for={msg <- @errors} class="text-sm text-danger-600">
@@ -568,7 +568,7 @@ defmodule SnippetSaverWeb.CoreComponents do
   attr :close_event, :string, required: true
   attr :pick_event, :string, required: true
   attr :clear_event, :string, default: nil
-  attr :phx_target, :any, required: true
+  attr :phx_target, :any, default: nil
 
   def searchable_select(assigns) do
     field = assigns.field
@@ -581,12 +581,38 @@ defmodule SnippetSaverWeb.CoreComponents do
       |> assign(:base_id, base_id)
       |> assign(:hidden_value, hidden_value)
       |> assign(:errors, errors)
+      |> assign(:target_attrs, if(assigns.phx_target, do: [phx_target: assigns.phx_target], else: []))
+      |> assign(
+        :close_js,
+        if(assigns.phx_target,
+          do: JS.push(assigns.close_event, target: assigns.phx_target),
+          else: JS.push(assigns.close_event)
+        )
+      )
+      |> assign(
+        :focus_js,
+        if(assigns.phx_target,
+          do: JS.push(assigns.focus_event, target: assigns.phx_target),
+          else: JS.push(assigns.focus_event)
+        )
+      )
+      |> assign(
+        :clear_js,
+        if(assigns.clear_event,
+          do:
+            if(assigns.phx_target,
+              do: JS.push(assigns.clear_event, target: assigns.phx_target),
+              else: JS.push(assigns.clear_event)
+            ),
+          else: nil
+        )
+      )
 
     ~H"""
     <div
       id={@base_id}
       class="relative mb-4"
-      phx-click-away={JS.push(@close_event, target: @phx_target)}
+      phx-click-away={@close_js}
       phx-feedback-for={@field.name}
     >
       <label
@@ -612,17 +638,17 @@ defmodule SnippetSaverWeb.CoreComponents do
             input_size("md"),
             input_variant("default", @errors)
           ]}
-          phx-target={@phx_target}
-          phx-focus={JS.push(@focus_event, target: @phx_target)}
-          phx-change={@search_event}
+          {@target_attrs}
+          phx-focus={@focus_js}
+          phx-keyup={@search_event}
           phx-debounce="200"
         />
         <button
           :if={@clear_event && @hidden_value != ""}
           type="button"
           class="shrink-0 rounded-lg border border-gray-300 px-2 py-2 text-xs text-gray-600 hover:bg-gray-50"
-          phx-target={@phx_target}
-          phx-click={JS.push(@clear_event, target: @phx_target)}
+          {@target_attrs}
+          phx-click={@clear_js}
           aria-label={gettext("Clear selection")}
         >
           <.icon name="hero-x-mark" class="h-4 w-4" />
@@ -638,8 +664,13 @@ defmodule SnippetSaverWeb.CoreComponents do
           type="button"
           role="option"
           class="block w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-primary-50"
-          phx-target={@phx_target}
-          phx-click={JS.push(@pick_event, value: %{id: to_string(id), label: label}, target: @phx_target)}
+          {@target_attrs}
+          phx-click={
+            if(@phx_target,
+              do: JS.push(@pick_event, value: %{id: to_string(id), label: label}, target: @phx_target),
+              else: JS.push(@pick_event, value: %{id: to_string(id), label: label})
+            )
+          }
         >
           {label}
         </button>
@@ -658,6 +689,115 @@ defmodule SnippetSaverWeb.CoreComponents do
 
   defp hidden_select_value(val) do
     val |> to_string() |> String.trim()
+  end
+
+  @doc """
+  Searchable multi-select (chip + dropdown) for reusable filters.
+
+  Selected items and suggestions are lists of `{label, id}` tuples.
+  """
+  attr :id, :string, required: true
+  attr :label, :string, default: nil
+  attr :placeholder, :string, default: "Search..."
+  attr :query, :string, default: ""
+  attr :open, :boolean, default: false
+  attr :selected, :list, default: []
+  attr :suggestions, :list, default: []
+  attr :search_name, :string, required: true
+  attr :search_event, :string, required: true
+  attr :focus_event, :string, required: true
+  attr :close_event, :string, required: true
+  attr :pick_event, :string, required: true
+  attr :remove_event, :string, required: true
+  attr :clear_event, :string, default: nil
+  attr :phx_target, :any, default: nil
+
+  def searchable_multi_select(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :target_attrs,
+        if(assigns.phx_target, do: [phx_target: assigns.phx_target], else: [])
+      )
+
+    ~H"""
+    <div
+      id={@id}
+      class="relative"
+      phx-click-away={@close_event}
+      {@target_attrs}
+    >
+      <label :if={@label} for={"#{@id}-query"} class="mb-1 block text-xs font-medium text-gray-600">
+        {@label}
+      </label>
+
+      <div class="min-h-[2.25rem] rounded-lg border border-gray-200 bg-white px-2 py-1.5 transition focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-500/20">
+        <div :if={@selected != []} class="mb-1 flex flex-wrap gap-1">
+          <span
+            :for={{label, sid} <- @selected}
+            class="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs text-gray-700"
+          >
+            {label}
+            <button
+              type="button"
+              phx-click={@remove_event}
+              phx-target={@phx_target}
+              phx-value-id={sid}
+              class="text-gray-400 hover:text-gray-700"
+              aria-label={gettext("Remove")}
+            >
+              <.icon name="hero-x-mark" class="h-3.5 w-3.5" />
+            </button>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <input
+            id={"#{@id}-query"}
+            type="text"
+            name={@search_name}
+            value={@query}
+            placeholder={@placeholder}
+            autocomplete="off"
+            phx-focus={@focus_event}
+            phx-keyup={@search_event}
+            phx-debounce="200"
+            {@target_attrs}
+            class="w-full border-0 bg-transparent px-1 py-0.5 text-sm text-gray-800 placeholder:text-gray-400 focus:outline-none focus:ring-0"
+          />
+          <button
+            :if={@clear_event && @selected != []}
+            type="button"
+            phx-click={@clear_event}
+            {@target_attrs}
+            class="rounded px-1 py-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
+            aria-label={gettext("Clear all")}
+          >
+            <.icon name="hero-x-mark" class="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      <div
+        :if={@open && @suggestions != []}
+        class="absolute z-30 mt-1 max-h-64 w-full overflow-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg"
+        role="listbox"
+      >
+        <button
+          :for={{label, sid} <- @suggestions}
+          type="button"
+          role="option"
+          phx-click={@pick_event}
+          phx-value-id={sid}
+          phx-value-label={label}
+          {@target_attrs}
+          class="block w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-primary-50"
+        >
+          {label}
+        </button>
+      </div>
+    </div>
+    """
   end
 
   @doc """
