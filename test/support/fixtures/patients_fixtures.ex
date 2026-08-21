@@ -52,6 +52,15 @@ defmodule SnippetSaver.PatientsFixtures do
   Generate a patient_note.
   """
   def patient_note_fixture(attrs \\ %{}) do
+    attrs = Enum.into(attrs, %{})
+
+    attrs =
+      if Map.has_key?(attrs, :patient_id) or Map.has_key?(attrs, "patient_id") do
+        attrs
+      else
+        Map.put(attrs, :patient_id, patient_fixture().id)
+      end
+
     {:ok, patient_note} =
       attrs
       |> Enum.into(%{

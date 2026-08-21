@@ -1,5 +1,6 @@
 const PatientTabs = {
   mounted() {
+    // tabs: [{ id, name, children: [{ id, label }] }]
     this.tabs = [];
     this.activePath = { parentId: null, subtab: null };
     this.userChoseList = false;
@@ -62,7 +63,15 @@ const PatientTabs = {
 
     if (id != null && id !== "" && (name == null ? false : String(name).trim() !== "")) {
       const parent = this.ensureParent({ id: id.trim(), name: (name || "").trim() });
-      const subtab = subtabAttr === "details" ? "details" : "details";
+
+      let subtab = "details";
+      if (typeof subtabAttr === "string" && subtabAttr.length > 0) {
+        const allowed = ["details", "notes", "images"];
+        if (allowed.includes(subtabAttr)) {
+          subtab = subtabAttr;
+        }
+      }
+
       this.activePath = { parentId: parent.id, subtab };
       this.renderTabs();
     } else {
@@ -93,7 +102,15 @@ const PatientTabs = {
 
     let parent = this.tabs.find((t) => t.id === id);
     if (!parent) {
-      parent = { id, name: patient.name || "New Patient" };
+      parent = {
+        id,
+        name: patient.name || "New Patient",
+        children: [
+          { id: "details", label: "Details" },
+          { id: "notes", label: "Notes" },
+          { id: "images", label: "Images" },
+        ],
+      };
       this.tabs.push(parent);
     }
     return parent;
@@ -157,6 +174,20 @@ const PatientTabs = {
     }
   },
 
+  switchToSubtab(parentId, subtabId) {
+    const parent = this.tabs.find((t) => t.id === parentId);
+    if (!parent) return;
+
+    this.activePath = { parentId, subtab: subtabId };
+    this.renderTabs();
+
+    if (parentId === "new") {
+      this.pushEvent("navigate_to", { id: "new" });
+    } else {
+      this.pushEvent("navigate_to", { patient_id: String(parentId), subtab: subtabId });
+    }
+  },
+
   renderTabs() {
     const container = this.el.querySelector("#patient-tabs");
     if (!container) return;
@@ -193,17 +224,26 @@ const PatientTabs = {
 
     let childRow = "";
     const activeParent = this.activePath.parentId != null ? this.tabs.find((t) => t.id === this.activePath.parentId) : null;
-    if (activeParent) {
-      const childClasses =
-        this.activePath.subtab === "details"
-          ? "border-primary-600 text-primary-600 bg-primary-50"
-          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300";
+    if (activeParent && activeParent.children && activeParent.children.length > 0) {
+      const childTabs = activeParent.children
+        .map((child) => {
+          const isActive =
+            this.activePath.parentId === activeParent.id && this.activePath.subtab === child.id;
+          const childClasses = isActive
+            ? "border-primary-600 text-primary-600 bg-primary-50"
+            : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300";
+
+          return `
+            <button type="button" class="patient-tab patient-child-tab group flex items-center gap-2 px-3 py-2 text-xs font-medium border-b-2 whitespace-nowrap transition-colors ${childClasses}" data-parent-id="${activeParent.id}" data-subtab-id="${child.id}">
+              <span>${child.label}</span>
+            </button>
+          `;
+        })
+        .join("");
 
       childRow = `
         <div class="patient-tabs-child-row flex items-center gap-1 border-b border-gray-100 bg-gray-50 px-3">
-          <button type="button" class="patient-tab patient-child-tab group flex items-center gap-2 px-3 py-2 text-xs font-medium border-b-2 whitespace-nowrap transition-colors ${childClasses}" data-parent-id="${activeParent.id}" data-subtab-id="details">
-            <span>Details</span>
-          </button>
+          ${childTabs}
         </div>
       `;
     }
@@ -238,13 +278,8 @@ const PatientTabs = {
     container.querySelectorAll(".patient-child-tab").forEach((btn) => {
       const parentIdRaw = btn.getAttribute("data-parent-id");
       const parentId = parentIdRaw === "new" ? "new" : Number(parentIdRaw);
-      btn.addEventListener("click", () => {
-        if (parentId === "new") {
-          this.pushEvent("navigate_to", { id: "new" });
-        } else {
-          this.pushEvent("navigate_to", { patient_id: String(parentId), subtab: "details" });
-        }
-      });
+      const subtabId = btn.getAttribute("data-subtab-id");
+      btn.addEventListener("click", () => this.switchToSubtab(parentId, subtabId));
     });
   },
 };

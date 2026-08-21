@@ -34,6 +34,7 @@ defmodule SnippetSaverWeb.PatientLive.Index do
         socket
         |> assign(:patient_page, :show)
         |> assign(:patient, patient)
+        |> assign(:active_subtab, subtab_from_params(params))
         |> assign(:page_title, patient.patient_name || "Patient ##{patient.id}")
         |> assign(:active_page, "patients")
 
@@ -82,6 +83,31 @@ defmodule SnippetSaverWeb.PatientLive.Index do
           |> assign(:page_title, patient_display_name(patient))
           |> assign(:active_page, "patients")
           |> push_event("open_patient_tab", %{patient: %{id: patient.id, name: patient_display_name(patient)}})
+
+        {:noreply, socket}
+
+      match?(["patients", _id, _subtab], path_segments) and Enum.at(path_segments, 2) != "edit" ->
+        patient = Patients.get_patient!(Enum.at(path_segments, 1))
+        subtab = Enum.at(path_segments, 2)
+
+        active_subtab =
+          case subtab do
+            "details" -> :details
+            "notes" -> :notes
+            "images" -> :images
+            _ -> :details
+          end
+
+        socket =
+          socket
+          |> assign(:patient_page, :show)
+          |> assign(:patient, patient)
+          |> assign(:active_subtab, active_subtab)
+          |> assign(:page_title, patient_display_name(patient))
+          |> assign(:active_page, "patients")
+          |> push_event("open_patient_tab", %{
+            patient: %{id: patient.id, name: patient_display_name(patient)}
+          })
 
         {:noreply, socket}
 
@@ -182,17 +208,25 @@ defmodule SnippetSaverWeb.PatientLive.Index do
     {:noreply, socket}
   end
 
-  def handle_event("navigate_to", %{"patient_id" => patient_id, "subtab" => _subtab}, socket) do
+  def handle_event("navigate_to", %{"patient_id" => patient_id, "subtab" => subtab}, socket) do
     patient = Patients.get_patient!(patient_id)
+
+    active_subtab =
+      case subtab do
+        "details" -> :details
+        "notes" -> :notes
+        "images" -> :images
+        _ -> :details
+      end
 
     {:noreply,
      socket
      |> assign(:patient_page, :show)
      |> assign(:patient, patient)
-     |> assign(:active_subtab, :details)
+     |> assign(:active_subtab, active_subtab)
      |> assign(:page_title, patient_display_name(patient))
      |> assign(:active_page, "patients")
-     |> push_patch(to: ~p"/patients/#{patient_id}")}
+     |> push_patch(to: ~p"/patients/#{patient_id}/#{subtab}")}
   end
 
   def handle_event("navigate_to", %{"patient_id" => patient_id}, socket) do
@@ -307,6 +341,14 @@ defmodule SnippetSaverWeb.PatientLive.Index do
       show_export={true}
     />
     """
+  end
+
+  defp subtab_from_params(params) do
+    case Map.get(params || %{}, "subtab") do
+      "notes" -> :notes
+      "images" -> :images
+      _ -> :details
+    end
   end
 
   defp patient_display_name(patient) do

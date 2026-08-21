@@ -25,7 +25,7 @@ defmodule SnippetSaverWeb.PatientLive.IndexView do
       data-patient-id={@data_patient_id}
       data-patient-name={@data_patient_name}
       data-page-new={@data_page_new}
-      data-patient-subtab={if @patient_page == :show, do: @active_subtab, else: nil}
+      data-patient-subtab={if @patient_page == :show, do: to_string(@active_subtab), else: nil}
     >
       <.header>
         Patients
@@ -48,12 +48,31 @@ defmodule SnippetSaverWeb.PatientLive.IndexView do
 
           <% :show -> %>
             <div class="p-4 h-full overflow-auto">
-              <.live_component
-                module={SnippetSaverWeb.PatientLive.Components.ShowComponent}
-                id={"patient-show-#{@patient.id}"}
-                patient={@patient}
-                patch_back={~p"/patients"}
-              />
+              <%= case @active_subtab do %>
+                <% :notes -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.PatientLive.Components.NotesComponent}
+                    id={"patient-notes-#{@patient.id}"}
+                    patient={@patient}
+                    patch_back={~p"/patients"}
+                  />
+
+                <% :images -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.PatientLive.Components.ImagesComponent}
+                    id={"patient-images-#{@patient.id}"}
+                    patient={@patient}
+                    patch_back={~p"/patients"}
+                  />
+
+                <% _ -> %>
+                  <.live_component
+                    module={SnippetSaverWeb.PatientLive.Components.ShowComponent}
+                    id={"patient-show-#{@patient.id}"}
+                    patient={@patient}
+                    patch_back={~p"/patients"}
+                  />
+              <% end %>
             </div>
 
           <% :edit -> %>

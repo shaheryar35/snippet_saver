@@ -233,6 +233,14 @@ defmodule SnippetSaver.Patients do
     Repo.all(PatientNote)
   end
 
+  def list_patient_notes_for_patient(patient_id) do
+    from(pn in PatientNote,
+      where: pn.patient_id == ^patient_id,
+      order_by: [desc: pn.inserted_at]
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single patient_note.
 

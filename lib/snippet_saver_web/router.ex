@@ -33,6 +33,7 @@ defmodule SnippetSaverWeb.Router do
       live "/patients/new", PatientLive.Index, :new
       live "/patients/:id", PatientLive.Index, :show
       live "/patients/:id/edit", PatientLive.Index, :edit
+      live "/patients/:id/:subtab", PatientLive.Index, :show
       live "/setting/contact/role_types", SettingLive.ContactRoleTypesLive, :index
       live "/setting/contact", SettingLive.ContactHub, :index
       live "/setting/patient", SettingLive.PatientHub, :index

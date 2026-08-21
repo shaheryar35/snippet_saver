@@ -159,7 +159,7 @@ defmodule SnippetSaver.PatientsTest do
     end
 
     test "create_patient_note/1 with valid data creates a patient_note" do
-      valid_attrs = %{notes: "some notes", notes_important: true}
+      valid_attrs = %{notes: "some notes", notes_important: true, patient_id: patient_fixture().id}
 
       assert {:ok, %PatientNote{} = patient_note} = Patients.create_patient_note(valid_attrs)
       assert patient_note.notes == "some notes"

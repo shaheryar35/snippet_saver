@@ -13,7 +13,8 @@ defmodule SnippetSaver.Patients.PatientNote do
   @doc false
   def changeset(patient_note, attrs) do
     patient_note
-    |> cast(attrs, [:notes, :notes_important])
-    |> validate_required([:notes, :notes_important])
+    |> cast(attrs, [:notes, :notes_important, :patient_id])
+    |> validate_required([:notes, :notes_important, :patient_id])
+    |> foreign_key_constraint(:patient_id)
   end
 end

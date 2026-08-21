@@ -51,6 +51,137 @@ defmodule SnippetSaver.Appointments do
   end
 
   @doc """
+  Returns cards for appointment dashboard swimlanes, grouped by lane.
+
+  Structure:
+
+      %{
+        "UPCOMING" => [%{title: ..., time: ..., detail: ..., status: ...}, ...],
+        "TODAY" => [...],
+        "NEEDS RESCHEDULE" => [...],
+        "READY FOR BILLING" => [...]
+      }
+  """
+  def appointment_swimlane_cards do
+    %{
+      "UPCOMING" => upcoming_cards(),
+      "TODAY" => today_cards(),
+      "NEEDS RESCHEDULE" => needs_reschedule_cards(),
+      "READY FOR BILLING" => ready_for_billing_cards()
+    }
+  end
+
+  defp upcoming_cards do
+    now = DateTime.utc_now()
+    in_48h = DateTime.add(now, 48 * 60 * 60, :second)
+
+    base_appointment_query()
+    |> where([a, _p, _owner, _doctor, _atype, s], a.appointment_datetime >= ^now)
+    |> where([a, _p, _owner, _doctor, _atype, s], a.appointment_datetime < ^in_48h)
+    |> order_by([a, _p, _owner, _doctor, _atype, _s], asc: a.appointment_datetime)
+    |> Repo.all()
+    |> Enum.map(&to_dashboard_card/1)
+  end
+
+  defp today_cards do
+    today = Date.utc_today()
+
+    start_of_day = DateTime.new!(today, ~T[00:00:00], "Etc/UTC")
+    end_of_day = DateTime.new!(today, ~T[23:59:59], "Etc/UTC")
+
+    base_appointment_query()
+    |> where([a, _p, _owner, _doctor, _atype, s], a.appointment_datetime >= ^start_of_day)
+    |> where([a, _p, _owner, _doctor, _atype, s], a.appointment_datetime <= ^end_of_day)
+    |> order_by([a, _p, _owner, _doctor, _atype, _s], asc: a.appointment_datetime)
+    |> Repo.all()
+    |> Enum.map(&to_dashboard_card/1)
+  end
+
+  defp needs_reschedule_cards do
+    now = DateTime.utc_now()
+
+    base_appointment_query()
+    |> where([a, _p, _owner, _doctor, _atype, s], a.appointment_datetime < ^now)
+    |> order_by([a, _p, _owner, _doctor, _atype, _s], desc: a.appointment_datetime)
+    |> Repo.all()
+    |> Enum.map(&to_dashboard_card/1)
+  end
+
+  defp ready_for_billing_cards do
+    today = Date.utc_today()
+    seven_days_ago = Date.add(today, -7)
+    start = DateTime.new!(seven_days_ago, ~T[00:00:00], "Etc/UTC")
+
+    base_appointment_query()
+    |> where([a, _p, _owner, _doctor, _atype, _s], a.appointment_datetime >= ^start)
+    |> order_by([a, _p, _owner, _doctor, _atype, _s], desc: a.appointment_datetime)
+    |> Repo.all()
+    |> Enum.map(&to_dashboard_card/1)
+  end
+
+  # Shared query used by all swimlane helpers
+  defp base_appointment_query do
+    from(a in Appointment,
+      join: p in assoc(a, :patient),
+      left_join: owner in assoc(a, :owner_contact),
+      left_join: doctor in assoc(a, :doctor_contact),
+      left_join: atype in assoc(a, :appointment_type),
+      left_join: s in assoc(a, :appointment_status),
+      select: {
+        a,
+        p.patient_name,
+        owner.first_name,
+        owner.last_name,
+        doctor.first_name,
+        doctor.last_name,
+        atype.name,
+        s.name
+      }
+    )
+  end
+
+  defp to_dashboard_card(
+         {appointment, patient_name, owner_first, owner_last, doctor_first, doctor_last,
+          appointment_type_name, status_name}
+       ) do
+    owner_full =
+      Enum.join(
+        Enum.reject([owner_first, owner_last], &is_nil_or_empty/1),
+        " "
+      )
+
+    doctor_full =
+      Enum.join(
+        Enum.reject([doctor_first, doctor_last], &is_nil_or_empty/1),
+        " "
+      )
+
+    time = Calendar.strftime(appointment.appointment_datetime, "%Y-%m-%d %H:%M")
+
+    detail_parts = [
+      owner_full != "" && "Owner: #{owner_full}",
+      doctor_full != "" && "Dr. #{doctor_full}",
+      appointment_type_name
+    ]
+
+    detail =
+      detail_parts
+      |> Enum.reject(&is_nil/1)
+      |> Enum.join(" • ")
+
+    %{
+      title: patient_name || "(no patient)",
+      time: time,
+      detail: detail,
+      status: status_name || ""
+    }
+  end
+
+  defp is_nil_or_empty(nil), do: true
+  defp is_nil_or_empty(""), do: true
+  defp is_nil_or_empty(_), do: false
+
+  @doc """
   Gets a single appointment with calendar-related associations preloaded.
   """
   def get_appointment_for_calendar!(id) do
