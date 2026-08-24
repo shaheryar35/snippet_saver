@@ -1,0 +1,19 @@
+defmodule <%= @module %> do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  schema "<%= @table %>" do
+<%= @field_lines %>
+<%= @bt_lines %>
+<%= @soft_delete_line %>
+<%= @audit_lines %>
+    timestamps(type: :utc_datetime)
+  end
+
+  @doc false
+  def changeset(<%= @var %>, attrs) do
+    <%= @var %>
+    |> cast(attrs, <%= @cast_list %>)
+<%= @validate_lines %>
+  end
+end

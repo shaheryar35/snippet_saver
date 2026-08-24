@@ -26,6 +26,7 @@ import EmployeeTabs from "./hooks/employee_tabs.js";
 import ContactTabs from "./hooks/contact_tabs.js";
 import PatientTabs from "./hooks/patient_tabs.js";
 import SectionScrollSpy from "./hooks/section_scroll_spy.js";
+import HearAboutOptionTabs from "./hooks/hear_about_option_tabs.js";
 import AppointmentScheduleCalendar, {
   AppointmentCalendarToolbar,
 } from "./hooks/appointment_schedule_calendar.js";
@@ -39,6 +40,7 @@ const hooks = Object.assign({}, hooks_default, CalendarHooks, {
   ContactTabs,
   PatientTabs,
   SectionScrollSpy,
+  HearAboutOptionTabs,
 });
 
 let csrfToken = document

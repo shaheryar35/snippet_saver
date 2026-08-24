@@ -1,0 +1,12 @@
+defmodule <%= @module %> do
+  use Ecto.Migration
+
+  def change do
+    create_if_not_exists table(:<%= @table %>) do
+<%= @column_lines %>
+
+      timestamps(type: :utc_datetime)
+    end
+<%= @index_lines %>
+  end
+end

@@ -51,6 +51,11 @@ defmodule SnippetSaverWeb.Router do
       live "/employees/:id", EmployeeLive.Index, :show
       live "/employees/:id/:subtab", EmployeeLive.Index, :show
       live "/employees/:id/edit", EmployeeLive.Index, :edit
+
+      live "/hear_about_options", HearAboutOptionLive.Index, :index
+      live "/hear_about_options/new", HearAboutOptionLive.Index, :new
+      live "/hear_about_options/:id", HearAboutOptionLive.Index, :show
+      live "/hear_about_options/:id/edit", HearAboutOptionLive.Index, :edit
     end
   end
 
