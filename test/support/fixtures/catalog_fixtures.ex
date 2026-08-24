@@ -20,5 +20,34 @@ defmodule SnippetSaver.CatalogFixtures do
     hear_about_option
   end
 
+  @doc """
+  Generate a vendor_contact.
+  """
+  def vendor_contact_fixture(attrs \\ %{}) do
+    {:ok, vendor_contact} =
+      attrs
+      |> Enum.into(%{
+        name: "some value",
+        role: "some value"
+      })
+      |> SnippetSaver.Catalog.create_vendor_contact()
+
+    vendor_contact
+  end
+
+  @doc """
+  Generate a vendor.
+  """
+  def vendor_fixture(attrs \\ %{}) do
+    {:ok, vendor} =
+      attrs
+      |> Enum.into(%{
+        company_name: "some value"
+      })
+      |> SnippetSaver.Catalog.create_vendor()
+
+    vendor
+  end
+
   # GEN_RESOURCE_INSERT_POINT
 end

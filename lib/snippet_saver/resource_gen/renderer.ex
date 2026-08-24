@@ -239,6 +239,10 @@ defmodule SnippetSaver.ResourceGen.Renderer do
         ""
       end
 
+    nested_collection_fns =
+      spec.nested_collections
+      |> Enum.map_join("\n", &("\n" <> FieldRenderer.nc_context_functions(&1, naming)))
+
     [
       "alias #{inspect(naming.schema_module)}",
       "",
@@ -251,6 +255,7 @@ defmodule SnippetSaver.ResourceGen.Renderer do
     ]
     |> Enum.join("\n")
     |> Kernel.<>(audit_helpers)
+    |> Kernel.<>(nested_collection_fns)
     |> then(&render("context_functions.ex.eex", %{body: &1}))
   end
 
@@ -696,11 +701,17 @@ defmodule SnippetSaver.ResourceGen.Renderer do
     s = naming.singular
     ctx = naming.context_alias
 
+    # `dropdown: false` belongs_tos (design doc §5/§9.4 — a nested-collection child's plain FK
+    # link back to its parent) never get a form field: an `:embedded_only` resource has no
+    # generated form at all, so this only matters defensively for a hypothetical `:top_level`
+    # resource that also declares one.
+    dropdown_bts = Enum.filter(spec.belongs_tos, & &1.dropdown)
+
     simple_field_heex =
       Enum.map_join(spec.fields, "\n            ", &FieldRenderer.form_field_heex(&1, s))
 
     bt_field_heex =
-      Enum.map_join(spec.belongs_tos, "\n            ", &FieldRenderer.bt_form_field_heex/1)
+      Enum.map_join(dropdown_bts, "\n            ", &FieldRenderer.bt_form_field_heex/1)
 
     static_select_assigns =
       spec.fields
@@ -710,14 +721,14 @@ defmodule SnippetSaver.ResourceGen.Renderer do
       end)
 
     context_select_assigns =
-      spec.belongs_tos
+      dropdown_bts
       |> Enum.reject(& &1.searchable)
       |> Enum.map_join(",\n       ", fn bt ->
         {mod, fun} = bt.options_from
         "#{FieldRenderer.options_assign_name(bt)}: enum_options(#{inspect(mod)}.#{fun}())"
       end)
 
-    searchable_bts = Enum.filter(spec.belongs_tos, & &1.searchable)
+    searchable_bts = Enum.filter(dropdown_bts, & &1.searchable)
 
     searchable_mount_assigns =
       searchable_bts
@@ -747,6 +758,86 @@ defmodule SnippetSaver.ResourceGen.Renderer do
 
     save_fn_name = "save_#{s}"
 
+    # -- :nested_collection wiring (Phase 2, design doc §5) --------------
+
+    nc_update_pipe_lines =
+      spec.nested_collections
+      |> Enum.flat_map(&FieldRenderer.nc_update_pipe_lines/1)
+      |> Enum.join("\n         ")
+
+    nc_handle_events_block =
+      spec.nested_collections
+      |> Enum.map_join("\n\n  ", &FieldRenderer.nc_handle_events(&1, naming))
+
+    nc_assign_rows_fns =
+      spec.nested_collections
+      |> Enum.map_join("\n\n  ", &FieldRenderer.nc_assign_rows_fn(&1, naming))
+
+    nc_heex_block =
+      spec.nested_collections
+      |> Enum.map_join("\n\n", &FieldRenderer.nc_heex(&1, naming))
+
+    buffered_sync_calls = FieldRenderer.nc_sync_calls(spec.nested_collections)
+
+    # Buffered collections need the parent's own save to `with`-chain the sync call(s) *after* the
+    # parent record itself is created/updated (design doc §5 "Parent save wiring" — nothing is
+    # persisted until the parent form is submitted); with none, the plain `case` from Phase 1 is
+    # unchanged.
+    save_fn_bodies =
+      if buffered_sync_calls == [] do
+        """
+        defp #{save_fn_name}(socket, :new, params) do
+          case #{ctx}.create_#{s}(params) do
+            {:ok, record} ->
+              notify_and_close(socket, record, "#{Naming.humanize(s)} created successfully")
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, :form, to_form(changeset))}
+          end
+        end
+
+        defp #{save_fn_name}(socket, :edit, params) do
+          case #{ctx}.update_#{s}(socket.assigns.#{s}, params) do
+            {:ok, record} ->
+              notify_and_close(socket, record, "#{Naming.humanize(s)} updated successfully")
+
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, :form, to_form(changeset))}
+          end
+        end
+        """
+      else
+        sync_with_clauses = Enum.join(buffered_sync_calls, ",\n         ")
+
+        """
+        defp #{save_fn_name}(socket, :new, params) do
+          with {:ok, record} <- #{ctx}.create_#{s}(params),
+               #{sync_with_clauses} do
+            notify_and_close(socket, record, "#{Naming.humanize(s)} created successfully")
+          else
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, :form, to_form(changeset))}
+
+            {:error, _reason} ->
+              {:noreply, put_flash(socket, :error, "Could not save related records. Please review and try again.")}
+          end
+        end
+
+        defp #{save_fn_name}(socket, :edit, params) do
+          with {:ok, record} <- #{ctx}.update_#{s}(socket.assigns.#{s}, params),
+               #{sync_with_clauses} do
+            notify_and_close(socket, record, "#{Naming.humanize(s)} updated successfully")
+          else
+            {:error, %Ecto.Changeset{} = changeset} ->
+              {:noreply, assign(socket, :form, to_form(changeset))}
+
+            {:error, _reason} ->
+              {:noreply, put_flash(socket, :error, "Could not save related records. Please review and try again.")}
+          end
+        end
+        """
+      end
+
     body = """
     defmodule #{inspect(naming.web_form_component_module)} do
       use SnippetSaverWeb, :live_component
@@ -755,8 +846,7 @@ defmodule SnippetSaver.ResourceGen.Renderer do
       alias #{inspect(naming.schema_module)}
 
       def mount(socket) do
-        {:ok,
-         assign(socket#{if mount_assign_lines == "", do: "", else: ",\n       " <> mount_assign_lines})}
+        #{if mount_assign_lines == "", do: "{:ok, socket}", else: "{:ok, assign(socket,\n       " <> mount_assign_lines <> ")}"}
       end
 
       def update(assigns, socket) do
@@ -765,7 +855,8 @@ defmodule SnippetSaver.ResourceGen.Renderer do
          |> assign(assigns)
          |> assign(:parent_pid, assigns[:parent_pid])
          #{if update_assign_lines == "", do: "", else: "|> assign(" <> update_assign_lines <> ")"}
-         |> assign_form()}
+         |> assign_form()
+         #{nc_update_pipe_lines}}
       end
 
       def handle_event("validate", %{"#{s}" => params}, socket) do
@@ -783,25 +874,9 @@ defmodule SnippetSaver.ResourceGen.Renderer do
 
     #{searchable_handlers}
 
-      defp #{save_fn_name}(socket, :new, params) do
-        case #{ctx}.create_#{s}(params) do
-          {:ok, record} ->
-            notify_and_close(socket, record, "#{Naming.humanize(s)} created successfully")
+    #{nc_handle_events_block}
 
-          {:error, %Ecto.Changeset{} = changeset} ->
-            {:noreply, assign(socket, :form, to_form(changeset))}
-        end
-      end
-
-      defp #{save_fn_name}(socket, :edit, params) do
-        case #{ctx}.update_#{s}(socket.assigns.#{s}, params) do
-          {:ok, record} ->
-            notify_and_close(socket, record, "#{Naming.humanize(s)} updated successfully")
-
-          {:error, %Ecto.Changeset{} = changeset} ->
-            {:noreply, assign(socket, :form, to_form(changeset))}
-        end
-      end
+    #{save_fn_bodies}
 
       defp notify_and_close(socket, record, message) do
         if pid = socket.assigns[:parent_pid] do
@@ -819,6 +894,8 @@ defmodule SnippetSaver.ResourceGen.Renderer do
         changeset = #{naming.schema_alias}.changeset(socket.assigns.#{s}, %{})
         assign(socket, form: to_form(changeset))
       end
+
+    #{nc_assign_rows_fns}
 
     #{if spec.belongs_tos != [], do: enum_options_helper(), else: ""}
     #{if searchable_bts != [], do: fk_helpers(), else: ""}
@@ -842,6 +919,8 @@ defmodule SnippetSaver.ResourceGen.Renderer do
                 </.link>
               </:actions>
             </.simple_form>
+
+            #{nc_heex_block}
           </.form_container>
         </div>
         \"\"\"
@@ -1105,13 +1184,21 @@ defmodule SnippetSaver.ResourceGen.Renderer do
       |> Enum.map(fn f -> "#{f.name}: #{inspect(default_value(f))}" end)
       |> Enum.join(",\n        ")
 
+    # `dropdown: false` belongs_tos (design doc §5/§9.4 — an embedded-only child's plain FK link
+    # back to a parent that, per the smoke test's own generation order, may not even exist yet)
+    # have no `options_from` to auto-pick an existing row from. The fixture can't safely fabricate
+    # one, so it leaves that FK out of its defaults entirely — same "trust the caller" stance
+    # Phase 1 already takes elsewhere — meaning callers must pass it explicitly, e.g.
+    # `vendor_contact_fixture(%{vendor_id: vendor.id})`.
+    auto_populatable_bts = Enum.filter(spec.belongs_tos, &(&1.options_from != nil))
+
     bt_setup =
-      spec.belongs_tos
+      auto_populatable_bts
       |> Enum.map(&fixture_bt_line/1)
       |> Enum.join("\n    ")
 
     bt_merge =
-      spec.belongs_tos
+      auto_populatable_bts
       |> Enum.map_join(",\n        ", fn bt -> "#{FieldRenderer.fk_name(bt)}: #{bt.name}.id" end)
 
     merge_line =

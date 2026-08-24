@@ -9,9 +9,12 @@ defmodule Mix.Tasks.Gen.Resource do
   See `resource-generator-design.md` for the full design, and
   `SnippetSaver.ResourceGen.Spec` for the spec DSL itself.
 
-  Phase 1 scope: `routing :top_level` resources built from field types 1/2/3/4/5 only
-  (`:nested_collection` fields, quick-create, and `routing :embedded_only` are not implemented —
-  the spec parser raises a clear error if you try to use them).
+  Phase 1 scope: `routing :top_level` resources built from field types 1/2/3/4/5.
+
+  Phase 2 adds `routing :embedded_only` (schema/migration/context only, no web layer — for a
+  nested collection's child resource) and `:nested_collection` fields in both `mode: :buffered`
+  and `mode: :immediate` (design doc §5). Quick-create (§4) is still not implemented — the spec
+  parser raises a clear error if you try to use it.
 
   Router and JS hook registration are never edited automatically — the snippets to hand-paste
   into `router.ex` and `assets/js/app.js` are printed after a successful (non-dry-run) generation.
@@ -73,22 +76,41 @@ defmodule Mix.Tasks.Gen.Resource do
 
       print_manual_paste_snippets(spec)
 
-      Mix.shell().info("""
+      web_layer_steps =
+        if spec.routing == :top_level do
+          [
+            "paste the router snippet above into lib/snippet_saver_web/router.ex",
+            "paste the app.js hook import/registration snippet above into assets/js/app.js"
+          ]
+        else
+          []
+        end
 
-      Remember to:
-        1) paste the router snippet above into lib/snippet_saver_web/router.ex
-        2) paste the app.js hook import/registration snippet above into assets/js/app.js
-        3) run `mix ecto.migrate`
-        4) if any searchable_select fields are present, review the generated handle_event clauses
-        5) run `mix compile --warnings-as-errors` and `mix test`
-      """)
+      remaining_steps =
+        [
+          "run `mix ecto.migrate`",
+          "if any searchable_select fields are present, review the generated handle_event clauses",
+          "run `mix compile --warnings-as-errors` and `mix test`"
+        ]
+
+      steps =
+        (web_layer_steps ++ remaining_steps)
+        |> Enum.with_index(1)
+        |> Enum.map_join("\n  ", fn {step, i} -> "#{i}) #{step}" end)
+
+      Mix.shell().info("\nRemember to:\n  #{steps}\n")
     end
   end
 
   defp print_manual_paste_snippets(spec) do
-    Mix.shell().info("\n--- router.ex snippet (paste inside the :app live_session) ---")
-    Mix.shell().info(Planner.router_snippet(spec))
-    Mix.shell().info("\n--- assets/js/app.js snippet ---")
-    Mix.shell().info(Planner.hooks_js_snippet(spec))
+    if router_snippet = Planner.router_snippet(spec) do
+      Mix.shell().info("\n--- router.ex snippet (paste inside the :app live_session) ---")
+      Mix.shell().info(router_snippet)
+    end
+
+    if hooks_js_snippet = Planner.hooks_js_snippet(spec) do
+      Mix.shell().info("\n--- assets/js/app.js snippet ---")
+      Mix.shell().info(hooks_js_snippet)
+    end
   end
 end

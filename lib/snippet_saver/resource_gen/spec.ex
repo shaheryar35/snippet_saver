@@ -40,7 +40,8 @@ defmodule SnippetSaver.ResourceGen.Spec do
     fields: [],
     belongs_tos: [],
     list_fields: [],
-    subtabs: []
+    subtabs: [],
+    nested_collections: []
   ]
 
   @type field :: %{
@@ -58,7 +59,21 @@ defmodule SnippetSaver.ResourceGen.Spec do
           searchable: boolean,
           options_from: {module, atom} | nil,
           quick_create: boolean,
-          display_fn: {module, atom} | nil
+          display_fn: {module, atom} | nil,
+          dropdown: boolean,
+          required: boolean,
+          table: atom | nil
+        }
+
+  @type nested_collection :: %{
+          name: atom,
+          mode: :buffered | :immediate,
+          child_schema: module,
+          row_fields: [atom],
+          sync_fn: {module, atom} | nil,
+          create_fn: {module, atom} | nil,
+          update_fn: {module, atom} | nil,
+          delete_fn: {module, atom} | nil
         }
 
   @type t :: %__MODULE__{}
@@ -110,7 +125,11 @@ defmodule SnippetSaver.ResourceGen.Spec do
 
   def soft_delete(bool) when is_boolean(bool), do: update_spec!(&%{&1 | soft_delete: bool})
 
-  def routing(mode) when is_atom(mode), do: update_spec!(&%{&1 | routing: mode})
+  def routing(mode) when mode in [:top_level, :embedded_only], do: update_spec!(&%{&1 | routing: mode})
+
+  def routing(other) do
+    Mix.raise("resource routing: must be :top_level or :embedded_only, got: #{inspect(other)}")
+  end
 
   def list_fields(fields) when is_list(fields), do: update_spec!(&%{&1 | list_fields: fields})
 
@@ -155,6 +174,23 @@ defmodule SnippetSaver.ResourceGen.Spec do
     options_from = Keyword.get(opts, :options_from)
     quick_create = Keyword.get(opts, :quick_create, false)
     display_fn = Keyword.get(opts, :display_fn)
+    required = Keyword.get(opts, :required, false)
+
+    # `dropdown: false` is for a plain internal FK column with no form field at all — the
+    # nested-collection child's link back to its parent (design doc §5/§9.4), which is never
+    # rendered as a user-facing select (an `:embedded_only` resource has no generated form to put
+    # it on in the first place). Mirrors the codebase's own convention for this exact case: a bare
+    # `field :parent_id, :id` on the child schema (see `patient_master_problem.ex`/`patient_note.ex`)
+    # — `belongs_to` is reused here only because it already derives the FK/migration/index shape.
+    dropdown = Keyword.get(opts, :dropdown, true)
+
+    # Optional, explicit escape hatch from needing `module` already compiled at generation time
+    # (Phase 1's `bt_migration_line`/`bt_index_line` normally call `module.__schema__(:source)` to
+    # get the FK target table name — fine when `module` is an already-hand-built catalog, but a
+    # nested-collection child's own parent-link (`dropdown: false`) is generated *before* the
+    # parent it points at exists, per design doc §9.4's own generation order. Passing `table:`
+    # here supplies the target table name directly, breaking that circular dependency.
+    table = Keyword.get(opts, :table)
 
     if quick_create do
       Mix.raise(
@@ -163,17 +199,18 @@ defmodule SnippetSaver.ResourceGen.Spec do
       )
     end
 
-    if searchable and is_nil(options_from) do
+    if dropdown and searchable and is_nil(options_from) do
       Mix.raise(
         "belongs_to #{inspect(name)}, searchable: true requires `options_from: {Module, :function}` " <>
           "so the generator knows which catalog to search against (mirrors the breed/colour combobox pattern)"
       )
     end
 
-    if !searchable and is_nil(options_from) do
+    if dropdown and !searchable and is_nil(options_from) do
       Mix.raise(
         "belongs_to #{inspect(name)}: requires `options_from: {Module, :function}` in Phase 1 " <>
-          "(plain unconstrained belongs_to selects with no option source are not supported yet)"
+          "(plain unconstrained belongs_to selects with no option source are not supported yet) — " <>
+          "or pass `dropdown: false` if this is an internal FK with no form field (e.g. a nested-collection child's link to its parent)"
       )
     end
 
@@ -183,10 +220,64 @@ defmodule SnippetSaver.ResourceGen.Spec do
       searchable: searchable,
       options_from: options_from,
       quick_create: quick_create,
-      display_fn: display_fn
+      display_fn: display_fn,
+      dropdown: dropdown,
+      required: required,
+      table: table
     }
 
     update_spec!(&%{&1 | belongs_tos: &1.belongs_tos ++ [entry]})
+  end
+
+  # -- nested_collection/2 (Phase 2, design doc §5) ------------------------
+
+  def nested_collection(name, opts) when is_atom(name) and is_list(opts) do
+    mode = Keyword.get(opts, :mode)
+
+    unless mode in [:buffered, :immediate] do
+      Mix.raise(
+        "nested_collection #{inspect(name)}: `mode: :buffered` or `mode: :immediate` is required — " <>
+          "no default (see resource-generator-design.md §5, this is deliberate: silently defaulting " <>
+          "risks the wrong save-timing behavior going unnoticed). Got: #{inspect(mode)}"
+      )
+    end
+
+    child_schema =
+      Keyword.get(opts, :child_schema) ||
+        Mix.raise("nested_collection #{inspect(name)}: `child_schema: Module` is required")
+
+    row_fields =
+      Keyword.get(opts, :row_fields) ||
+        Mix.raise("nested_collection #{inspect(name)}: `row_fields: [:field, ...]` is required")
+
+    case mode do
+      :buffered ->
+        unless Keyword.has_key?(opts, :sync_fn) do
+          Mix.raise(
+            "nested_collection #{inspect(name)}: mode: :buffered requires sync_fn: {Context, :function_name}"
+          )
+        end
+
+      :immediate ->
+        unless Keyword.has_key?(opts, :create_fn) and Keyword.has_key?(opts, :update_fn) do
+          Mix.raise(
+            "nested_collection #{inspect(name)}: mode: :immediate requires both create_fn: {Context, :fn} and update_fn: {Context, :fn}"
+          )
+        end
+    end
+
+    entry = %{
+      name: name,
+      mode: mode,
+      child_schema: child_schema,
+      row_fields: row_fields,
+      sync_fn: Keyword.get(opts, :sync_fn),
+      create_fn: Keyword.get(opts, :create_fn),
+      update_fn: Keyword.get(opts, :update_fn),
+      delete_fn: Keyword.get(opts, :delete_fn)
+    }
+
+    update_spec!(&%{&1 | nested_collections: &1.nested_collections ++ [entry]})
   end
 
   # -- validation -------------------------------------------------------
@@ -217,21 +308,31 @@ defmodule SnippetSaver.ResourceGen.Spec do
       :top_level ->
         :ok
 
-      nil ->
-        Mix.raise("resource #{inspect(spec.name)}: `routing :top_level` is required")
+      :embedded_only ->
+        if spec.nested_collections != [] do
+          Mix.raise(
+            "resource #{inspect(spec.name)}: routing :embedded_only cannot itself declare nested_collections " <>
+              "(design doc §4 scopes quick-create/nesting to one level deep — an embedded-only resource is " <>
+              "always the child, never the parent, of a nested collection)"
+          )
+        end
 
-      other ->
-        Mix.raise(
-          "resource #{inspect(spec.name)}: routing #{inspect(other)} is not implemented in Phase 1 " <>
-            "(only :top_level is supported — see resource-generator-design.md §9.4 for :embedded_only, planned later)"
-        )
+        if spec.subtabs != [] do
+          Mix.raise(
+            "resource #{inspect(spec.name)}: routing :embedded_only generates no web/routing layer, " <>
+              "so `subtabs` (a top-level-only concept) must be [] or omitted"
+          )
+        end
+
+      nil ->
+        Mix.raise("resource #{inspect(spec.name)}: `routing :top_level` or `routing :embedded_only` is required")
     end
 
-    if spec.subtabs not in [[], [:details]] do
+    if spec.routing == :top_level and spec.subtabs not in [[], [:details]] do
       Mix.raise(
-        "resource #{inspect(spec.name)}: subtabs #{inspect(spec.subtabs)} is not supported in Phase 1 " <>
-          "(only [:details] — additional subtabs require :nested_collection fields, see design doc §5, " <>
-          "planned for a later phase)"
+        "resource #{inspect(spec.name)}: subtabs #{inspect(spec.subtabs)} is not supported " <>
+          "(only [:details] is generated automatically — nested_collection fields render inline on the " <>
+          "same form, they don't add their own subtab in Phase 2)"
       )
     end
 

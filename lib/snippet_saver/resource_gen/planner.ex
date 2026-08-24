@@ -31,45 +31,58 @@ defmodule SnippetSaver.ResourceGen.Planner do
   def build_plan(%Spec{} = spec) do
     naming = Naming.build(spec)
 
-    [
+    core_entries = [
       file_entry(:schema, "lib/#{schema_path(naming)}.ex", Renderer.schema(spec, naming)),
       file_entry(
         :migration,
         "priv/repo/migrations/#{naming.migration_file_name}",
         Renderer.migration(spec, naming)
       ),
-      context_entry(spec, naming),
-      file_entry(
-        :index,
-        "lib/snippet_saver_web/live/#{naming.singular}_live/index.ex",
-        Renderer.live_index(spec, naming)
-      ),
-      file_entry(
-        :index_view,
-        "lib/snippet_saver_web/live/#{naming.singular}_live/index_view.ex",
-        Renderer.index_view(spec, naming)
-      ),
-      file_entry(
-        :form_component,
-        "lib/snippet_saver_web/live/#{naming.singular}_live/components/form_component.ex",
-        Renderer.form_component(spec, naming)
-      ),
-      file_entry(
-        :table,
-        "lib/snippet_saver_web/live/#{naming.singular}_live/table.ex",
-        Renderer.table(spec, naming)
-      ),
-      file_entry(
-        :tabs_hook_js,
-        "assets/js/hooks/#{naming.singular}_tabs.js",
-        Renderer.tabs_hook_js(spec, naming)
-      ),
-      fixtures_entry(spec, naming),
-      resource_test_entry(spec, naming)
+      context_entry(spec, naming)
     ]
+
+    # `routing :embedded_only` (design doc §9.4) generates schema/migration/context/fixtures/test
+    # only — no web/routing layer at all, since it's only ever consumed as a nested_collection
+    # child, never navigated to on its own.
+    web_entries =
+      if spec.routing == :top_level do
+        [
+          file_entry(
+            :index,
+            "lib/snippet_saver_web/live/#{naming.singular}_live/index.ex",
+            Renderer.live_index(spec, naming)
+          ),
+          file_entry(
+            :index_view,
+            "lib/snippet_saver_web/live/#{naming.singular}_live/index_view.ex",
+            Renderer.index_view(spec, naming)
+          ),
+          file_entry(
+            :form_component,
+            "lib/snippet_saver_web/live/#{naming.singular}_live/components/form_component.ex",
+            Renderer.form_component(spec, naming)
+          ),
+          file_entry(
+            :table,
+            "lib/snippet_saver_web/live/#{naming.singular}_live/table.ex",
+            Renderer.table(spec, naming)
+          ),
+          file_entry(
+            :tabs_hook_js,
+            "assets/js/hooks/#{naming.singular}_tabs.js",
+            Renderer.tabs_hook_js(spec, naming)
+          )
+        ]
+      else
+        []
+      end
+
+    core_entries ++ web_entries ++ [fixtures_entry(spec, naming), resource_test_entry(spec, naming)]
   end
 
-  @spec router_snippet(Spec.t()) :: String.t()
+  @spec router_snippet(Spec.t()) :: String.t() | nil
+  def router_snippet(%Spec{routing: :embedded_only}), do: nil
+
   def router_snippet(%Spec{} = spec) do
     naming = Naming.build(spec)
     live_ns = "#{naming.schema_alias}Live"
@@ -83,7 +96,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
     |> String.trim_trailing()
   end
 
-  @spec hooks_js_snippet(Spec.t()) :: String.t()
+  @spec hooks_js_snippet(Spec.t()) :: String.t() | nil
+  def hooks_js_snippet(%Spec{routing: :embedded_only}), do: nil
+
   def hooks_js_snippet(%Spec{} = spec) do
     naming = Naming.build(spec)
     hook = naming.web_tabs_hook_module_js
