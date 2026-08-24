@@ -2,14 +2,19 @@ defmodule SnippetSaver.ResourceGen.Planner do
   @moduledoc """
   Turns a `%Spec{}` into an ordered list of file-plan entries:
 
-      %{path: String.t(), content: String.t(), mode: :create | :insert | :print_instruct, kind: atom}
+      %{path: String.t(), content: String.t(), mode: :create | :insert | :already_present | :print_instruct, kind: atom}
 
   `:create` — file does not exist yet, `Writer` uses `Mix.Generator.create_file/2` (which itself
   prompts on conflict — see design doc §9.1).
 
-  `:insert` — target file exists and already contains a `# GEN_RESOURCE_INSERT_POINT` marker
-  (added by an earlier `mix gen.resource` run against the same context); `content` is spliced
-  above that marker.
+  `:insert` — target file exists, already contains a `# GEN_RESOURCE_INSERT_POINT` marker
+  (added by an earlier `mix gen.resource` run against the same context), and does not yet contain
+  this resource's own generated code. `content` is spliced above that marker.
+
+  `:already_present` — target file exists and already contains this resource's own generated code
+  (detected via a per-file-kind signature — see `already_contains_resource?/3`). This makes
+  re-running an unchanged spec idempotent: nothing is written, and `Writer`/the Mix task report it
+  as a no-op rather than re-splicing a duplicate copy.
 
   `:print_instruct` — target file exists but has no marker (e.g. a hand-written context like
   `Settings`). Nothing is written; `Mix.Tasks.Gen.Resource` prints `content` for manual pasting.
@@ -107,8 +112,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
   defp context_entry(spec, naming) do
     inner = Renderer.context_functions(spec, naming)
     path = naming.context_file_path
+    signal = "def create_#{naming.singular}("
 
-    case append_mode(path) do
+    case append_mode(path, signal) do
       :create ->
         content = """
         defmodule #{inspect(naming.context_module)} do
@@ -130,6 +136,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
       :insert ->
         %{path: path, content: inner, mode: :insert, kind: :context}
 
+      :already_present ->
+        %{path: path, content: inner, mode: :already_present, kind: :context}
+
       :print_instruct ->
         %{path: path, content: inner, mode: :print_instruct, kind: :context}
     end
@@ -139,8 +148,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
     inner = Renderer.fixtures(spec, naming)
     path = naming.fixtures_file_path
     module_name = "SnippetSaver.#{naming.context_alias}Fixtures"
+    signal = "def #{naming.fixture_fn}("
 
-    case append_mode(path) do
+    case append_mode(path, signal) do
       :create ->
         content = """
         defmodule #{module_name} do
@@ -160,6 +170,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
       :insert ->
         %{path: path, content: inner, mode: :insert, kind: :fixtures}
 
+      :already_present ->
+        %{path: path, content: inner, mode: :already_present, kind: :fixtures}
+
       :print_instruct ->
         %{path: path, content: inner, mode: :print_instruct, kind: :fixtures}
     end
@@ -169,8 +182,9 @@ defmodule SnippetSaver.ResourceGen.Planner do
     inner = Renderer.resource_test(spec, naming)
     path = naming.context_test_file_path
     module_name = "SnippetSaver.#{naming.context_alias}Test"
+    signal = "describe #{inspect(naming.plural)} do"
 
-    case append_mode(path) do
+    case append_mode(path, signal) do
       :create ->
         content = """
         defmodule #{module_name} do
@@ -189,16 +203,30 @@ defmodule SnippetSaver.ResourceGen.Planner do
       :insert ->
         %{path: path, content: inner, mode: :insert, kind: :test}
 
+      :already_present ->
+        %{path: path, content: inner, mode: :already_present, kind: :test}
+
       :print_instruct ->
         %{path: path, content: inner, mode: :print_instruct, kind: :test}
     end
   end
 
-  defp append_mode(path) do
-    cond do
-      not File.exists?(path) -> :create
-      String.contains?(File.read!(path), @marker) -> :insert
-      true -> :print_instruct
+  # `presence_signal` is a snippet unique to *this resource's* generated code within the file —
+  # different per file kind (a `def` name for context/fixtures, a `describe` block for tests) since
+  # none of those three file kinds share a single reliable marker string. Checking for it before
+  # offering `:insert` is what makes re-running an unchanged spec idempotent instead of always
+  # double-splicing on the second run.
+  defp append_mode(path, presence_signal) do
+    if File.exists?(path) do
+      content = File.read!(path)
+
+      cond do
+        String.contains?(content, presence_signal) -> :already_present
+        String.contains?(content, @marker) -> :insert
+        true -> :print_instruct
+      end
+    else
+      :create
     end
   end
 end

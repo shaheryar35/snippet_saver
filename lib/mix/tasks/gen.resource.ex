@@ -47,15 +47,24 @@ defmodule Mix.Tasks.Gen.Resource do
       {written, skipped} = Writer.write_plan!(plan)
       Writer.format!(written)
 
+      {already_present, needs_paste} = Enum.split_with(skipped, &(&1.mode == :already_present))
+
       Mix.shell().info("\nGenerated/updated #{length(written)} file(s) for #{inspect(spec.name)}.")
 
-      if skipped != [] do
+      if already_present != [] do
         Mix.shell().info(
-          "\n#{length(skipped)} fragment(s) were NOT written automatically (existing file with no " <>
+          "\n#{length(already_present)} file(s) already up to date for this resource — nothing to do:\n" <>
+            Enum.map_join(already_present, "\n", &"  - #{&1.path}")
+        )
+      end
+
+      if needs_paste != [] do
+        Mix.shell().info(
+          "\n#{length(needs_paste)} fragment(s) were NOT written automatically (existing file with no " <>
             "# GEN_RESOURCE_INSERT_POINT marker, or you declined the insert prompt) — paste these by hand:\n"
         )
 
-        Enum.each(skipped, fn entry ->
+        Enum.each(needs_paste, fn entry ->
           Mix.shell().info("--- #{entry.path} (#{entry.kind}) ---")
           Mix.shell().info(entry.content)
           Mix.shell().info("")

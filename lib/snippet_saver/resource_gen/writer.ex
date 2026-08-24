@@ -10,11 +10,16 @@ defmodule SnippetSaver.ResourceGen.Writer do
   marker) — confirmed with the user before writing, since it's still a change to a file the
   generator didn't create.
 
+  `:already_present` entries mean the target file already contains this resource's own generated
+  code (see `Planner.append_mode/2`) — nothing is written, and no confirmation prompt is shown,
+  since there's nothing to confirm: it's a deterministic no-op, not a judgment call like `:insert`.
+
   `:print_instruct` entries are never written — the caller is expected to print `content` for
   manual pasting instead.
 
-  Returns `{written_paths, print_instruct_entries}` so the Mix task can run `mix format` on what
-  was written and print instructions for what wasn't.
+  Returns `{written_paths, skipped_entries}` so the Mix task can run `mix format` on what was
+  written and report on what wasn't (splitting `:already_present` no-ops from genuine
+  `:print_instruct`/declined-`:insert` manual-paste cases).
   """
 
   @marker "# GEN_RESOURCE_INSERT_POINT"
@@ -39,6 +44,13 @@ defmodule SnippetSaver.ResourceGen.Writer do
           else
             {written, [entry | skipped]}
           end
+
+        :already_present ->
+          Mix.shell().info(
+            "#{entry.path} already contains generated code for this resource — skipping (no duplicate insert)."
+          )
+
+          {written, [entry | skipped]}
 
         :print_instruct ->
           {written, [entry | skipped]}

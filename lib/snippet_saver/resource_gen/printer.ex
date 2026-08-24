@@ -12,6 +12,7 @@ defmodule SnippetSaver.ResourceGen.Printer do
         case entry.mode do
           :create -> "CREATE #{entry.path}"
           :insert -> "INSERT into #{entry.path} (above # GEN_RESOURCE_INSERT_POINT)"
+          :already_present -> "ALREADY UP TO DATE — #{entry.path} already has this resource's code"
           :print_instruct -> "MANUAL PASTE needed — #{entry.path} exists with no marker"
         end
 

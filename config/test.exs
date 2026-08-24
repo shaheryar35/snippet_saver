@@ -21,9 +21,7 @@ config :snippet_saver, SnippetSaver.Repo,
   password: System.get_env("PGPASSWORD") || "",
   hostname: System.get_env("PGHOST") || "localhost",
   port: pg_port,
-  database:
-    (System.get_env("PGDATABASE") || "snippet_saver_test") <>
-      "#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "snippet_saver_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: System.schedulers_online() * 2
 
