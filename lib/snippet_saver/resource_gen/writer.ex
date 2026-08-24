@@ -3,8 +3,16 @@ defmodule SnippetSaver.ResourceGen.Writer do
   Writes a file plan to disk.
 
   `:create` entries go through `Mix.Generator.create_file/2`, which prompts
-  `already exists, overwrite? [y/N]` if the path is unexpectedly already there — that prompt is
-  never suppressed (design doc §9.1: no silent overwrite, ever).
+  `already exists, overwrite? [y/N]` if the path is unexpectedly already there **and its content
+  would actually change** — that prompt is never suppressed (design doc §9.1: no silent
+  overwrite, ever). `Mix.Generator` itself no-ops silently (no prompt, no write, just its own
+  `* creating <path>` status line) when the existing file's bytes already match what would be
+  written — writing identical content isn't an overwrite. This is why re-running an unchanged spec
+  against a fully-deterministic `:create` file (e.g. `schema.ex`, whose output never depends on
+  anything that changes between runs) shows no prompt, while a file whose generation logic *did*
+  change (e.g. after a renderer bug fix) correctly prompts, since its content now genuinely
+  differs. Confirmed via `diff` against a real re-run, not assumed — see the idempotency spec's
+  bug report for `vendor.ex`.
 
   `:insert` entries modify an existing file (splicing above its `# GEN_RESOURCE_INSERT_POINT`
   marker) — confirmed with the user before writing, since it's still a change to a file the

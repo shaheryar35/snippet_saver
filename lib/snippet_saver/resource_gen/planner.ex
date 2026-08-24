@@ -12,9 +12,12 @@ defmodule SnippetSaver.ResourceGen.Planner do
   this resource's own generated code. `content` is spliced above that marker.
 
   `:already_present` — target file exists and already contains this resource's own generated code
-  (detected via a per-file-kind signature — see `already_contains_resource?/3`). This makes
-  re-running an unchanged spec idempotent: nothing is written, and `Writer`/the Mix task report it
-  as a no-op rather than re-splicing a duplicate copy.
+  (detected via a per-file-kind signature — see `append_mode/2`). This makes re-running an
+  unchanged spec idempotent: nothing is written, and `Writer`/the Mix task report it as a no-op
+  rather than re-splicing a duplicate copy. The migration entry uses the same mode for the same
+  reason, but via a different detection path (`migration_entry/2`) — its filename always embeds a
+  fresh timestamp, so there's no fixed path to check; instead the whole `priv/repo/migrations/`
+  directory is searched by *content* for an existing `create_if_not_exists table(:<this table>)`.
 
   `:print_instruct` — target file exists but has no marker (e.g. a hand-written context like
   `Settings`). Nothing is written; `Mix.Tasks.Gen.Resource` prints `content` for manual pasting.
@@ -33,11 +36,7 @@ defmodule SnippetSaver.ResourceGen.Planner do
 
     core_entries = [
       file_entry(:schema, "lib/#{schema_path(naming)}.ex", Renderer.schema(spec, naming)),
-      file_entry(
-        :migration,
-        "priv/repo/migrations/#{naming.migration_file_name}",
-        Renderer.migration(spec, naming)
-      ),
+      migration_entry(spec, naming),
       context_entry(spec, naming)
     ]
 
@@ -122,6 +121,31 @@ defmodule SnippetSaver.ResourceGen.Planner do
 
   defp file_entry(kind, path, content) do
     %{path: path, content: content, mode: :create, kind: kind}
+  end
+
+  # Migration filenames always embed a fresh timestamp (`naming.migration_file_name`), so unlike
+  # every other `:create`-mode file, path-based conflict detection (Mix.Generator's own
+  # already-exists prompt) can never fire — two runs of the same spec never collide on a path, so
+  # they'd otherwise just pile up near-duplicate migrations forever. Detect an existing migration
+  # for this resource by *content* instead (same idea as `append_mode/2`'s presence-signal check,
+  # just against a directory of files instead of one fixed path).
+  defp migration_entry(spec, naming) do
+    content = Renderer.migration(spec, naming)
+    signal = "create_if_not_exists table(:#{naming.plural})"
+
+    case existing_migration_path(signal) do
+      nil ->
+        file_entry(:migration, "priv/repo/migrations/#{naming.migration_file_name}", content)
+
+      existing_path ->
+        %{path: existing_path, content: content, mode: :already_present, kind: :migration}
+    end
+  end
+
+  defp existing_migration_path(signal) do
+    "priv/repo/migrations/*.exs"
+    |> Path.wildcard()
+    |> Enum.find(fn path -> path |> File.read!() |> String.contains?(signal) end)
   end
 
   defp context_entry(spec, naming) do

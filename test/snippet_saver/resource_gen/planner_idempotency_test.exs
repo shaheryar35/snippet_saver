@@ -1,12 +1,19 @@
 defmodule SnippetSaver.ResourceGen.PlannerIdempotencyTest do
   @moduledoc """
-  Regression test for the `:insert` mode not being idempotent — see bug report "mix gen.resource
-  duplicates code on re-run". Runs the append-mode file kinds (context/fixtures/test) through
-  `Planner.build_plan/1` + `Writer.write_plan!/1` twice against an unchanged spec and asserts the
-  second run is a no-op rather than a duplicate splice.
+  Regression tests for `mix gen.resource` re-run idempotency:
+
+    1. "mix gen.resource duplicates code on re-run" — the `:insert` mode wasn't idempotent for the
+       append-mode file kinds (context/fixtures/test).
+    2. "mix gen.resource creates a duplicate migration file on every re-run" — migration filenames
+       always embed a fresh timestamp, so path-based conflict detection can never catch a repeat
+       run; needs its own content-based check (`Planner.migration_entry/2`).
+
+  Both run the same throwaway spec through `Planner.build_plan/1` + `Writer.write_plan!/1` twice
+  and assert the second run is a no-op rather than a duplicate write.
 
   Deliberately scoped to a throwaway resource/context name (not `hear_about_option`/`Catalog`) so
-  this test doesn't collide with real generated files, and cleans up everything it writes.
+  this test doesn't collide with real generated files, and cleans up everything it writes —
+  including the real `priv/repo/migrations/` entry the migration test creates.
   """
 
   use ExUnit.Case, async: false
@@ -80,5 +87,38 @@ defmodule SnippetSaver.ResourceGen.PlannerIdempotencyTest do
     assert {:ok, _} = Code.string_to_quoted(context_content)
     assert {:ok, _} = Code.string_to_quoted(fixtures_content)
     assert {:ok, _} = Code.string_to_quoted(test_content)
+  end
+
+  test "re-running the same spec does not create a duplicate migration file", %{spec: spec} do
+    glob = "priv/repo/migrations/*_create_resource_gen_regression_widgets.exs"
+
+    assert Path.wildcard(glob) == []
+
+    plan1 = Planner.build_plan(spec) |> Enum.filter(&(&1.kind == :migration))
+    [migration_entry1] = plan1
+    assert migration_entry1.mode == :create
+
+    {written1, skipped1} = Writer.write_plan!(plan1)
+    on_exit(fn -> File.rm(migration_entry1.path) end)
+
+    assert written1 == [migration_entry1.path]
+    assert skipped1 == []
+    assert Path.wildcard(glob) == [migration_entry1.path]
+
+    plan2 = Planner.build_plan(spec) |> Enum.filter(&(&1.kind == :migration))
+    [migration_entry2] = plan2
+
+    # Found the *existing* file by content, not generated a fresh timestamped path.
+    assert migration_entry2.mode == :already_present
+    assert migration_entry2.path == migration_entry1.path
+
+    {written2, skipped2} = Writer.write_plan!(plan2)
+
+    assert written2 == []
+    assert [%{mode: :already_present, path: skipped_path}] = skipped2
+    assert skipped_path == migration_entry1.path
+
+    # Exactly one migration file for this table exists on disk after two runs.
+    assert Path.wildcard(glob) == [migration_entry1.path]
   end
 end
